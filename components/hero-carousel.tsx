@@ -1,24 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import {
-  ChevronLeft,
-  ChevronRight,
-  Pause,
-  Play,
-  Volume2,
-  VolumeX,
-  Settings,
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight, Pause, Play, Volume2, VolumeX, Settings } from 'lucide-react'
 import type { Slide, SlideMedia } from './carousel-types'
-
-// Loaded client-side only — prevents any SSR analysis of nested interactive elements
-const CarouselPortals = dynamic(
-  () => import('./carousel-portals').then((m) => m.CarouselPortals),
-  { ssr: false }
-)
+import { CarouselPortals } from './carousel-portals'
 
 const defaultSlides: Slide[] = [
   {
