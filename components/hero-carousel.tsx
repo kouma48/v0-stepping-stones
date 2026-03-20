@@ -11,26 +11,10 @@ import {
   Volume2,
   VolumeX,
   Settings,
-  X,
-  Plus,
-  Trash2,
-  GripVertical,
-  ImageIcon,
-  Video,
 } from 'lucide-react'
-
-type SlideMedia =
-  | { type: 'image'; src: string }
-  | { type: 'video'; src: string; poster?: string }
-
-interface Slide {
-  id: string
-  media: SlideMedia
-  heading: string
-  subheading: string
-  primaryCta: { label: string; href: string }
-  secondaryCta?: { label: string; href: string }
-}
+import type { Slide, SlideMedia } from './carousel-types'
+import { EditorPanel } from './carousel-editor-panel'
+import { AdminPinModal } from './carousel-pin-modal'
 
 const defaultSlides: Slide[] = [
   {
@@ -61,377 +45,6 @@ const defaultSlides: Slide[] = [
 
 const AUTOPLAY_INTERVAL = 6000
 
-// ─── Editor Panel ────────────────────────────────────────────────────────────
-
-function EditorPanel({
-  slides,
-  onClose,
-  onChange,
-}: {
-  slides: Slide[]
-  onClose: () => void
-  onChange: (slides: Slide[]) => void
-}) {
-  const [editingId, setEditingId] = useState<string | null>(slides[0]?.id ?? null)
-
-  const editing = slides.find((s) => s.id === editingId) ?? null
-
-  function update(id: string, patch: Partial<Slide>) {
-    onChange(slides.map((s) => (s.id === id ? { ...s, ...patch } : s)))
-  }
-
-  function updateMedia(id: string, patch: Partial<SlideMedia>) {
-    const slide = slides.find((s) => s.id === id)
-    if (!slide) return
-    onChange(
-      slides.map((s) =>
-        s.id === id ? { ...s, media: { ...s.media, ...patch } as SlideMedia } : s
-      )
-    )
-  }
-
-  function addSlide() {
-    const id = Date.now().toString()
-    const newSlide: Slide = {
-      id,
-      media: { type: 'image', src: '' },
-      heading: 'New Slide Heading',
-      subheading: 'Add a subheading here',
-      primaryCta: { label: 'Learn More', href: '#' },
-    }
-    onChange([...slides, newSlide])
-    setEditingId(id)
-  }
-
-  function removeSlide(id: string) {
-    const next = slides.filter((s) => s.id !== id)
-    onChange(next)
-    if (editingId === id) setEditingId(next[0]?.id ?? null)
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-stretch pointer-events-none">
-      {/* Backdrop */}
-      <div
-        role="button"
-        tabIndex={0}
-        className="flex-1 pointer-events-auto bg-black/40 cursor-default"
-        onClick={onClose}
-        onKeyDown={(e) => e.key === 'Escape' && onClose()}
-        aria-label="Close editor"
-      />
-
-      {/* Panel */}
-      <div className="pointer-events-auto w-full max-w-md bg-white shadow-2xl flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-school-divider">
-          <h2 className="font-sans font-semibold text-school-heading text-sm tracking-widest uppercase">
-            Carousel Editor
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-school-subtle hover:text-school-heading transition-colors"
-            aria-label="Close"
-          >
-            <X size={18} />
-          </button>
-        </div>
-
-        <div className="flex flex-1 overflow-hidden">
-          {/* Slide list */}
-          <div className="w-36 border-r border-school-divider flex flex-col overflow-y-auto shrink-0">
-            {slides.map((slide, i) => (
-              <div
-                key={slide.id}
-                className={`group relative px-3 py-3 border-b border-school-divider transition-colors cursor-pointer select-none ${
-                  editingId === slide.id
-                    ? 'bg-crimson/5 border-l-2 border-l-crimson'
-                    : 'hover:bg-gray-50'
-                }`}
-                onClick={() => setEditingId(slide.id)}
-                onKeyDown={(e) => e.key === 'Enter' && setEditingId(slide.id)}
-                role="button"
-                tabIndex={0}
-              >
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <GripVertical size={12} className="text-school-subtle shrink-0" />
-                  <span className="font-sans text-xs font-semibold text-school-subtle uppercase tracking-wider">
-                    Slide {i + 1}
-                  </span>
-                </div>
-                <p className="font-sans text-xs text-school-heading leading-tight line-clamp-2">
-                  {slide.heading}
-                </p>
-                {/* Delete — uses span + onPointerDown to avoid nested <button> */}
-                <span
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Delete slide"
-                  aria-disabled={slides.length <= 1}
-                  onPointerDown={(e) => {
-                    e.stopPropagation()
-                    if (slides.length > 1) removeSlide(slide.id)
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && slides.length > 1) {
-                      e.stopPropagation()
-                      removeSlide(slide.id)
-                    }
-                  }}
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-school-subtle hover:text-red-500 transition cursor-pointer"
-                >
-                  <Trash2 size={12} />
-                </span>
-              </div>
-            ))}
-            <button
-              onClick={addSlide}
-              className="flex items-center gap-2 px-3 py-3 text-crimson hover:bg-crimson/5 transition-colors font-sans text-xs font-semibold tracking-wider uppercase"
-            >
-              <Plus size={13} />
-              Add Slide
-            </button>
-          </div>
-
-          {/* Field editor */}
-          <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
-            {editing ? (
-              <>
-                {/* Media type toggle */}
-                <fieldset>
-                  <legend className="font-sans text-xs font-semibold tracking-widest uppercase text-school-subtle mb-2">
-                    Media Type
-                  </legend>
-                  <div className="flex gap-2">
-                    {(['image', 'video'] as const).map((t) => (
-                      <button
-                        key={t}
-                        onClick={() =>
-                          updateMedia(editing.id, {
-                            type: t,
-                            src: editing.media.src,
-                          })
-                        }
-                        className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans font-semibold border transition-colors ${
-                          editing.media.type === t
-                            ? 'border-crimson bg-crimson/5 text-crimson'
-                            : 'border-school-divider text-school-subtle hover:border-school-body'
-                        }`}
-                      >
-                        {t === 'image' ? <ImageIcon size={13} /> : <Video size={13} />}
-                        {t.charAt(0).toUpperCase() + t.slice(1)}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-
-                {/* Media URL */}
-                <Field label={editing.media.type === 'image' ? 'Image URL' : 'Video URL'}>
-                  <input
-                    type="text"
-                    value={editing.media.src}
-                    placeholder={editing.media.type === 'image' ? '/images/hero.jpg' : '/videos/hero.mp4'}
-                    onChange={(e) => updateMedia(editing.id, { src: e.target.value })}
-                    className={inputCls}
-                  />
-                </Field>
-
-                {/* Video poster */}
-                {editing.media.type === 'video' && (
-                  <Field label="Poster Image URL (optional)">
-                    <input
-                      type="text"
-                      value={(editing.media as { type: 'video'; src: string; poster?: string }).poster ?? ''}
-                      placeholder="/images/poster.jpg"
-                      onChange={(e) =>
-                        updateMedia(editing.id, { poster: e.target.value } as Partial<SlideMedia>)
-                      }
-                      className={inputCls}
-                    />
-                  </Field>
-                )}
-
-                {/* Heading */}
-                <Field label="Heading">
-                  <input
-                    type="text"
-                    value={editing.heading}
-                    onChange={(e) => update(editing.id, { heading: e.target.value })}
-                    className={inputCls}
-                  />
-                </Field>
-
-                {/* Subheading */}
-                <Field label="Subheading">
-                  <textarea
-                    value={editing.subheading}
-                    rows={2}
-                    onChange={(e) => update(editing.id, { subheading: e.target.value })}
-                    className={`${inputCls} resize-none`}
-                  />
-                </Field>
-
-                {/* Primary CTA */}
-                <fieldset className="border border-school-divider p-3 space-y-3">
-                  <legend className="font-sans text-xs font-semibold tracking-widest uppercase text-school-subtle px-1">
-                    Primary Button
-                  </legend>
-                  <Field label="Label">
-                    <input
-                      type="text"
-                      value={editing.primaryCta.label}
-                      onChange={(e) =>
-                        update(editing.id, {
-                          primaryCta: { ...editing.primaryCta, label: e.target.value },
-                        })
-                      }
-                      className={inputCls}
-                    />
-                  </Field>
-                  <Field label="Link">
-                    <input
-                      type="text"
-                      value={editing.primaryCta.href}
-                      onChange={(e) =>
-                        update(editing.id, {
-                          primaryCta: { ...editing.primaryCta, href: e.target.value },
-                        })
-                      }
-                      className={inputCls}
-                    />
-                  </Field>
-                </fieldset>
-
-                {/* Secondary CTA */}
-                <fieldset className="border border-school-divider p-3 space-y-3">
-                  <legend className="font-sans text-xs font-semibold tracking-widest uppercase text-school-subtle px-1">
-                    Secondary Button (optional)
-                  </legend>
-                  <Field label="Label">
-                    <input
-                      type="text"
-                      value={editing.secondaryCta?.label ?? ''}
-                      placeholder="Leave blank to hide"
-                      onChange={(e) =>
-                        update(editing.id, {
-                          secondaryCta: e.target.value
-                            ? { label: e.target.value, href: editing.secondaryCta?.href ?? '#' }
-                            : undefined,
-                        })
-                      }
-                      className={inputCls}
-                    />
-                  </Field>
-                  {editing.secondaryCta && (
-                    <Field label="Link">
-                      <input
-                        type="text"
-                        value={editing.secondaryCta.href}
-                        onChange={(e) =>
-                          update(editing.id, {
-                            secondaryCta: { ...editing.secondaryCta!, href: e.target.value },
-                          })
-                        }
-                        className={inputCls}
-                      />
-                    </Field>
-                  )}
-                </fieldset>
-              </>
-            ) : (
-              <p className="font-sans text-sm text-school-subtle">Select a slide to edit.</p>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const inputCls =
-  'w-full font-sans text-sm text-school-heading border border-school-divider px-3 py-2 focus:outline-none focus:border-crimson transition-colors bg-white'
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="space-y-1">
-      <label className="font-sans text-xs font-semibold tracking-widest uppercase text-school-subtle block">
-        {label}
-      </label>
-      {children}
-    </div>
-  )
-}
-
-// ─── Admin PIN Gate ───────────────────────────────────────────────────────────
-
-const ADMIN_PIN = '1234'
-
-function AdminPinModal({
-  onSuccess,
-  onClose,
-}: {
-  onSuccess: () => void
-  onClose: () => void
-}) {
-  const [pin, setPin] = useState('')
-  const [error, setError] = useState(false)
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (pin === ADMIN_PIN) {
-      onSuccess()
-    } else {
-      setError(true)
-      setPin('')
-    }
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="bg-white w-full max-w-xs mx-4 p-6 shadow-2xl">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-sans font-semibold text-school-heading text-sm tracking-widest uppercase">
-            Admin Access
-          </h2>
-          <button onClick={onClose} className="text-school-subtle hover:text-school-heading transition-colors" aria-label="Close">
-            <X size={16} />
-          </button>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="font-sans text-xs font-semibold tracking-widest uppercase text-school-subtle block mb-1">
-              Enter PIN
-            </label>
-            <input
-              type="password"
-              inputMode="numeric"
-              maxLength={8}
-              value={pin}
-              onChange={(e) => { setPin(e.target.value); setError(false) }}
-              autoFocus
-              className={`w-full font-sans text-sm border px-3 py-2 focus:outline-none transition-colors ${
-                error ? 'border-red-400 bg-red-50' : 'border-school-divider focus:border-crimson'
-              }`}
-              placeholder="••••"
-            />
-            {error && (
-              <p className="font-sans text-xs text-red-500 mt-1">Incorrect PIN. Try again.</p>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="w-full font-sans font-semibold text-sm tracking-widest uppercase px-4 py-2.5 bg-crimson text-white hover:bg-crimson/90 transition-colors"
-          >
-            Unlock
-          </button>
-        </form>
-      </div>
-    </div>
-  )
-}
-
-
-
 export default function HeroCarousel() {
   const [slides, setSlides] = useState<Slide[]>(defaultSlides)
   const [current, setCurrent] = useState(0)
@@ -449,7 +62,49 @@ export default function HeroCarousel() {
 
   useEffect(() => { setIsMounted(true) }, [])
 
-  // Triple-click on the controls area to trigger admin PIN prompt
+  // Clamp current index if slides are removed
+  useEffect(() => {
+    if (current >= slides.length) setCurrent(Math.max(0, slides.length - 1))
+  }, [slides.length, current])
+
+  const goTo = useCallback(
+    (index: number) => {
+      if (isTransitioning) return
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setCurrent((index + slides.length) % slides.length)
+        setIsTransitioning(false)
+      }, 300)
+    },
+    [isTransitioning, slides.length]
+  )
+
+  const goNext = useCallback(() => goTo(current + 1), [goTo, current])
+  const goPrev = useCallback(() => goTo(current - 1), [goTo, current])
+
+  // Autoplay
+  useEffect(() => {
+    if (!isPlaying) return
+    timerRef.current = setTimeout(goNext, AUTOPLAY_INTERVAL)
+    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+  }, [isPlaying, current, goNext])
+
+  // Sync video play/pause
+  useEffect(() => {
+    const video = videoRefs.current[current]
+    if (!video) return
+    if (isPlaying) {
+      video.play().catch(() => {})
+    } else {
+      video.pause()
+    }
+  }, [current, isPlaying])
+
+  // Sync mute on all videos
+  useEffect(() => {
+    videoRefs.current.forEach((v) => { if (v) v.muted = isMuted })
+  }, [isMuted])
+
   function handleAdminTrigger() {
     const next = adminClickCount + 1
     setAdminClickCount(next)
@@ -457,156 +112,101 @@ export default function HeroCarousel() {
     if (next >= 3) {
       setAdminClickCount(0)
       if (!isAdmin) setPinModalOpen(true)
-      else setIsAdmin(false) // triple-click again to exit admin mode
+      else setIsAdmin(false)
     } else {
       adminClickTimer.current = setTimeout(() => setAdminClickCount(0), 600)
     }
   }
 
-  // Clamp current index if slides are removed
-  useEffect(() => {
-    if (current >= slides.length) setCurrent(Math.max(0, slides.length - 1))
-  }, [slides, current])
-
-  const goTo = useCallback(
-    (index: number) => {
-      if (isTransitioning || index === current) return
-      setIsTransitioning(true)
-      setTimeout(() => {
-        setCurrent(index)
-        setIsTransitioning(false)
-      }, 400)
-    },
-    [current, isTransitioning]
-  )
-
-  const next = useCallback(() => {
-    goTo((current + 1) % slides.length)
-  }, [current, goTo, slides.length])
-
-  const prev = useCallback(() => {
-    goTo((current - 1 + slides.length) % slides.length)
-  }, [current, goTo, slides.length])
-
-  useEffect(() => {
-    if (!isPlaying || editorOpen) {
-      if (timerRef.current) clearTimeout(timerRef.current)
-      return
-    }
-    timerRef.current = setTimeout(next, AUTOPLAY_INTERVAL)
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current)
-    }
-  }, [isPlaying, current, next, editorOpen])
-
-  useEffect(() => {
-    videoRefs.current.forEach((v) => {
-      if (v) v.muted = isMuted
-    })
-  }, [isMuted])
-
-  useEffect(() => {
-    const slide = slides[current]
-    videoRefs.current.forEach((v, i) => {
-      if (!v) return
-      if (i === current && slide?.media.type === 'video') {
-        isPlaying ? v.play().catch(() => {}) : v.pause()
-      } else {
-        v.pause()
-        v.currentTime = 0
-      }
-    })
-  }, [current, isPlaying, slides])
-
-  const currentSlide = slides[current]
-  const showMuteButton = currentSlide?.media.type === 'video'
-
-  if (!currentSlide) return null
+  const slide = slides[current]
+  const isVideo = slide?.media.type === 'video'
 
   return (
     <>
       <section
-        aria-label="Hero carousel"
         className="relative w-full h-svh min-h-[560px] overflow-hidden bg-school-heading"
+        aria-label="Hero carousel"
       >
         {/* Slides */}
-        {slides.map((slide, i) => (
+        {slides.map((s, i) => (
           <div
-            key={slide.id}
-            aria-hidden={i !== current}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              i === current ? (isTransitioning ? 'opacity-0' : 'opacity-100') : 'opacity-0'
+            key={s.id}
+            className={`absolute inset-0 transition-opacity duration-700 ${
+              i === current
+                ? isTransitioning ? 'opacity-0' : 'opacity-100'
+                : 'opacity-0 pointer-events-none'
             }`}
+            aria-hidden={i !== current}
           >
-            {slide.media.type === 'image' ? (
-              slide.media.src ? (
-                <Image
-                  src={slide.media.src}
-                  alt={slide.heading}
-                  fill
-                  priority={i === 0}
-                  className="object-cover object-center"
-                  sizes="100vw"
-                />
-              ) : (
-                <div className="absolute inset-0 bg-school-heading/80" />
-              )
+            {s.media.type === 'image' ? (
+              <Image
+                src={s.media.src}
+                alt={s.heading}
+                fill
+                priority={i === 0}
+                className="object-cover"
+                sizes="100vw"
+              />
             ) : (
               <video
                 ref={(el) => { videoRefs.current[i] = el }}
-                src={slide.media.src}
-                poster={(slide.media as { type: 'video'; src: string; poster?: string }).poster}
+                src={s.media.src}
+                poster={(s.media as SlideMedia & { type: 'video'; poster?: string }).poster}
+                autoPlay={i === current && isPlaying}
                 loop
                 muted={isMuted}
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover object-center"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             )}
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           </div>
         ))}
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 pointer-events-none" />
-
-        {/* Slide content */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 px-8 pb-32 md:px-16 md:pb-36 lg:px-24 max-w-4xl transition-all duration-500 ${
-            isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-          }`}
-        >
-          <h1 className="font-serif text-white text-[clamp(2rem,5vw,4rem)] leading-[1.1] tracking-tight text-balance mb-3">
-            {currentSlide.heading}
+        {/* Text content */}
+        <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-28 md:pb-32 z-10 max-w-3xl">
+          <h1
+            key={`h-${current}`}
+            className="font-serif text-white text-[clamp(2rem,5vw,4rem)] leading-[1.1] tracking-tight mb-4 animate-fade-up"
+          >
+            {slide?.heading}
           </h1>
-          <p className="font-sans text-white/85 text-[clamp(0.9rem,1.8vw,1.1rem)] mb-7 italic">
-            {currentSlide.subheading}
+          <p
+            key={`p-${current}`}
+            className="font-sans text-white/80 text-[clamp(0.9rem,1.5vw,1.1rem)] leading-relaxed mb-8 max-w-xl animate-fade-up"
+          >
+            {slide?.subheading}
           </p>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={currentSlide.primaryCta.href}
-              className="font-sans font-semibold text-sm tracking-widest uppercase px-7 py-3 bg-white text-school-heading hover:bg-white/90 transition-colors"
-            >
-              {currentSlide.primaryCta.label}
-            </a>
-            {currentSlide.secondaryCta && (
+          <div className="flex flex-wrap gap-4">
+            {slide?.primaryCta && (
               <a
-                href={currentSlide.secondaryCta.href}
-                className="font-sans font-semibold text-sm tracking-widest uppercase px-7 py-3 border border-white text-white hover:bg-white/10 transition-colors"
+                href={slide.primaryCta.href}
+                className="font-sans font-semibold tracking-widest uppercase text-sm px-7 py-3 bg-white text-school-heading hover:bg-white/90 transition-colors"
               >
-                {currentSlide.secondaryCta.label}
+                {slide.primaryCta.label}
+              </a>
+            )}
+            {slide?.secondaryCta && (
+              <a
+                href={slide.secondaryCta.href}
+                className="font-sans font-semibold tracking-widest uppercase text-sm px-7 py-3 border border-white text-white hover:bg-white/10 transition-colors"
+              >
+                {slide.secondaryCta.label}
               </a>
             )}
           </div>
         </div>
 
-        {/* Dot indicators */}
+        {/* Right-edge dot indicators */}
         <div className="absolute right-5 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10">
           {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => goTo(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`w-2.5 h-2.5 rounded-full border border-white transition-colors ${
-                i === current ? 'bg-white' : 'bg-white/30 hover:bg-white/60'
+              className={`w-2 rounded-full transition-all duration-300 ${
+                i === current ? 'h-8 bg-white' : 'h-2 bg-white/50 hover:bg-white/80'
               }`}
             />
           ))}
@@ -617,40 +217,46 @@ export default function HeroCarousel() {
           className="absolute bottom-10 right-8 md:right-12 flex items-center gap-1 z-10"
           onClick={handleAdminTrigger}
         >
+          {/* Prev */}
           <button
-            onClick={prev}
+            onClick={(e) => { e.stopPropagation(); goPrev() }}
             aria-label="Previous slide"
             className="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
           >
             <ChevronLeft size={18} />
           </button>
+          {/* Next */}
           <button
-            onClick={next}
+            onClick={(e) => { e.stopPropagation(); goNext() }}
             aria-label="Next slide"
             className="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
           >
             <ChevronRight size={18} />
           </button>
+
           <span className="w-px h-5 bg-white/40 mx-1" aria-hidden="true" />
+
+          {/* Play / Pause */}
           <button
-            onClick={() => setIsPlaying((p) => !p)}
-            aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
+            onClick={(e) => { e.stopPropagation(); setIsPlaying((p) => !p) }}
+            aria-label={isPlaying ? 'Pause autoplay' : 'Resume autoplay'}
             className="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
           >
             {isPlaying ? <Pause size={16} /> : <Play size={16} />}
           </button>
-          {showMuteButton && (
-            <>
-              <span className="w-px h-5 bg-white/40 mx-1" aria-hidden="true" />
-              <button
-                onClick={() => setIsMuted((m) => !m)}
-                aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
-              >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-              </button>
-            </>
+
+          {/* Mute — only shown for video slides */}
+          {isVideo && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setIsMuted((m) => !m) }}
+              aria-label={isMuted ? 'Unmute' : 'Mute'}
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
+            >
+              {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            </button>
           )}
+
+          {/* Admin gear — only visible after PIN unlock */}
           {isAdmin && (
             <>
               <span className="w-px h-5 bg-white/40 mx-1" aria-hidden="true" />
@@ -666,7 +272,7 @@ export default function HeroCarousel() {
         </div>
       </section>
 
-      {/* Admin PIN modal — portalled to body, client-only */}
+      {/* Portalled modals — client-only, never rendered during SSR */}
       {isMounted && pinModalOpen && createPortal(
         <AdminPinModal
           onSuccess={() => { setIsAdmin(true); setPinModalOpen(false) }}
@@ -675,7 +281,6 @@ export default function HeroCarousel() {
         document.body
       )}
 
-      {/* Editor panel — portalled to body, client-only */}
       {isMounted && editorOpen && createPortal(
         <EditorPanel
           slides={slides}

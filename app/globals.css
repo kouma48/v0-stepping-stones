@@ -40,39 +40,63 @@
   --card-foreground: oklch(0.18 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0 0);
-  --primary: oklch(0.35 0.13 22);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.18 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.35 0.13 22);
-  --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+  /* ── Primary palette ───────────────────────────────────────────────────── */
+  --navy:        #0F2C4C; /* Royal Navy Blue  — headlines, logo, primary CTAs  */
+  --gold:        #C59A49; /* Warm Gold        — accents, dividers, highlights   */
+  --brand-brown: #772221; /* Primary Brand Brown — logos, primary CTAs          */
+
+  /* ── Secondary palette ─────────────────────────────────────────────────── */
+  --support-blue: #395b72; /* Supporting Blue  — secondary headlines, info boxes */
+  --accent-red:   #A42424; /* Accent Red       — urgent notices, special events  */
+
+  /* ── Accent colours ────────────────────────────────────────────────────── */
+  --creative-orange: #FF6B35;
+  --coral:           #FF8A80;
+  --mustard:         #F39C12;
+
+  /* ── Neutrals ──────────────────────────────────────────────────────────── */
+  --charcoal:    #000000; /* Primary text     */
+  --dark-grey:   #2D3748;
+  --light-gray:  #f4f4f4;
+
+  /* ── Semantic UI tokens (mapped to brand colours) ──────────────────────── */
+  --primary:            var(--navy);
+  --primary-foreground: #ffffff;
+  --secondary:          var(--light-gray);
+  --secondary-foreground: var(--navy);
+  --muted:              var(--light-gray);
+  --muted-foreground:   var(--dark-grey);
+  --accent:             var(--accent-red);
+  --accent-foreground:  #ffffff;
+  --destructive:        oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.88 0 0);
-  --input: oklch(0.88 0 0);
-  --ring: oklch(0.35 0.13 22);
-  /* School-specific tokens */
-  --crimson: oklch(0.35 0.13 22);
-  --school-heading: oklch(0.13 0 0);
-  --school-body: oklch(0.25 0 0);
-  --school-subtle: oklch(0.55 0 0);
-  --school-divider: oklch(0.85 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --border:             #e2e2e2;
+  --input:              #e2e2e2;
+  --ring:               var(--accent-red);
+
+  /* ── School component tokens ───────────────────────────────────────────── */
+  --crimson:        var(--accent-red);   /* all "red" highlights use Accent Red */
+  --school-heading: var(--charcoal);
+  --school-body:    var(--dark-grey);
+  --school-subtle:  #6b7280;
+  --school-divider: #e2e2e2;
+  --school-gold:    var(--gold);
+  --school-navy:    var(--navy);
+
+  --chart-1: #FF6B35;
+  --chart-2: #395b72;
+  --chart-3: #C59A49;
+  --chart-4: #FF8A80;
+  --chart-5: #F39C12;
   --radius: 0.25rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.18 0 0);
-  --sidebar-primary: oklch(0.35 0.13 22);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.18 0 0);
-  --sidebar-border: oklch(0.88 0 0);
-  --sidebar-ring: oklch(0.35 0.13 22);
+  --sidebar: var(--light-gray);
+  --sidebar-foreground: var(--navy);
+  --sidebar-primary: var(--navy);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--light-gray);
+  --sidebar-accent-foreground: var(--navy);
+  --sidebar-border: #e2e2e2;
+  --sidebar-ring: var(--accent-red);
 }
 
 .dark {
@@ -114,11 +138,28 @@
   --font-sans: var(--font-sans, 'Montserrat', sans-serif);
   --font-serif: 'Roxborough CF', Georgia, 'Times New Roman', serif;
   --font-mono: 'Courier New', Courier, monospace;
-  --color-crimson: var(--crimson);
-  --color-school-heading: var(--school-heading);
-  --color-school-body: var(--school-body);
-  --color-school-subtle: var(--school-subtle);
-  --color-school-divider: var(--school-divider);
+
+  /* Brand colour utilities */
+  --color-navy:            var(--navy);
+  --color-gold:            var(--gold);
+  --color-brand-brown:     var(--brand-brown);
+  --color-support-blue:    var(--support-blue);
+  --color-accent-red:      var(--accent-red);
+  --color-creative-orange: var(--creative-orange);
+  --color-coral:           var(--coral);
+  --color-mustard:         var(--mustard);
+  --color-charcoal:        var(--charcoal);
+  --color-dark-grey:       var(--dark-grey);
+  --color-light-gray:      var(--light-gray);
+
+  /* School component utilities */
+  --color-crimson:         var(--crimson);
+  --color-school-heading:  var(--school-heading);
+  --color-school-body:     var(--school-body);
+  --color-school-subtle:   var(--school-subtle);
+  --color-school-divider:  var(--school-divider);
+  --color-school-gold:     var(--school-gold);
+  --color-school-navy:     var(--school-navy);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
