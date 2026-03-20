@@ -1,6 +1,36 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Roxborough CF — premium display serif loaded from CDN */
+@font-face {
+  font-family: 'Roxborough CF';
+  src: url('https://fonts.cdnfonts.com/s/15327/RoxboroughCF-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roxborough CF';
+  src: url('https://fonts.cdnfonts.com/s/15327/RoxboroughCF-RegularItalic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roxborough CF';
+  src: url('https://fonts.cdnfonts.com/s/15327/RoxboroughCF-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roxborough CF';
+  src: url('https://fonts.cdnfonts.com/s/15327/RoxboroughCF-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -81,8 +111,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-sans, 'EB Garamond', Georgia, serif);
-  --font-serif: var(--font-serif, 'Playfair Display', Georgia, serif);
+  --font-sans: var(--font-sans, 'Montserrat', sans-serif);
+  --font-serif: 'Roxborough CF', Georgia, 'Times New Roman', serif;
   --font-mono: 'Courier New', Courier, monospace;
   --color-crimson: var(--crimson);
   --color-school-heading: var(--school-heading);
