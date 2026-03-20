@@ -80,16 +80,16 @@ export default function SchoolIntroSection() {
         </div>
 
         {/* Column 3 — blockquote */}
-        <div className="relative border-l-2 border-school-divider pl-8">
-          {/* Large decorative quote mark */}
+        <div className="relative border-l border-school-divider pl-10">
+          {/* Large decorative quote mark — vertically centered on the border line */}
           <span
-            className="absolute -top-1 left-4 text-crimson font-serif leading-none select-none"
-            style={{ fontSize: '3.5rem', lineHeight: 1 }}
+            className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 text-crimson font-serif leading-none select-none bg-background"
+            style={{ fontSize: '4rem', lineHeight: 1 }}
             aria-hidden="true"
           >
             &#8220;
           </span>
-          <blockquote className="pt-8 text-[1.05rem] leading-[1.65] text-crimson font-serif italic">
+          <blockquote className="text-[1.05rem] leading-[1.8] text-crimson font-serif">
             At Stepping Stones we see education as being so much more than exam results. We see
             education as being about developing young women and men who are ready to make a
             meaningful difference to their communities.

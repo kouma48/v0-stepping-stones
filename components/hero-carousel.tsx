@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import {
   ChevronLeft,
@@ -650,21 +651,23 @@ export default function HeroCarousel() {
         </div>
       </section>
 
-      {/* Admin PIN modal */}
-      {pinModalOpen && (
+      {/* Admin PIN modal — portalled to body to avoid nested button issues */}
+      {pinModalOpen && typeof document !== 'undefined' && createPortal(
         <AdminPinModal
           onSuccess={() => { setIsAdmin(true); setPinModalOpen(false) }}
           onClose={() => setPinModalOpen(false)}
-        />
+        />,
+        document.body
       )}
 
-      {/* Editor panel */}
-      {editorOpen && (
+      {/* Editor panel — portalled to body */}
+      {editorOpen && typeof document !== 'undefined' && createPortal(
         <EditorPanel
           slides={slides}
           onClose={() => setEditorOpen(false)}
           onChange={setSlides}
-        />
+        />,
+        document.body
       )}
     </>
   )
