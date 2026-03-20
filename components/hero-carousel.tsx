@@ -143,15 +143,15 @@ function EditorPanel({
             {slides.map((slide, i) => (
               <div
                 key={slide.id}
-                role="button"
-                tabIndex={0}
-                onClick={() => setEditingId(slide.id)}
-                onKeyDown={(e) => e.key === 'Enter' && setEditingId(slide.id)}
-                className={`group relative text-left px-3 py-3 border-b border-school-divider transition-colors cursor-pointer select-none ${
+                className={`group relative px-3 py-3 border-b border-school-divider transition-colors cursor-pointer select-none ${
                   editingId === slide.id
                     ? 'bg-crimson/5 border-l-2 border-l-crimson'
                     : 'hover:bg-gray-50'
                 }`}
+                onClick={() => setEditingId(slide.id)}
+                onKeyDown={(e) => e.key === 'Enter' && setEditingId(slide.id)}
+                role="button"
+                tabIndex={0}
               >
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <GripVertical size={12} className="text-school-subtle shrink-0" />
@@ -162,14 +162,26 @@ function EditorPanel({
                 <p className="font-sans text-xs text-school-heading leading-tight line-clamp-2">
                   {slide.heading}
                 </p>
-                <button
-                  onClick={(e) => { e.stopPropagation(); removeSlide(slide.id) }}
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-school-subtle hover:text-red-500 transition"
+                {/* Delete — uses span + onPointerDown to avoid nested <button> */}
+                <span
+                  role="button"
+                  tabIndex={0}
                   aria-label="Delete slide"
-                  disabled={slides.length <= 1}
+                  aria-disabled={slides.length <= 1}
+                  onPointerDown={(e) => {
+                    e.stopPropagation()
+                    if (slides.length > 1) removeSlide(slide.id)
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && slides.length > 1) {
+                      e.stopPropagation()
+                      removeSlide(slide.id)
+                    }
+                  }}
+                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-school-subtle hover:text-red-500 transition cursor-pointer"
                 >
                   <Trash2 size={12} />
-                </button>
+                </span>
               </div>
             ))}
             <button
