@@ -37,11 +37,7 @@ export default function SchoolIntroSection() {
 
       {/* Main heading */}
       <h1 className="font-serif text-center text-[clamp(2.4rem,6vw,5rem)] leading-[1.1] tracking-tight text-school-heading text-balance mb-16">
-        A{' '}
-        <em className="text-crimson font-serif" style={{ fontStyle: 'italic' }}>
-          nurturing
-        </em>{' '}
-        independent school
+        Nurturing principled hearts and brilliant minds.
       </h1>
 
       {/* Three-column content */}
