@@ -47,7 +47,7 @@
 
   /* ── Secondary palette ─────────────────────────────────────────────────── */
   --support-blue: #395b72; /* Supporting Blue  — secondary headlines, info boxes */
-  --accent-red:   #A42424; /* Accent Red       — urgent notices, special events  */
+  --accent-red:   #c11f1e; /* Accent Red       — urgent notices, special events  */
 
   /* ── Accent colours ────────────────────────────────────────────────────── */
   --creative-orange: #FF6B35;
@@ -144,7 +144,7 @@
   --color-gold:            #C59A49;
   --color-brand-brown:     #772221;
   --color-support-blue:    #395b72;
-  --color-accent-red:      #A42424;
+  --color-accent-red:      #c11f1e;
   --color-creative-orange: #FF6B35;
   --color-coral:           #FF8A80;
   --color-mustard:         #F39C12;
@@ -153,7 +153,7 @@
   --color-light-gray:      #f4f4f4;
 
   /* School component utilities */
-  --color-crimson:         #A42424;
+  --color-crimson:         #c11f1e;
   --color-school-heading:  #000000;
   --color-school-body:     #2D3748;
   --color-school-subtle:   #6b7280;

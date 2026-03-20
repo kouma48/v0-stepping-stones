@@ -65,9 +65,8 @@ export function EditorPanel({
 
   return (
     <div className="fixed inset-0 z-50 flex items-stretch pointer-events-none">
-      {/* Backdrop */}
+      {/* Backdrop — div not button to avoid nesting issues */}
       <div
-        role="button"
         tabIndex={0}
         className="flex-1 pointer-events-auto bg-black/40 cursor-default"
         onClick={onClose}
@@ -92,12 +91,11 @@ export function EditorPanel({
         </div>
 
         <div className="flex flex-1 overflow-hidden">
-          {/* Slide list */}
+          {/* Slide list — all interactive elements are divs/spans, no buttons */}
           <div className="w-36 border-r border-school-divider flex flex-col overflow-y-auto shrink-0">
             {slides.map((slide, i) => (
               <div
                 key={slide.id}
-                role="button"
                 tabIndex={0}
                 onClick={() => setEditingId(slide.id)}
                 onKeyDown={(e) => e.key === 'Enter' && setEditingId(slide.id)}
@@ -116,11 +114,10 @@ export function EditorPanel({
                 <p className="font-sans text-xs text-school-heading leading-tight line-clamp-2">
                   {slide.heading}
                 </p>
+                {/* Delete — span with onPointerDown to avoid any nested button */}
                 <span
-                  role="button"
                   tabIndex={0}
                   aria-label="Delete slide"
-                  aria-disabled={slides.length <= 1}
                   onPointerDown={(e) => {
                     e.stopPropagation()
                     if (slides.length > 1) removeSlide(slide.id)
@@ -133,17 +130,26 @@ export function EditorPanel({
                   }}
                   className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-school-subtle hover:text-red-500 transition cursor-pointer"
                 >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6l-1 14H6L5 6"/>
+                    <path d="M10 11v6"/>
+                    <path d="M14 11v6"/>
+                    <path d="M9 6V4h6v2"/>
+                  </svg>
                 </span>
               </div>
             ))}
-            <button
+            {/* Add Slide — span to avoid any button nesting */}
+            <span
+              tabIndex={0}
               onClick={addSlide}
-              className="flex items-center gap-2 px-3 py-3 text-accent-red hover:bg-accent-red/5 transition-colors font-sans text-xs font-semibold tracking-wider uppercase"
+              onKeyDown={(e) => e.key === 'Enter' && addSlide()}
+              className="flex items-center gap-2 px-3 py-3 text-accent-red hover:bg-accent-red/5 transition-colors font-sans text-xs font-semibold tracking-wider uppercase cursor-pointer"
             >
               <Plus size={13} />
               Add Slide
-            </button>
+            </span>
           </div>
 
           {/* Field editor */}
