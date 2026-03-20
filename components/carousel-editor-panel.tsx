@@ -18,7 +18,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   )
 }
 
-export function EditorPanel({
+export function CarouselEditorPanel({
   slides,
   onClose,
   onChange,

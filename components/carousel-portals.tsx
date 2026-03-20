@@ -8,8 +8,8 @@ import type { Slide } from './carousel-types'
 
 // Dynamic import with ssr:false so Next.js never server-renders EditorPanel
 // This prevents any nested <button> hydration mismatch
-const EditorPanel = dynamic(
-  () => import('./carousel-editor-panel').then((m) => m.EditorPanel),
+const CarouselEditorPanel = dynamic(
+  () => import('./carousel-editor-panel').then((m) => m.CarouselEditorPanel),
   { ssr: false }
 )
 
@@ -43,7 +43,7 @@ export function CarouselPortals({
         document.body
       )}
       {editorOpen && createPortal(
-        <EditorPanel slides={slides} onClose={onEditorClose} onChange={onSlidesChange} />,
+        <CarouselEditorPanel slides={slides} onClose={onEditorClose} onChange={onSlidesChange} />,
         document.body
       )}
     </>
