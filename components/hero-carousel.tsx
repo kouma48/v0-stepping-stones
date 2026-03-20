@@ -137,10 +137,13 @@ function EditorPanel({
           {/* Slide list */}
           <div className="w-36 border-r border-school-divider flex flex-col overflow-y-auto shrink-0">
             {slides.map((slide, i) => (
-              <button
+              <div
                 key={slide.id}
+                role="button"
+                tabIndex={0}
                 onClick={() => setEditingId(slide.id)}
-                className={`group relative text-left px-3 py-3 border-b border-school-divider transition-colors ${
+                onKeyDown={(e) => e.key === 'Enter' && setEditingId(slide.id)}
+                className={`group relative text-left px-3 py-3 border-b border-school-divider transition-colors cursor-pointer select-none ${
                   editingId === slide.id
                     ? 'bg-crimson/5 border-l-2 border-l-crimson'
                     : 'hover:bg-gray-50'
@@ -163,7 +166,7 @@ function EditorPanel({
                 >
                   <Trash2 size={12} />
                 </button>
-              </button>
+              </div>
             ))}
             <button
               onClick={addSlide}
@@ -419,7 +422,7 @@ export default function HeroCarousel() {
     <>
       <section
         aria-label="Hero carousel"
-        className="relative w-full h-screen min-h-[560px] max-h-[900px] overflow-hidden bg-school-heading"
+        className="relative w-full h-svh min-h-[560px] overflow-hidden bg-school-heading"
       >
         {/* Slides */}
         {slides.map((slide, i) => (
