@@ -111,9 +111,12 @@ function EditorPanel({
   return (
     <div className="fixed inset-0 z-50 flex items-stretch pointer-events-none">
       {/* Backdrop */}
-      <button
-        className="flex-1 pointer-events-auto bg-black/40"
+      <div
+        role="button"
+        tabIndex={0}
+        className="flex-1 pointer-events-auto bg-black/40 cursor-default"
         onClick={onClose}
+        onKeyDown={(e) => e.key === 'Escape' && onClose()}
         aria-label="Close editor"
       />
 
@@ -346,7 +349,75 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   )
 }
 
-// ─── Main Carousel ────────────────────────────────────────────────────────────
+// ─── Admin PIN Gate ───────────────────────────────────────────────────────────
+
+const ADMIN_PIN = '1234'
+
+function AdminPinModal({
+  onSuccess,
+  onClose,
+}: {
+  onSuccess: () => void
+  onClose: () => void
+}) {
+  const [pin, setPin] = useState('')
+  const [error, setError] = useState(false)
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (pin === ADMIN_PIN) {
+      onSuccess()
+    } else {
+      setError(true)
+      setPin('')
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      <div className="bg-white w-full max-w-xs mx-4 p-6 shadow-2xl">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-sans font-semibold text-school-heading text-sm tracking-widest uppercase">
+            Admin Access
+          </h2>
+          <button onClick={onClose} className="text-school-subtle hover:text-school-heading transition-colors" aria-label="Close">
+            <X size={16} />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="font-sans text-xs font-semibold tracking-widest uppercase text-school-subtle block mb-1">
+              Enter PIN
+            </label>
+            <input
+              type="password"
+              inputMode="numeric"
+              maxLength={8}
+              value={pin}
+              onChange={(e) => { setPin(e.target.value); setError(false) }}
+              autoFocus
+              className={`w-full font-sans text-sm border px-3 py-2 focus:outline-none transition-colors ${
+                error ? 'border-red-400 bg-red-50' : 'border-school-divider focus:border-crimson'
+              }`}
+              placeholder="••••"
+            />
+            {error && (
+              <p className="font-sans text-xs text-red-500 mt-1">Incorrect PIN. Try again.</p>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full font-sans font-semibold text-sm tracking-widest uppercase px-4 py-2.5 bg-crimson text-white hover:bg-crimson/90 transition-colors"
+          >
+            Unlock
+          </button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+
 
 export default function HeroCarousel() {
   const [slides, setSlides] = useState<Slide[]>(defaultSlides)
@@ -355,8 +426,26 @@ export default function HeroCarousel() {
   const [isMuted, setIsMuted] = useState(true)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [editorOpen, setEditorOpen] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [pinModalOpen, setPinModalOpen] = useState(false)
+  const [adminClickCount, setAdminClickCount] = useState(0)
+  const adminClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+
+  // Triple-click on the controls area to trigger admin PIN prompt
+  function handleAdminTrigger() {
+    const next = adminClickCount + 1
+    setAdminClickCount(next)
+    if (adminClickTimer.current) clearTimeout(adminClickTimer.current)
+    if (next >= 3) {
+      setAdminClickCount(0)
+      if (!isAdmin) setPinModalOpen(true)
+      else setIsAdmin(false) // triple-click again to exit admin mode
+    } else {
+      adminClickTimer.current = setTimeout(() => setAdminClickCount(0), 600)
+    }
+  }
 
   // Clamp current index if slides are removed
   useEffect(() => {
@@ -508,7 +597,10 @@ export default function HeroCarousel() {
         </div>
 
         {/* Bottom-right controls */}
-        <div className="absolute bottom-10 right-8 md:right-12 flex items-center gap-1 z-10">
+        <div
+          className="absolute bottom-10 right-8 md:right-12 flex items-center gap-1 z-10"
+          onClick={handleAdminTrigger}
+        >
           <button
             onClick={prev}
             aria-label="Previous slide"
@@ -543,17 +635,28 @@ export default function HeroCarousel() {
               </button>
             </>
           )}
-          <span className="w-px h-5 bg-white/40 mx-1" aria-hidden="true" />
-          {/* Edit button */}
-          <button
-            onClick={() => setEditorOpen(true)}
-            aria-label="Edit carousel"
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
-          >
-            <Settings size={16} />
-          </button>
+          {isAdmin && (
+            <>
+              <span className="w-px h-5 bg-white/40 mx-1" aria-hidden="true" />
+              <button
+                onClick={(e) => { e.stopPropagation(); setEditorOpen(true) }}
+                aria-label="Edit carousel"
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
+              >
+                <Settings size={16} />
+              </button>
+            </>
+          )}
         </div>
       </section>
+
+      {/* Admin PIN modal */}
+      {pinModalOpen && (
+        <AdminPinModal
+          onSuccess={() => { setIsAdmin(true); setPinModalOpen(false) }}
+          onClose={() => setPinModalOpen(false)}
+        />
+      )}
 
       {/* Editor panel */}
       {editorOpen && (
