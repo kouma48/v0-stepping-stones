@@ -1,4 +1,5 @@
 'use client'
+// v5 — all interactive elements use div/span, zero <button> elements in slide list
 
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -49,7 +50,7 @@ function TabBtn({
 }
 
 // ─── Editor panel — no <button> elements at all ───────────────────────────────
-function InlineEditorPanel({
+function SlideEditorPanel({
   slides,
   onClose,
   onChange,
@@ -322,7 +323,7 @@ export function CarouselPortals({
         document.body
       )}
       {editorOpen && createPortal(
-        <InlineEditorPanel slides={slides} onClose={onEditorClose} onChange={onSlidesChange} />,
+        <SlideEditorPanel slides={slides} onClose={onEditorClose} onChange={onSlidesChange} />,
         document.body
       )}
     </>

@@ -1,6 +1,7 @@
 import HeroCarousel from '@/components/hero-carousel'
 import SchoolIntroSection from '@/components/school-intro-section'
 import ScrollGallery from '@/components/scroll-gallery'
+import LearningSection from '@/components/learning-section'
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <HeroCarousel />
       <SchoolIntroSection />
       <ScrollGallery />
+      <LearningSection />
     </main>
   )
 }
