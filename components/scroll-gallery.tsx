@@ -9,7 +9,7 @@ import Image from 'next/image'
 const IMAGES = [
   {
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-ICuR5nH7GMCIYFdxnwCmmO7mURmZe6.jpeg',
-    alt: 'Historic brick school building with manicured lawn',
+    alt: 'Students walking across manicured school grounds',
     col: 'left',
     row: 0,
   },
@@ -20,14 +20,14 @@ const IMAGES = [
     row: 0,
   },
   {
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-6YNMOSy3CyVNB8JnHVqfVuLb6VJfbW.png',
+    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-BTOcA4S3qa8a3WRVNhZi9lbzr0QdZw.jpeg',
     alt: 'Cricket match on school grounds',
     col: 'right',
     row: 0,
   },
   {
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-dTVspKtQ5pxszbhCDF94unXM7XvV8f.jpeg',
-    alt: 'Large trees and Victorian school building',
+    alt: 'Victorian school building with large trees',
     col: 'left',
     row: 1,
   },
@@ -38,7 +38,7 @@ const IMAGES = [
     row: 1,
   },
   {
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-BTOcA4S3qa8a3WRVNhZi9lbzr0QdZw.jpeg',
+    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-iHJRdw1yKdBnmJCQA3vGupLcXx5jT5.jpeg',
     alt: 'Students hiking outdoors with backpacks',
     col: 'right',
     row: 1,
@@ -189,7 +189,7 @@ export default function ScrollGallery() {
   // Right column slides out to the right
   const rightX = useTransform(smooth, [0.1, 0.75], ['0%', '115%'])
   // Centre column expands to fill — starts later, ends later
-  const centreScale = useTransform(smooth, [0.05, 0.8], [0.68, 1])
+  const centreScale = useTransform(smooth, [0.05, 0.8], [0.78, 1])
   // Border radius collapses smoothly
   const radius = useTransform(smooth, [0.05, 0.75], [14, 0])
   const radiusStr = useTransform(radius, (r) => `${r}px`)
@@ -224,13 +224,13 @@ export default function ScrollGallery() {
           style={{ opacity: collageOpacity }}
         >
           <motion.div
-            className="flex items-stretch w-full h-full px-8 py-8"
+            className="flex items-stretch w-full h-full px-6 py-6"
             style={{ gap: gapStr }}
           >
             {/* Left column */}
             <motion.div
               className="flex flex-col flex-shrink-0"
-              style={{ width: '22%', gap: gapStr, x: leftX, willChange: 'transform' }}
+              style={{ width: '27%', gap: gapStr, x: leftX, willChange: 'transform' }}
             >
               {IMAGES.filter((img) => img.col === 'left').map((img) => (
                 <motion.div
@@ -274,7 +274,7 @@ export default function ScrollGallery() {
             {/* Right column */}
             <motion.div
               className="flex flex-col flex-shrink-0"
-              style={{ width: '22%', gap: gapStr, x: rightX, willChange: 'transform' }}
+              style={{ width: '27%', gap: gapStr, x: rightX, willChange: 'transform' }}
             >
               {IMAGES.filter((img) => img.col === 'right').map((img) => (
                 <motion.div
