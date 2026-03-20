@@ -181,25 +181,25 @@ export default function ScrollGallery() {
     offset: ['start start', 'end end'],
   })
 
-  // Spring-smoothed progress
-  const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 25 })
+  // Spring-smoothed progress — lower stiffness + higher damping = silky glide
+  const smooth = useSpring(scrollYProgress, { stiffness: 40, damping: 30, restDelta: 0.001 })
 
-  // Left column slides out to the left
-  const leftX = useTransform(smooth, [0, 0.85], ['0%', '-110%'])
+  // Left column slides out to the left — starts moving at 0.1, fully gone at 0.75
+  const leftX = useTransform(smooth, [0.1, 0.75], ['0%', '-115%'])
   // Right column slides out to the right
-  const rightX = useTransform(smooth, [0, 0.85], ['0%', '110%'])
-  // Centre column expands
-  const centreScale = useTransform(smooth, [0, 0.85], [0.72, 1])
-  // Border radius collapses
-  const radius = useTransform(smooth, [0, 0.7], [12, 0])
+  const rightX = useTransform(smooth, [0.1, 0.75], ['0%', '115%'])
+  // Centre column expands to fill — starts later, ends later
+  const centreScale = useTransform(smooth, [0.05, 0.8], [0.68, 1])
+  // Border radius collapses smoothly
+  const radius = useTransform(smooth, [0.05, 0.75], [14, 0])
   const radiusStr = useTransform(radius, (r) => `${r}px`)
   // Gap collapses
-  const gap = useTransform(smooth, [0, 0.7], [16, 0])
+  const gap = useTransform(smooth, [0.05, 0.7], [16, 0])
   const gapStr = useTransform(gap, (g) => `${g}px`)
-  // Carousel fade in
-  const carouselOpacity = useTransform(smooth, [0.8, 1], [0, 1])
-  // Collage fade out
-  const collageOpacity = useTransform(smooth, [0.75, 0.9], [1, 0])
+  // Carousel fades in gently after collage is mostly gone
+  const carouselOpacity = useTransform(smooth, [0.82, 1], [0, 1])
+  // Collage fades out
+  const collageOpacity = useTransform(smooth, [0.7, 0.88], [1, 0])
 
   const [carouselVisible, setCarouselVisible] = useState(false)
 
@@ -230,7 +230,7 @@ export default function ScrollGallery() {
             {/* Left column */}
             <motion.div
               className="flex flex-col flex-shrink-0"
-              style={{ width: '22%', gap: gapStr, x: leftX }}
+              style={{ width: '22%', gap: gapStr, x: leftX, willChange: 'transform' }}
             >
               {IMAGES.filter((img) => img.col === 'left').map((img) => (
                 <motion.div
@@ -252,7 +252,7 @@ export default function ScrollGallery() {
             {/* Centre column */}
             <motion.div
               className="flex flex-col flex-1"
-              style={{ gap: gapStr, scale: centreScale }}
+              style={{ gap: gapStr, scale: centreScale, transformOrigin: 'center center', willChange: 'transform' }}
             >
               {IMAGES.filter((img) => img.col === 'centre').map((img) => (
                 <motion.div
@@ -274,7 +274,7 @@ export default function ScrollGallery() {
             {/* Right column */}
             <motion.div
               className="flex flex-col flex-shrink-0"
-              style={{ width: '22%', gap: gapStr, x: rightX }}
+              style={{ width: '22%', gap: gapStr, x: rightX, willChange: 'transform' }}
             >
               {IMAGES.filter((img) => img.col === 'right').map((img) => (
                 <motion.div
