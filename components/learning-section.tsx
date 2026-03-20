@@ -14,12 +14,12 @@ const STAGES = [
     href: '#early-years',
   },
   {
-    id: 'prep',
-    label: 'Prep School',
-    ages: 'Ages 6–13',
-    image: '/images/learning-prep.jpg',
-    alt: 'Primary school children in classroom discussion',
-    href: '#prep',
+    id: 'upperprimary',
+    label: 'Upper Primary',
+    ages: 'Ages 7–11',
+    image: '/images/learning-upperprimary.jpg',
+    alt: 'Teacher helping upper primary students with art activity',
+    href: '#upper-primary',
   },
   {
     id: 'senior',
