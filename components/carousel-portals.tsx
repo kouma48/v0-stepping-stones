@@ -2,9 +2,16 @@
 
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { EditorPanel } from './carousel-editor-panel'
+import dynamic from 'next/dynamic'
 import { AdminPinModal } from './carousel-pin-modal'
 import type { Slide } from './carousel-types'
+
+// Dynamic import with ssr:false so Next.js never server-renders EditorPanel
+// This prevents any nested <button> hydration mismatch
+const EditorPanel = dynamic(
+  () => import('./carousel-editor-panel').then((m) => m.EditorPanel),
+  { ssr: false }
+)
 
 interface CarouselPortalsProps {
   slides: Slide[]
