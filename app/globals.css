@@ -140,26 +140,26 @@
   --font-mono: 'Courier New', Courier, monospace;
 
   /* Brand colour utilities */
-  --color-navy:            var(--navy);
-  --color-gold:            var(--gold);
-  --color-brand-brown:     var(--brand-brown);
-  --color-support-blue:    var(--support-blue);
-  --color-accent-red:      var(--accent-red);
-  --color-creative-orange: var(--creative-orange);
-  --color-coral:           var(--coral);
-  --color-mustard:         var(--mustard);
-  --color-charcoal:        var(--charcoal);
-  --color-dark-grey:       var(--dark-grey);
-  --color-light-gray:      var(--light-gray);
+  --color-navy:            #0F2C4C;
+  --color-gold:            #C59A49;
+  --color-brand-brown:     #772221;
+  --color-support-blue:    #395b72;
+  --color-accent-red:      #A42424;
+  --color-creative-orange: #FF6B35;
+  --color-coral:           #FF8A80;
+  --color-mustard:         #F39C12;
+  --color-charcoal:        #000000;
+  --color-dark-grey:       #2D3748;
+  --color-light-gray:      #f4f4f4;
 
   /* School component utilities */
-  --color-crimson:         var(--crimson);
-  --color-school-heading:  var(--school-heading);
-  --color-school-body:     var(--school-body);
-  --color-school-subtle:   var(--school-subtle);
-  --color-school-divider:  var(--school-divider);
-  --color-school-gold:     var(--school-gold);
-  --color-school-navy:     var(--school-navy);
+  --color-crimson:         #A42424;
+  --color-school-heading:  #000000;
+  --color-school-body:     #2D3748;
+  --color-school-subtle:   #6b7280;
+  --color-school-divider:  #e2e2e2;
+  --color-school-gold:     #C59A49;
+  --color-school-navy:     #0F2C4C;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import {
   ChevronLeft,
@@ -13,8 +12,7 @@ import {
   Settings,
 } from 'lucide-react'
 import type { Slide, SlideMedia } from './carousel-types'
-import { EditorPanel } from './carousel-editor-panel'
-import { AdminPinModal } from './carousel-pin-modal'
+import { CarouselPortals } from './carousel-portals'
 
 const defaultSlides: Slide[] = [
   {
@@ -55,12 +53,9 @@ export default function HeroCarousel() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [pinModalOpen, setPinModalOpen] = useState(false)
   const [adminClickCount, setAdminClickCount] = useState(0)
-  const [isMounted, setIsMounted] = useState(false)
   const adminClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
-
-  useEffect(() => { setIsMounted(true) }, [])
 
   // Clamp current index if slides are removed
   useEffect(() => {
@@ -272,23 +267,16 @@ export default function HeroCarousel() {
         </div>
       </section>
 
-      {/* Portalled modals — client-only, never rendered during SSR */}
-      {isMounted && pinModalOpen && createPortal(
-        <AdminPinModal
-          onSuccess={() => { setIsAdmin(true); setPinModalOpen(false) }}
-          onClose={() => setPinModalOpen(false)}
-        />,
-        document.body
-      )}
-
-      {isMounted && editorOpen && createPortal(
-        <EditorPanel
-          slides={slides}
-          onClose={() => setEditorOpen(false)}
-          onChange={setSlides}
-        />,
-        document.body
-      )}
+      {/* Portalled modals rendered via dedicated client component */}
+      <CarouselPortals
+        slides={slides}
+        editorOpen={editorOpen}
+        pinModalOpen={pinModalOpen}
+        onEditorClose={() => setEditorOpen(false)}
+        onPinSuccess={() => { setIsAdmin(true); setPinModalOpen(false) }}
+        onPinClose={() => setPinModalOpen(false)}
+        onSlidesChange={setSlides}
+      />
     </>
   )
 }
