@@ -85,10 +85,10 @@ export default function SchoolIntroSection() {
 
         {/* Main heading */}
         <Reveal delay={160} className="w-full">
-          <h1 className="font-serif text-center text-[clamp(2.6rem,6.5vw,5.5rem)] leading-[1.08] tracking-tight text-school-heading text-balance max-w-4xl mx-auto">
+          <h1 className="font-serif text-center text-[clamp(2rem,4.5vw,4rem)] leading-[1.12] tracking-tight text-school-heading max-w-4xl mx-auto">
             Nurturing{' '}
             <em className="text-crimson" style={{ fontStyle: 'italic' }}>principled</em>{' '}
-            hearts<br className="hidden md:block" /> and{' '}
+            hearts<br /> and{' '}
             <em className="text-crimson" style={{ fontStyle: 'italic' }}>brilliant</em>{' '}
             minds.
           </h1>

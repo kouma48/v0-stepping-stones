@@ -442,9 +442,12 @@ export default function HeroCarousel() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [pinModalOpen, setPinModalOpen] = useState(false)
   const [adminClickCount, setAdminClickCount] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
   const adminClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+
+  useEffect(() => { setIsMounted(true) }, [])
 
   // Triple-click on the controls area to trigger admin PIN prompt
   function handleAdminTrigger() {
@@ -663,8 +666,8 @@ export default function HeroCarousel() {
         </div>
       </section>
 
-      {/* Admin PIN modal — portalled to body to avoid nested button issues */}
-      {pinModalOpen && typeof document !== 'undefined' && createPortal(
+      {/* Admin PIN modal — portalled to body, client-only */}
+      {isMounted && pinModalOpen && createPortal(
         <AdminPinModal
           onSuccess={() => { setIsAdmin(true); setPinModalOpen(false) }}
           onClose={() => setPinModalOpen(false)}
@@ -672,8 +675,8 @@ export default function HeroCarousel() {
         document.body
       )}
 
-      {/* Editor panel — portalled to body */}
-      {editorOpen && typeof document !== 'undefined' && createPortal(
+      {/* Editor panel — portalled to body, client-only */}
+      {isMounted && editorOpen && createPortal(
         <EditorPanel
           slides={slides}
           onClose={() => setEditorOpen(false)}
