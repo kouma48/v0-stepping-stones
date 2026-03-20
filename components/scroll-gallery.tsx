@@ -211,7 +211,7 @@ export default function ScrollGallery() {
 
   return (
     // Tall section — scroll distance determines animation progress
-    <div ref={sectionRef} className="relative" style={{ height: '400vh' }}>
+    <div ref={sectionRef} className="relative" style={{ height: '400vh', position: 'relative' }}>
       {/* Sticky viewport-filling container */}
       <div
         ref={stickyRef}

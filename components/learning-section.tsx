@@ -6,12 +6,12 @@ import { ArrowRight } from 'lucide-react'
 
 const STAGES = [
   {
-    id: 'preprep',
-    label: 'Pre-Prep',
+    id: 'earlyyears',
+    label: 'Early Years - Kindergarten',
     ages: 'Ages 3–6',
-    image: '/images/learning-preprep.jpg',
-    alt: 'Young children doing hands-on outdoor learning',
-    href: '#pre-prep',
+    image: '/images/learning-earlyyears.jpg',
+    alt: 'Kindergarten children playing on colorful playground equipment',
+    href: '#early-years',
   },
   {
     id: 'prep',
@@ -98,7 +98,7 @@ export default function LearningSection() {
                 {/* Label row — no border */}
                 <div className="flex items-center justify-between pt-5">
                   <div>
-                    <span className="font-serif text-xl text-school-heading block leading-tight">
+                    <span className="font-serif text-[1.1rem] text-school-heading block leading-tight">
                       {stage.label}
                     </span>
                     <span className="font-sans text-sm text-school-subtle">
