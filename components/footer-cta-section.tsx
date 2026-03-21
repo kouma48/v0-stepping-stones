@@ -32,7 +32,7 @@ export default function FooterCtaSection() {
             width={140}
             height={140}
             className="drop-shadow-lg"
-            style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
+            style={{ width: 'auto', height: 'auto', maxWidth: '140px', filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
           />
         </div>
 
