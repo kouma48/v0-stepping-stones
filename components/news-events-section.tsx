@@ -74,7 +74,7 @@ export default function NewsEventsSection() {
     >
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
         {/* Three red stars decoration */}
-        <div className="flex justify-center gap-6 mb-12">
+        <div className="flex justify-center gap-6 mb-8">
           {[1, 2, 3].map((i) => (
             <svg
               key={i}
@@ -91,6 +91,11 @@ export default function NewsEventsSection() {
             </svg>
           ))}
         </div>
+
+        {/* Section heading */}
+        <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-white text-center mb-16 leading-tight">
+          What's On & What's New
+        </h2>
 
         <div className="grid lg:grid-cols-[1fr_500px] gap-12 lg:gap-16 items-start">
           {/* Left: Featured News Carousel */}
@@ -137,14 +142,16 @@ export default function NewsEventsSection() {
                     <h3 className="font-serif text-3xl md:text-4xl text-white">{article.title}</h3>
                   </div>
 
-                  {/* Hover overlay - full red card with content */}
+                  {/* Hover overlay - darker red with vignette */}
                   <div
                     className={`absolute inset-0 flex flex-col justify-center px-10 md:px-16 py-12 transition-all duration-500 ${
                       hoveredSlide === index
                         ? 'opacity-100 translate-y-0'
                         : 'opacity-0 translate-y-8 pointer-events-none'
                     }`}
-                    style={{ background: 'rgba(193, 31, 30, 0.95)' }}
+                    style={{ 
+                      background: 'linear-gradient(135deg, rgba(153, 25, 24, 0.96) 0%, rgba(193, 31, 30, 0.96) 100%)'
+                    }}
                   >
                     <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight">
                       {article.title}
@@ -181,20 +188,40 @@ export default function NewsEventsSection() {
               </button>
             </div>
 
-            {/* Carousel dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              {FEATURED_NEWS.map((_, index) => (
+            {/* Carousel dots and arrows */}
+            <div className="flex justify-between items-center mt-6">
+              <div className="flex gap-2">
+                {FEATURED_NEWS.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === currentSlide
+                        ? 'bg-white w-8'
+                        : 'bg-white/30 hover:bg-white/50'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Arrow navigation */}
+              <div className="flex gap-3">
                 <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentSlide
-                      ? 'bg-white w-8'
-                      : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
+                  onClick={prevSlide}
+                  className="w-10 h-10 flex items-center justify-center border border-white/30 hover:bg-white/10 rounded-sm transition-colors"
+                  aria-label="Previous article"
+                >
+                  <ChevronLeft className="w-5 h-5 text-white/80" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="w-10 h-10 flex items-center justify-center border border-white/30 hover:bg-white/10 rounded-sm transition-colors"
+                  aria-label="Next article"
+                >
+                  <ChevronRight className="w-5 h-5 text-white/80" />
+                </button>
+              </div>
             </div>
           </div>
 
