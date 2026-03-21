@@ -2,235 +2,308 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { ArrowRight, Shield, Music, Heart, Globe, HandHeart, Play } from 'lucide-react'
+import { ArrowRight, Play } from 'lucide-react'
 
 interface TabContent {
   id: string
   label: string
-  icon: typeof Shield
   eyebrow: string
   title: string
   boldIntro: string
   description: string
   ctaText: string
   ctaHref: string
-  mainImage: string
-  insetImage: string
-  mainImageAlt: string
-  insetImageAlt: string
+  image: string
+  imageAlt: string
 }
 
 const TABS: TabContent[] = [
   {
     id: 'athletics',
     label: 'Sports & Athletics',
-    icon: Shield,
     eyebrow: 'SPORTS & ATHLETICS',
     title: 'Champions in Body and Spirit',
     boldIntro: 'Excellence starts on the field.',
     description:
-      "For Stepping Stones School's athletes, adopting the discipline of sport builds resilience, teamwork, and lifelong character.",
-    ctaText: 'Explore our sports programmes',
+      'Through competitive sport, Stepping Stones students build resilience, teamwork, and the lifelong discipline that defines great character.',
+    ctaText: 'View Programmes',
     ctaHref: '#sports',
-    mainImage: '/images/beyond-athletics-main.jpg',
-    insetImage: '/images/beyond-athletics-inset.jpg',
-    mainImageAlt: 'Students playing basketball',
-    insetImageAlt: 'Student running on track',
+    image: '/images/beyond-athletics-main.jpg',
+    imageAlt: 'Students competing in athletics',
   },
   {
     id: 'arts',
     label: 'Performing Arts',
-    icon: Music,
     eyebrow: 'PERFORMING ARTS',
     title: 'Creative Minds, Bold Voices',
     boldIntro: 'Artistry begins with courage.',
     description:
-      "Through music, drama, and dance, Stepping Stones students discover their unique creative voice and learn the power of passionate expression.",
-    ctaText: 'Discover our arts programmes',
+      'Through music, drama, and dance, Stepping Stones students discover their unique creative voice and learn the power of passionate self-expression.',
+    ctaText: 'View Programmes',
     ctaHref: '#arts',
-    mainImage: '/images/beyond-arts-main.jpg',
-    insetImage: '/images/beyond-arts-inset.jpg',
-    mainImageAlt: 'Dance performance on stage',
-    insetImageAlt: 'Student playing violin',
+    image: '/images/beyond-arts-main.jpg',
+    imageAlt: 'Students performing on stage',
   },
   {
     id: 'pastoral',
     label: 'Pastoral Care',
-    icon: Heart,
     eyebrow: 'PASTORAL CARE',
     title: 'Principled Hearts, Guided Growth',
     boldIntro: 'Character is cultivated with care.',
     description:
-      "For Stepping Stones School's pastoral team, nurturing emotional well-being and moral character ensures every child feels deeply valued and supported.",
-    ctaText: 'Learn about our care approach',
+      'Our pastoral team nurtures emotional well-being and moral character, ensuring every child feels deeply valued, safe, and supported throughout their journey.',
+    ctaText: 'View Programmes',
     ctaHref: '#pastoral',
-    mainImage: '/images/beyond-pastoral-main.jpg',
-    insetImage: '/images/beyond-pastoral-inset.jpg',
-    mainImageAlt: 'Teacher mentoring student',
-    insetImageAlt: 'Students laughing together',
+    image: '/images/beyond-pastoral-main.jpg',
+    imageAlt: 'Teacher mentoring a student',
   },
   {
     id: 'development',
     label: 'Student Development',
-    icon: Globe,
     eyebrow: 'STUDENT DEVELOPMENT',
     title: 'Leaders for Tomorrow',
     boldIntro: 'Change begins with vision.',
     description:
-      "Through leadership clubs, life skills training, and global engagement, Stepping Stones equips students with the tools to make a profound impact in the world.",
-    ctaText: 'View development programmes',
+      'Through leadership clubs, life skills training, and global engagement, Stepping Stones equips students with the tools to make a profound impact in the world.',
+    ctaText: 'View Programmes',
     ctaHref: '#development',
-    mainImage: '/images/beyond-development-main.jpg',
-    insetImage: '/images/beyond-development-inset.jpg',
-    mainImageAlt: 'Students in cultural attire',
-    insetImageAlt: 'Student at Model UN podium',
+    image: '/images/beyond-development-main.jpg',
+    imageAlt: 'Students in cultural event',
   },
   {
     id: 'service',
     label: 'Community Service',
-    icon: HandHeart,
     eyebrow: 'COMMUNITY SERVICE',
     title: 'Compassion in Action',
     boldIntro: 'Service shapes leaders.',
     description:
-      "For Stepping Stones students, putting empathy into action through community service builds character and creates lasting positive impact.",
-    ctaText: 'See our community impact',
+      'Putting empathy into action, our students engage in meaningful community service that builds character and creates lasting positive impact beyond the school gates.',
+    ctaText: 'View Programmes',
     ctaHref: '#service',
-    mainImage: '/images/beyond-service-main.jpg',
-    insetImage: '/images/beyond-service-inset.jpg',
-    mainImageAlt: 'Students planting trees',
-    insetImageAlt: 'Student at community drive',
+    image: '/images/beyond-service-main.jpg',
+    imageAlt: 'Students engaged in community service',
   },
 ]
 
 export default function BeyondClassroomSection() {
   const [activeTab, setActiveTab] = useState('athletics')
-  const activeContent = TABS.find((tab) => tab.id === activeTab) || TABS[0]
-  const Icon = activeContent.icon
+  const [animating, setAnimating] = useState(false)
+
+  const activeContent = TABS.find((t) => t.id === activeTab) || TABS[0]
+
+  function handleTabChange(id: string) {
+    if (id === activeTab) return
+    setAnimating(true)
+    setTimeout(() => {
+      setActiveTab(id)
+      setAnimating(false)
+    }, 320)
+  }
 
   return (
-    <section className="relative py-24 md:py-32 bg-white overflow-hidden">
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16">
-        {/* Header */}
-        <div className="text-center mb-16 md:mb-20">
-          <h2 className="font-serif text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.1] tracking-tight text-school-heading text-balance">
-            A{' '}
-            <em className="text-accent-red not-italic font-serif">
-              well-balanced
-            </em>{' '}
-            experience
-          </h2>
-        </div>
+    <section className="bg-white py-20 md:py-28 overflow-hidden">
+      {/* Header */}
+      <div className="text-center mb-14 px-6">
+        <p
+          className="font-sans text-[11px] font-semibold tracking-[0.3em] uppercase mb-5"
+          style={{ color: 'var(--color-accent-red)' }}
+        >
+          Life at Stepping Stones
+        </p>
+        <h2
+          className="font-serif text-[clamp(2.8rem,6vw,5rem)] leading-[1.08] tracking-tight text-balance"
+          style={{ color: 'var(--color-school-heading)' }}
+        >
+          A{' '}
+          <em
+            className="not-italic font-serif italic"
+            style={{ color: 'var(--color-accent-red)' }}
+          >
+            well-balanced
+          </em>{' '}
+          experience
+        </h2>
+      </div>
 
-        {/* Split Layout */}
-        <div className="grid lg:grid-cols-[1fr_550px] gap-0 items-stretch min-h-[700px]">
-          {/* Left: Image Area */}
-          <div className="relative bg-neutral-900 overflow-hidden">
-            {/* Main Background Image */}
+      {/* Main Split Panel */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <div
+          className="grid lg:grid-cols-[1fr_420px] overflow-hidden"
+          style={{ minHeight: '520px' }}
+        >
+          {/* Left: Single Image */}
+          <div className="relative bg-neutral-900 overflow-hidden" style={{ minHeight: '460px' }}>
             <div
-              key={`main-${activeContent.id}`}
-              className="absolute inset-0 animate-in fade-in duration-1000"
+              key={activeContent.id}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                opacity: animating ? 0 : 1,
+                transform: animating ? 'scale(1.03)' : 'scale(1)',
+                transition: 'opacity 0.4s ease, transform 0.7s ease',
+              }}
             >
               <Image
-                src={activeContent.mainImage}
-                alt={activeContent.mainImageAlt}
+                src={activeContent.image}
+                alt={activeContent.imageAlt}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 60vw"
+                sizes="(max-width: 1024px) 100vw, 66vw"
               />
-              {/* Dark overlay for contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+              {/* Subtle vignette */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 50%, transparent 100%)',
+                }}
+              />
             </div>
 
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button
-                className="group flex items-center gap-4 bg-black/70 hover:bg-accent-red text-white px-8 py-4 transition-all duration-500 hover:px-10"
+            {/* Play Button */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+              <div
+                className="group flex items-center justify-center w-16 h-16 rounded-full cursor-pointer"
+                role="button"
+                tabIndex={0}
                 aria-label="Play video"
+                style={{
+                  background: 'rgba(255,255,255,0.18)',
+                  border: '2px solid rgba(255,255,255,0.7)',
+                  backdropFilter: 'blur(4px)',
+                  transition: 'background 0.3s',
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = 'rgba(193,31,30,0.85)')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = 'rgba(255,255,255,0.18)')
+                }
               >
-                <span className="font-sans text-sm font-medium tracking-[0.2em] uppercase">
-                  Play Full Video
-                </span>
-                <div className="flex items-center justify-center w-12 h-12 rounded-full border-2 border-white group-hover:border-white/90 transition-all">
-                  <Play size={20} fill="white" className="ml-0.5" />
-                </div>
-              </button>
-            </div>
-
-            {/* Inset Image - Bottom Left */}
-            <div
-              key={`inset-${activeContent.id}`}
-              className="absolute bottom-8 left-8 w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 shadow-2xl animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300"
-            >
-              <Image
-                src={activeContent.insetImage}
-                alt={activeContent.insetImageAlt}
-                fill
-                className="object-cover"
-                sizes="256px"
-              />
+                <Play
+                  size={22}
+                  fill="white"
+                  stroke="none"
+                  style={{ marginLeft: '3px' }}
+                />
+              </div>
+              <span
+                className="font-sans font-semibold tracking-[0.22em] uppercase text-white"
+                style={{ fontSize: '11px', letterSpacing: '0.22em' }}
+              >
+                Watch Full Film
+              </span>
             </div>
           </div>
 
-          {/* Right: Content Card */}
+          {/* Right: Red Content Card */}
           <div
-            key={`content-${activeContent.id}`}
-            className="bg-accent-red text-white p-10 md:p-12 lg:p-16 flex flex-col justify-center animate-in fade-in slide-in-from-right-8 duration-1000"
+            key={`card-${activeContent.id}`}
+            className="flex flex-col justify-between p-10 md:p-12 lg:p-14"
+            style={{
+              background: 'var(--color-accent-red)',
+              opacity: animating ? 0 : 1,
+              transform: animating ? 'translateX(12px)' : 'translateX(0)',
+              transition: 'opacity 0.4s ease, transform 0.4s ease',
+            }}
           >
-            {/* Eyebrow */}
-            <div className="mb-6">
-              <span className="font-sans text-xs font-bold tracking-[0.25em] uppercase text-white/90">
-                {activeContent.eyebrow}
-              </span>
-              <div className="w-12 h-[2px] bg-white mt-4" />
+            <div>
+              {/* Eyebrow */}
+              <div className="mb-7">
+                <span
+                  className="font-sans font-semibold text-white/80 tracking-[0.22em] uppercase block mb-3"
+                  style={{ fontSize: '10px' }}
+                >
+                  {activeContent.eyebrow}
+                </span>
+                <div className="w-10 h-[2px] bg-white/50" />
+              </div>
+
+              {/* Title */}
+              <h3
+                className="font-serif text-white leading-[1.15] mb-7"
+                style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)' }}
+              >
+                {activeContent.title}
+              </h3>
+
+              {/* Bold intro */}
+              <p
+                className="font-sans font-bold text-white leading-snug mb-4"
+                style={{ fontSize: '0.95rem', letterSpacing: '0.01em' }}
+              >
+                {activeContent.boldIntro.toUpperCase()}
+              </p>
+
+              {/* Body */}
+              <p
+                className="font-sans text-white/90 leading-relaxed"
+                style={{ fontSize: '0.97rem' }}
+              >
+                {activeContent.description}
+              </p>
             </div>
 
-            {/* Title */}
-            <h3 className="font-serif text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.15] mb-8 tracking-tight">
-              {activeContent.title}
-            </h3>
-
-            {/* Bold Intro */}
-            <p className="font-sans text-lg md:text-xl font-semibold leading-relaxed mb-4">
-              {activeContent.boldIntro}
-            </p>
-
-            {/* Description */}
-            <p className="font-sans text-base md:text-lg leading-relaxed mb-10 text-white/95">
-              {activeContent.description}
-            </p>
-
-            {/* CTA Link */}
+            {/* CTA */}
             <a
               href={activeContent.ctaHref}
-              className="inline-flex items-center gap-3 font-sans text-xs font-bold tracking-[0.2em] uppercase hover:gap-4 transition-all duration-300 group"
+              className="inline-flex items-center gap-3 text-white font-sans font-bold tracking-[0.18em] uppercase mt-10 group"
+              style={{ fontSize: '11px', borderTop: '1px solid rgba(255,255,255,0.3)', paddingTop: '1.5rem' }}
             >
               <span>{activeContent.ctaText}</span>
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight
+                size={16}
+                style={{ transition: 'transform 0.3s' }}
+                className="group-hover:translate-x-1"
+              />
             </a>
           </div>
         </div>
 
-        {/* Bottom Tab Navigation */}
-        <div className="mt-0 bg-white border-t border-school-divider">
-          <div className="flex flex-wrap justify-center lg:justify-between items-center gap-6 md:gap-8 lg:gap-12 py-6 px-6 md:px-8">
-            {TABS.map((tab) => (
-              <button
+        {/* Tab Bar */}
+        <div
+          className="flex items-stretch"
+          style={{ borderTop: '1px solid #e5e5e5' }}
+        >
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab.id
+            return (
+              <div
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`font-sans text-xs md:text-sm font-bold tracking-[0.15em] uppercase transition-all duration-300 relative ${
-                  activeTab === tab.id
-                    ? 'text-accent-red'
-                    : 'text-school-heading hover:text-accent-red'
-                }`}
+                role="button"
+                tabIndex={0}
+                onClick={() => handleTabChange(tab.id)}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)}
+                className="flex-1 flex items-center justify-center py-6 cursor-pointer relative transition-colors duration-300"
+                style={{
+                  borderRight: '1px solid #e5e5e5',
+                  background: isActive ? '#fafafa' : 'white',
+                }}
               >
-                {tab.label}
-                {activeTab === tab.id && (
-                  <span className="absolute -bottom-6 left-0 right-0 h-1 bg-accent-red" />
+                <span
+                  className="font-sans font-semibold tracking-[0.16em] uppercase text-center leading-tight"
+                  style={{
+                    fontSize: '10.5px',
+                    color: isActive
+                      ? 'var(--color-accent-red)'
+                      : 'var(--color-school-heading)',
+                    transition: 'color 0.3s',
+                  }}
+                >
+                  {tab.label}
+                </span>
+                {isActive && (
+                  <div
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px]"
+                    style={{
+                      background: 'var(--color-accent-red)',
+                      width: '2.5rem',
+                    }}
+                  />
                 )}
-              </button>
-            ))}
-          </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
