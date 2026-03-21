@@ -123,6 +123,12 @@ export default function BeyondClassroomSection() {
           </em>{' '}
           experience
         </h2>
+        <p
+          className="font-serif italic text-[clamp(1rem,2vw,1.25rem)] mt-4 text-balance"
+          style={{ color: 'var(--color-school-heading)', opacity: 0.65 }}
+        >
+          Where every child is known, valued and inspired
+        </p>
       </div>
 
       {/* Main Split Panel */}
