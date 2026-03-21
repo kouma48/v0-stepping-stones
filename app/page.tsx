@@ -4,6 +4,7 @@ import ScrollGallery from '@/components/scroll-gallery'
 import LearningSection from '@/components/learning-section'
 import BeyondClassroomSection from '@/components/beyond-classroom-section'
 import NewsEventsSection from '@/components/news-events-section'
+import FooterCtaSection from '@/components/footer-cta-section'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <LearningSection />
       <BeyondClassroomSection />
       <NewsEventsSection />
+      <FooterCtaSection />
     </main>
   )
 }
