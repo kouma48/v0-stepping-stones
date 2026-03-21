@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import SiteHeader from '@/components/site-header'
 import './globals.css'
 
 const montserrat = Montserrat({
@@ -42,7 +41,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${montserrat.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
-        <SiteHeader />
         {children}
         <Analytics />
       </body>
