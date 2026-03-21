@@ -3,6 +3,7 @@ import SchoolIntroSection from '@/components/school-intro-section'
 import ScrollGallery from '@/components/scroll-gallery'
 import LearningSection from '@/components/learning-section'
 import BeyondClassroomSection from '@/components/beyond-classroom-section'
+import NewsEventsSection from '@/components/news-events-section'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <ScrollGallery />
       <LearningSection />
       <BeyondClassroomSection />
+      <NewsEventsSection />
     </main>
   )
 }
