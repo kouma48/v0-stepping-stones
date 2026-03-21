@@ -131,6 +131,7 @@ export default function HeroCarousel() {
                 alt={s.heading}
                 fill
                 priority={i === 0}
+                loading={i === 0 ? 'eager' : 'lazy'}
                 className="object-cover"
                 sizes="100vw"
               />
