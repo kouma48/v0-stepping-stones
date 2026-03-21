@@ -101,7 +101,7 @@ export default function BeyondClassroomSection() {
   }
 
   return (
-    <section className="bg-white py-20 md:py-28 overflow-hidden">
+    <section className="py-20 md:py-28 overflow-hidden" style={{ background: '#f8f9fa' }}>
       {/* Header */}
       <div className="text-center mb-14 px-6">
         <p
