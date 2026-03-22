@@ -14,11 +14,11 @@ export default function FooterCtaSection() {
         priority={false}
       />
 
-      {/* Light overlay for text readability */}
+      {/* Dark overlay for text readability */}
       <div 
         className="absolute inset-0" 
         style={{ 
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.4) 100%)' 
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.6) 100%)' 
         }} 
       />
 
@@ -37,8 +37,7 @@ export default function FooterCtaSection() {
 
         {/* Heading */}
         <h2 
-          className="font-serif text-[clamp(2rem,5vw,3.5rem)] leading-[1.15] text-balance mb-12"
-          style={{ color: 'var(--color-school-heading)' }}
+          className="font-serif text-[clamp(2rem,5vw,3.5rem)] leading-[1.15] text-balance mb-12 text-white"
         >
           We would love to discuss your place at Stepping Stones.
         </h2>
