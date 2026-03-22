@@ -141,15 +141,12 @@ export default function ScrollGallery() {
           <ChevronRight className="w-6 h-6 text-white" />
         </button>
 
-        {/* Dot indicators - centered at bottom with admin trigger */}
-        <div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3 items-center"
-          onClick={handleAdminTrigger}
-        >
+        {/* Dot indicators */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3 items-center">
           {images.map((_, index) => (
             <button
               key={index}
-              onClick={(e) => { e.stopPropagation(); setCurrentIndex(index) }}
+              onClick={() => setCurrentIndex(index)}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                 index === currentIndex
                   ? 'bg-white scale-125'
@@ -158,21 +155,27 @@ export default function ScrollGallery() {
               aria-label={`Go to image ${index + 1}`}
             />
           ))}
-          
-          {/* Admin gear - only visible after PIN unlock */}
-          {isAdmin && (
-            <>
-              <span className="w-px h-4 bg-white/40 mx-1" aria-hidden="true" />
-              <button
-                onClick={(e) => { e.stopPropagation(); setEditorOpen(true) }}
-                aria-label="Edit gallery"
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-white/50 text-white hover:bg-white/15 transition-colors"
-              >
-                <Settings size={14} />
-              </button>
-            </>
-          )}
         </div>
+
+        {/* Admin trigger zone - triple click the image counter to unlock */}
+        <button
+          onClick={handleAdminTrigger}
+          className="absolute bottom-2 right-4 md:right-8 z-20 font-sans text-xs text-white/40 hover:text-white/60 transition-colors px-2 py-1"
+          aria-label="Image counter"
+        >
+          {currentIndex + 1} / {images.length}
+        </button>
+
+        {/* Admin gear - visible after PIN unlock */}
+        {isAdmin && (
+          <button
+            onClick={() => setEditorOpen(true)}
+            aria-label="Edit gallery"
+            className="absolute top-4 right-4 md:top-6 md:right-8 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-colors"
+          >
+            <Settings size={16} />
+          </button>
+        )}
       </section>
 
       {/* Editor portals */}
