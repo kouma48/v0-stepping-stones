@@ -55,7 +55,7 @@ export default function ScrollGallery() {
 
   return (
     <section className="relative h-[70vh] md:h-[85vh] overflow-hidden">
-      {/* Images with dark overlay */}
+      {/* Images */}
       {GALLERY_IMAGES.map((image, index) => (
         <div
           key={image.src}
@@ -72,12 +72,6 @@ export default function ScrollGallery() {
             priority={index === 0}
             crossOrigin="anonymous"
           />
-          {/* Dark overlay with light text */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end justify-center pb-16 md:pb-24">
-            <p className="text-white text-center font-serif text-lg md:text-2xl max-w-2xl px-6 text-pretty">
-              {image.alt}
-            </p>
-          </div>
         </div>
       ))}
 
