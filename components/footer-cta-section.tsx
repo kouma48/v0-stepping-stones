@@ -11,7 +11,7 @@ export default function FooterCtaSection() {
         fill
         className="object-cover"
         sizes="100vw"
-        priority={false}
+        priority
       />
 
       {/* Dark overlay for text readability */}
@@ -25,13 +25,14 @@ export default function FooterCtaSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">
         {/* School logo */}
-        <div className="mb-10 relative w-[140px] h-[140px]">
+        <div className="mb-10">
           <Image
             src="/images/stepping-stones-logo-white.png"
             alt="Stepping Stones School Logo"
-            fill
-            className="object-contain drop-shadow-lg"
-            style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
+            width={140}
+            height={140}
+            className="drop-shadow-lg"
+            style={{ width: 'auto', height: 'auto', maxWidth: '140px', filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
           />
         </div>
 
