@@ -45,27 +45,30 @@ export default function FooterCtaSection() {
 
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
-          <Link
-            href="#inquire"
+          <a
+            href="/contact-us/"
+            target="_parent"
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >
             Inquire
-          </Link>
-          <Link
-            href="#apply"
+          </a>
+          <a
+            href="/apply-now/"
+            target="_parent"
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >
             Apply
-          </Link>
-          <Link
-            href="#tour"
+          </a>
+          <a
+            href="/book-a-visit/"
+            target="_parent"
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >
             Arrange a Tour
-          </Link>
+          </a>
         </div>
       </div>
     </section>
