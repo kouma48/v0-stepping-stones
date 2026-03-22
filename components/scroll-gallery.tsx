@@ -27,8 +27,8 @@ const GALLERY_IMAGES = [
     caption: 'Building Connections',
   },
   {
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-BTOcA4S3qa8a3WRVNhZi9lbzr0QdZw.jpeg',
-    alt: 'Cricket match on school grounds',
+    src: '/images/carousel-sports.jpg',
+    alt: 'Students playing basketball on school court',
     caption: 'Sports & Athletics',
   },
   {
