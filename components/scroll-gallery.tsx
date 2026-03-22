@@ -9,26 +9,32 @@ const GALLERY_IMAGES = [
   {
     src: '/images/campus-main.jpg',
     alt: 'Students in burgundy blazers walking across the school lawn',
+    caption: 'Our Campus Community',
+  },
+  {
+    src: '/images/campus-computer-lab.jpg',
+    alt: 'Teacher guiding students in computer lab with green uniforms',
+    caption: 'Technology & Learning',
   },
   {
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-ICuR5nH7GMCIYFdxnwCmmO7mURmZe6.jpeg',
     alt: 'Students walking across manicured school grounds',
+    caption: 'Growth & Development',
   },
   {
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-6YNMOSy3CyVNB8JnHVqfVuLb6VJfbW.png',
     alt: 'Students gathered around campfire at night',
+    caption: 'Building Connections',
   },
   {
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-BTOcA4S3qa8a3WRVNhZi9lbzr0QdZw.jpeg',
     alt: 'Cricket match on school grounds',
+    caption: 'Sports & Athletics',
   },
   {
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-dTVspKtQ5pxszbhCDF94unXM7XvV8f.jpeg',
     alt: 'Victorian school building with large trees',
-  },
-  {
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-QHVOXC5DWv2MWRPeCpWRkyJrc0U1k0.jpeg',
-    alt: 'Modern school dormitory buildings surrounded by trees',
+    caption: 'Heritage & Excellence',
   },
 ]
 
@@ -72,6 +78,13 @@ export default function ScrollGallery() {
             priority={index === 0}
             crossOrigin="anonymous"
           />
+          
+          {/* Dark overlay with light text caption */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-end justify-center pb-12">
+            <h3 className="font-serif text-2xl md:text-4xl text-white text-center leading-tight tracking-tight">
+              {image.caption}
+            </h3>
+          </div>
         </div>
       ))}
 
