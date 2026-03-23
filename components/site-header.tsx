@@ -310,45 +310,82 @@ export default function SiteHeader() {
               </button>
             </div>
 
-            {/* Main content: nav + submenu — shared hover zone */}
+            {/* Main content: nav + submenu — shared hover zone (desktop) | stacked (mobile) */}
             <div
-              className="flex flex-1 overflow-hidden"
+              className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden"
               onMouseLeave={() => setHoveredNav(null)}
             >
               {/* Primary nav column */}
               <nav
                 ref={navColumnRef}
-                className="relative flex flex-col justify-center px-8 md:px-12 py-10 w-full md:w-1/2 border-r border-gray-100"
+                className="relative flex flex-col px-8 md:px-12 py-8 md:py-10 w-full md:w-1/2 md:justify-center border-r-0 md:border-r border-gray-100"
                 aria-label="Main navigation"
               >
                 {MEGA_NAV.map((nav, i) => (
-                  <Link
-                    key={nav.label}
-                    href={nav.href}
-                    target="_parent"
-                    ref={(el) => { navItemRefs.current[i] = el }}
-                    onClick={() => setMenuOpen(false)}
-                    onMouseEnter={() => handleNavHover(i)}
-                    className="relative font-serif py-3 transition-colors duration-200"
-                    style={{
-                      fontSize: 'clamp(1.4rem, 2.5vw, 1.75rem)',
-                      color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
-                    }}
-                  >
-                    {nav.label}
-                    {/* Red underline on active */}
-                    <span
-                      className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300"
-                      style={{
-                        width: hoveredNav === i ? '100%' : '0%',
-                        background: '#c11f1e',
+                  <div key={nav.label}>
+                    <button
+                      ref={(el) => { navItemRefs.current[i] = el as any }}
+                      onClick={() => {
+                        // On mobile, toggle submenu; on desktop/with no submenu, navigate
+                        if (window.innerWidth < 768 && nav.submenu.length > 0) {
+                          setHoveredNav(hoveredNav === i ? null : i)
+                        } else {
+                          window.open(nav.href, '_parent')
+                          setMenuOpen(false)
+                        }
                       }}
-                    />
-                  </Link>
+                      onMouseEnter={() => handleNavHover(i)}
+                      className="w-full text-left relative font-serif py-3 md:py-3 transition-colors duration-200"
+                      style={{
+                        fontSize: 'clamp(1.1rem, 2.5vw, 1.75rem)',
+                        color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{nav.label}</span>
+                        {/* Mobile-only expand indicator */}
+                        {nav.submenu.length > 0 && (
+                          <span
+                            className="md:hidden text-sm transition-transform duration-200"
+                            style={{
+                              transform: hoveredNav === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                            }}
+                          >
+                            ▾
+                          </span>
+                        )}
+                      </div>
+                      {/* Red underline on active (desktop only) */}
+                      <span
+                        className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300 hidden md:block"
+                        style={{
+                          width: hoveredNav === i ? '100%' : '0%',
+                          background: '#c11f1e',
+                        }}
+                      />
+                    </button>
+
+                    {/* Mobile submenu — inline below parent item */}
+                    {nav.submenu.length > 0 && hoveredNav === i && (
+                      <div className="md:hidden pl-4 pb-2 flex flex-col gap-1">
+                        {nav.submenu.map((sub) => (
+                          <Link
+                            key={sub.label}
+                            href={sub.href}
+                            target="_parent"
+                            onClick={() => setMenuOpen(false)}
+                            className="font-sans py-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </nav>
 
-              {/* Submenu column — absolutely positioned to align with hovered item */}
+              {/* Desktop submenu column — absolutely positioned to align with hovered item */}
               <div className="hidden md:block relative w-1/2">
                 <div
                   className="absolute left-0 px-10 transition-opacity duration-200"
@@ -385,7 +422,7 @@ export default function SiteHeader() {
 
             {/* Bottom CTA bar (red) */}
             <div
-              className="flex items-stretch border-t border-gray-100"
+              className="flex flex-col md:flex-row items-stretch border-t border-gray-100"
               style={{ background: '#c11f1e' }}
             >
               {CTA_LINKS.map((link) => {
@@ -396,12 +433,12 @@ export default function SiteHeader() {
                     href={link.href}
                     target="_parent"
                     onClick={() => setMenuOpen(false)}
-                    className="flex-1 flex items-center justify-center gap-3 py-5 text-white hover:bg-white/10 transition-colors duration-200 border-r border-white/20 last:border-r-0"
+                    className="flex-1 flex items-center justify-center gap-2 md:gap-3 py-4 md:py-5 text-white hover:bg-white/10 transition-colors duration-200 border-b md:border-b-0 md:border-r border-white/20 last:border-b-0 md:last:border-r-0"
                   >
-                    <Icon size={16} strokeWidth={1.5} />
+                    <Icon size={18} strokeWidth={1.5} />
                     <span
-                      className="font-sans font-bold tracking-[0.2em] uppercase"
-                      style={{ fontSize: '10px' }}
+                      className="font-sans font-bold tracking-[0.15em] md:tracking-[0.2em] uppercase"
+                      style={{ fontSize: 'clamp(9px, 2vw, 10px)' }}
                     >
                       {link.label}
                     </span>
