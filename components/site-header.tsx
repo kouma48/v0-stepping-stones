@@ -48,18 +48,18 @@ export default function SiteHeader() {
           boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.06)' : 'none',
         }}
       >
-        <div className="max-w-full px-6 md:px-12">
-          <div className="relative flex items-center justify-between" style={{ height: scrolled ? 80 : 140, transition: 'height 0.5s ease' }}>
+        <div className="max-w-[1400px] mx-auto px-8 md:px-14">
+          <div className="relative flex items-center justify-center" style={{ height: scrolled ? 80 : 140, transition: 'height 0.5s ease' }}>
 
             {/* LEFT — Inquire / Visit / Apply */}
-            <div className="flex items-center gap-6 md:gap-8 flex-1" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
+            <div className="flex items-center gap-7 w-[38%]" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
               {CTA_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
                   className="relative font-sans font-semibold tracking-[0.22em] uppercase transition-colors duration-300 group hidden md:block"
                   style={{
-                    fontSize: '9.5px',
+                    fontSize: '10px',
                     color: isLight ? 'var(--color-school-heading)' : 'rgba(255,255,255,0.92)',
                   }}
                 >
@@ -72,25 +72,21 @@ export default function SiteHeader() {
               ))}
             </div>
 
-            {/* CENTRE — Logo (positioned with top spacing) */}
+            {/* CENTRE — Logo (absolutely centred) */}
             <Link
               href="/"
-              className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center"
-              style={{ 
-                top: scrolled ? '50%' : '20px', 
-                transform: scrolled ? 'translateX(-50%) translateY(-50%)' : 'translateX(-50%)',
-                transition: 'top 0.5s ease, transform 0.5s ease',
-              }}
+              className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center"
+              style={{ transform: 'translateX(-50%)', paddingTop: scrolled ? '0px' : '12px' }}
               aria-label="Stepping Stones School — home"
             >
               {/* White logo: shown on transparent header */}
               <div
-                className="transition-opacity duration-500"
+                className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
                 style={{ opacity: isLight ? 0 : 1 }}
               >
                 <div 
                   className="relative transition-all duration-500" 
-                  style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
+                  style={{ width: scrolled ? 90 : 180, height: scrolled ? 90 : 180 }}
                 >
                   <Image
                     src="/images/logo-white.png"
@@ -103,12 +99,12 @@ export default function SiteHeader() {
               </div>
               {/* Colour logo: shown on scrolled white header */}
               <div
-                className="absolute transition-opacity duration-500"
+                className="transition-opacity duration-500"
                 style={{ opacity: isLight ? 1 : 0 }}
               >
                 <div 
                   className="relative transition-all duration-500" 
-                  style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
+                  style={{ width: scrolled ? 90 : 180, height: scrolled ? 90 : 180 }}
                 >
                   <Image
                     src="/images/logo-colour.png"
@@ -122,11 +118,11 @@ export default function SiteHeader() {
             </Link>
 
             {/* RIGHT — Menu label + Hamburger */}
-            <div className="flex items-center justify-end gap-3 flex-1" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
+            <div className="flex items-center justify-end gap-3 w-[38%] ml-auto" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
               <span
                 className="hidden md:block font-sans font-semibold tracking-[0.22em] uppercase transition-colors duration-300"
                 style={{
-                  fontSize: '9.5px',
+                  fontSize: '10px',
                   color: isLight ? 'var(--color-school-heading)' : 'rgba(255,255,255,0.92)',
                 }}
               >
