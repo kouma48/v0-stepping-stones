@@ -8,34 +8,34 @@ const STAGES = [
   {
     id: 'earlyyears',
     label: 'Early Years - Kindergarten',
-    ages: 'Ages 3–6',
+    description: 'Where curiosity and character begin',
     image: '/images/learning-earlyyears.jpg',
-    alt: 'Kindergarten children playing on colorful playground equipment',
+    alt: 'Kindergarten children playing and learning together',
     href: '#early-years',
+  },
+  {
+    id: 'lowerprimary',
+    label: 'Lower Primary',
+    description: 'Laying the foundation for lifelong learning',
+    image: '/images/learning-lowerprimary.jpg',
+    alt: 'Lower primary students engaged in classroom learning',
+    href: '#lower-primary',
   },
   {
     id: 'upperprimary',
     label: 'Upper Primary',
-    ages: 'Ages 7–11',
+    description: 'Growing confident, creative thinkers',
     image: '/images/learning-upperprimary.jpg',
-    alt: 'Teacher helping upper primary students with art activity',
+    alt: 'Upper primary students working on creative projects',
     href: '#upper-primary',
   },
   {
     id: 'juniorsecondary',
     label: 'Junior Secondary',
-    ages: 'Ages 11–14',
-    image: '/images/learning-seniorsecondary.jpg',
-    alt: 'Students playing basketball on school court',
-    href: '#junior-secondary',
-  },
-  {
-    id: 'seniorsecondary',
-    label: 'Senior Secondary',
-    ages: 'Ages 15–18',
+    description: 'Shaping ethical leaders for tomorrow',
     image: '/images/learning-juniorsecondary.jpg',
-    alt: 'Junior secondary student conducting chemistry experiment',
-    href: '#senior-secondary',
+    alt: 'Junior secondary students engaged in collaborative learning',
+    href: '#junior-secondary',
   },
 ]
 
@@ -101,8 +101,8 @@ export default function LearningSection() {
                     <span className="font-serif text-[1.1rem] text-school-heading block leading-tight">
                       {stage.label}
                     </span>
-                    <span className="font-sans text-sm text-school-subtle">
-                      ({stage.ages})
+                    <span className="font-serif italic text-sm text-school-subtle">
+                      {stage.description}
                     </span>
                   </div>
 
