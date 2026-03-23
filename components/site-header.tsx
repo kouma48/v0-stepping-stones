@@ -72,10 +72,15 @@ export default function SiteHeader() {
               ))}
             </div>
 
-            {/* CENTRE — Logo (absolutely centred with dynamic sizing) */}
+            {/* CENTRE — Logo (positioned with top spacing) */}
             <Link
               href="/"
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
+              className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center"
+              style={{ 
+                top: scrolled ? '50%' : '20px', 
+                transform: scrolled ? 'translateX(-50%) translateY(-50%)' : 'translateX(-50%)',
+                transition: 'top 0.5s ease, transform 0.5s ease',
+              }}
               aria-label="Stepping Stones School — home"
             >
               {/* White logo: shown on transparent header */}
