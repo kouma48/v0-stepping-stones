@@ -76,7 +76,7 @@ export default function SchoolIntroSection() {
         {/* Subtitle */}
         <Reveal delay={80}>
           <p className="text-[0.65rem] tracking-[0.3em] uppercase text-school-subtle font-sans font-semibold mb-3">
-            Day School from Age 3–18&nbsp;&nbsp;•&nbsp;&nbsp;Boarding from 11–18
+            A Christ-Centred School&nbsp;&nbsp;·&nbsp;&nbsp;Kitengela, Kenya&nbsp;&nbsp;·&nbsp;&nbsp;Est. 2009
           </p>
         </Reveal>
 
