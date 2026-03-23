@@ -53,29 +53,23 @@ export default function SiteHeader() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="relative flex items-center justify-between" style={{ height: 80 }}>
 
-            {/* LEFT — CTA links (desktop only) */}
-            <nav className="hidden md:flex items-center gap-8 w-1/3" aria-label="Quick actions">
-              {CTA_LINKS.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="relative font-sans font-semibold tracking-[0.2em] uppercase transition-colors duration-300 group"
-                  style={{
-                    fontSize: '10.5px',
-                    color: isLight ? 'var(--color-school-heading)' : '#ffffff',
-                  }}
-                >
-                  {link.label}
-                  <span
-                    className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 group-hover:w-full transition-all duration-300"
-                    style={{ background: 'var(--color-accent-red)' }}
-                  />
-                </Link>
-              ))}
-            </nav>
-
-            {/* Mobile left spacer */}
-            <div className="md:hidden w-10" />
+            {/* LEFT — Sign In */}
+            <div className="flex items-center w-1/3">
+              <Link
+                href="#sign-in"
+                className="relative font-sans font-semibold tracking-[0.2em] uppercase transition-colors duration-300 group"
+                style={{
+                  fontSize: '10.5px',
+                  color: isLight ? 'var(--color-school-heading)' : '#ffffff',
+                }}
+              >
+                Sign In
+                <span
+                  className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 group-hover:w-full transition-all duration-300"
+                  style={{ background: 'var(--color-accent-red)' }}
+                />
+              </Link>
+            </div>
 
             {/* CENTRE — Logo */}
             <Link
@@ -94,14 +88,36 @@ export default function SiteHeader() {
                   className="object-contain transition-all duration-500"
                   priority
                   style={{
-                    filter: isLight ? 'none' : 'brightness(0) invert(1)',
+                    filter: scrolled ? 'brightness(0)' : 'brightness(0) invert(1)',
                   }}
                 />
               </div>
             </Link>
 
-            {/* RIGHT — Hamburger */}
-            <div className="flex items-center justify-end w-1/3 md:w-auto">
+            {/* RIGHT — CTA links + Hamburger */}
+            <div className="flex items-center justify-end w-1/3 gap-8">
+              {/* CTA links (desktop only) */}
+              <nav className="hidden md:flex items-center gap-6" aria-label="Quick actions">
+                {CTA_LINKS.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="relative font-sans font-semibold tracking-[0.2em] uppercase transition-colors duration-300 group"
+                    style={{
+                      fontSize: '10.5px',
+                      color: isLight ? 'var(--color-school-heading)' : '#ffffff',
+                    }}
+                  >
+                    {link.label}
+                    <span
+                      className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 group-hover:w-full transition-all duration-300"
+                      style={{ background: 'var(--color-accent-red)' }}
+                    />
+                  </Link>
+                ))}
+              </nav>
+
+              {/* Hamburger */}
               <button
                 onClick={() => setMenuOpen(true)}
                 aria-label="Open navigation menu"
