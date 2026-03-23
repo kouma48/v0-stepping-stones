@@ -148,8 +148,10 @@ export default function HeroCarousel() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
             )}
-            {/* Overlay */}
+            {/* Bottom overlay — darkens lower portion for text legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            {/* Top overlay — darkens upper portion for header/logo legibility */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-transparent" />
           </div>
         ))}
 
