@@ -155,13 +155,13 @@ export default function HeroCarousel() {
           </div>
         ))}
 
-        {/* Centered text content with downward arrow */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-8">
+        {/* Centered text positioned toward bottom with downward arrow */}
+        <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-20 md:pb-32 z-10 px-8">
           <h1 className="font-serif text-white text-[clamp(3rem,8vw,5.5rem)] leading-[1.1] tracking-tight text-center text-balance">
             Impact Starts Here
           </h1>
           {/* Downward arrow animation */}
-          <div className="mt-12 md:mt-16 animate-bounce">
+          <div className="mt-8 md:mt-12 animate-bounce">
             <svg
               width="32"
               height="32"
