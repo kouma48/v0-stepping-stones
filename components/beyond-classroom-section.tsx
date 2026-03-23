@@ -161,7 +161,53 @@ export default function BeyondClassroomSection() {
 
       {/* Main Split Panel */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        {/* Tab Bar - Moved to Top */}
         <div
+          className="flex items-stretch"
+          style={{ borderBottom: '1px solid #e5e5e5' }}
+        >
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id
+            return (
+              <div
+                key={tab.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => handleTabChange(tab.id)}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)}
+                className="flex-1 flex items-center justify-center py-6 cursor-pointer relative transition-colors duration-300"
+                style={{
+                  borderRight: '1px solid #e5e5e5',
+                  background: isActive ? '#fafafa' : 'white',
+                }}
+              >
+                <span
+                  className="font-sans font-semibold tracking-[0.16em] uppercase text-center leading-tight"
+                  style={{
+                    fontSize: '10.5px',
+                    color: isActive
+                      ? 'var(--color-accent-red)'
+                      : 'var(--color-school-heading)',
+                    transition: 'color 0.3s',
+                  }}
+                >
+                  {tab.label}
+                </span>
+                {isActive && (
+                  <div
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px]"
+                    style={{
+                      background: 'var(--color-accent-red)',
+                      width: '2.5rem',
+                    }}
+                  />
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Content Grid */}
           className="grid lg:grid-cols-[1fr_420px] overflow-hidden"
           style={{ minHeight: '520px' }}
         >
@@ -198,7 +244,8 @@ export default function BeyondClassroomSection() {
             <div className="absolute inset-0" />
           </div>
 
-          {/* Right: Red Content Card */}
+        {/* Content Grid */}
+        <div
           <div
             key={`card-${activeContent.id}`}
             className="flex flex-col justify-between p-10 md:p-12 lg:p-14"
@@ -260,52 +307,6 @@ export default function BeyondClassroomSection() {
               />
             </a>
           </div>
-        </div>
-
-        {/* Tab Bar */}
-        <div
-          className="flex items-stretch"
-          style={{ borderTop: '1px solid #e5e5e5' }}
-        >
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id
-            return (
-              <div
-                key={tab.id}
-                role="button"
-                tabIndex={0}
-                onClick={() => handleTabChange(tab.id)}
-                onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)}
-                className="flex-1 flex items-center justify-center py-6 cursor-pointer relative transition-colors duration-300"
-                style={{
-                  borderRight: '1px solid #e5e5e5',
-                  background: isActive ? '#fafafa' : 'white',
-                }}
-              >
-                <span
-                  className="font-sans font-semibold tracking-[0.16em] uppercase text-center leading-tight"
-                  style={{
-                    fontSize: '10.5px',
-                    color: isActive
-                      ? 'var(--color-accent-red)'
-                      : 'var(--color-school-heading)',
-                    transition: 'color 0.3s',
-                  }}
-                >
-                  {tab.label}
-                </span>
-                {isActive && (
-                  <div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px]"
-                    style={{
-                      background: 'var(--color-accent-red)',
-                      width: '2.5rem',
-                    }}
-                  />
-                )}
-              </div>
-            )
-          })}
         </div>
       </div>
 
