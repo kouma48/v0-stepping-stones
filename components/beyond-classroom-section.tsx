@@ -1,21 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Settings } from 'lucide-react'
+import { BeyondClassroomEditorPortals, type BeyondTab } from './beyond-classroom-editor'
 
-interface TabContent {
-  id: string
-  label: string
-  eyebrow: string
-  title: string
-  boldIntro: string
-  description: string
-  ctaText: string
-  ctaHref: string
-  image: string
-  imageAlt: string
-}
+interface TabContent extends BeyondTab {}
 
 const TABS: TabContent[] = [
   {
@@ -86,10 +76,17 @@ const TABS: TabContent[] = [
 ]
 
 export default function BeyondClassroomSection() {
+  const [tabs, setTabs] = useState<TabContent[]>(TABS)
   const [activeTab, setActiveTab] = useState('athletics')
   const [animating, setAnimating] = useState(false)
+  // CMS state
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [pinModalOpen, setPinModalOpen] = useState(false)
+  const [editorOpen, setEditorOpen] = useState(false)
+  const triggerClickCount = useRef(0)
+  const triggerTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const activeContent = TABS.find((t) => t.id === activeTab) || TABS[0]
+  const activeContent = tabs.find((t) => t.id === activeTab) || tabs[0]
 
   function handleTabChange(id: string) {
     if (id === activeTab) return
@@ -100,10 +97,21 @@ export default function BeyondClassroomSection() {
     }, 320)
   }
 
+  function handleAdminTrigger() {
+    triggerClickCount.current += 1
+    if (triggerTimer.current) clearTimeout(triggerTimer.current)
+    triggerTimer.current = setTimeout(() => { triggerClickCount.current = 0 }, 600)
+    if (triggerClickCount.current >= 3) {
+      triggerClickCount.current = 0
+      if (isAdmin) setEditorOpen(true)
+      else setPinModalOpen(true)
+    }
+  }
+
   return (
     <section className="py-20 md:py-28 overflow-hidden" style={{ background: '#f8f9fa' }}>
       {/* Header */}
-      <div className="text-center mb-14 px-6">
+      <div className="relative text-center mb-14 px-6">
         <p
           className="font-sans text-[11px] font-semibold tracking-[0.3em] uppercase mb-5"
           style={{ color: 'var(--color-accent-red)' }}
@@ -129,6 +137,26 @@ export default function BeyondClassroomSection() {
         >
           Where every child is known, valued and inspired
         </p>
+
+        {/* Admin trigger — triple-click the eyebrow text counter */}
+        <button
+          onClick={handleAdminTrigger}
+          className="absolute top-0 right-6 font-sans text-[10px] text-school-subtle/30 hover:text-school-subtle/60 transition-colors px-2 py-1"
+          aria-label="Admin trigger"
+        >
+          {tabs.length} tabs
+        </button>
+
+        {/* Gear icon after PIN unlock */}
+        {isAdmin && (
+          <button
+            onClick={() => setEditorOpen(true)}
+            aria-label="Edit section"
+            className="absolute top-0 right-16 w-8 h-8 flex items-center justify-center rounded-full border border-school-divider text-school-subtle hover:text-school-heading hover:border-school-heading transition-colors"
+          >
+            <Settings size={14} />
+          </button>
+        )}
       </div>
 
       {/* Main Split Panel */}
@@ -239,7 +267,7 @@ export default function BeyondClassroomSection() {
           className="flex items-stretch"
           style={{ borderTop: '1px solid #e5e5e5' }}
         >
-          {TABS.map((tab) => {
+          {tabs.map((tab) => {
             const isActive = activeTab === tab.id
             return (
               <div
@@ -280,6 +308,17 @@ export default function BeyondClassroomSection() {
           })}
         </div>
       </div>
+
+      {/* CMS Editor Portals */}
+      <BeyondClassroomEditorPortals
+        tabs={tabs}
+        editorOpen={editorOpen}
+        pinModalOpen={pinModalOpen}
+        onEditorClose={() => setEditorOpen(false)}
+        onPinSuccess={() => { setPinModalOpen(false); setIsAdmin(true); setEditorOpen(true) }}
+        onPinClose={() => setPinModalOpen(false)}
+        onTabsChange={setTabs}
+      />
     </section>
   )
 }
