@@ -155,37 +155,26 @@ export default function HeroCarousel() {
           </div>
         ))}
 
-        {/* Text content */}
-        <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-28 md:pb-32 z-10 max-w-3xl">
-          <h1
-            key={`h-${current}`}
-            className="font-serif text-white text-[clamp(2rem,5vw,4rem)] leading-[1.1] tracking-tight mb-4 animate-fade-up"
-          >
-            {slide?.heading}
+        {/* Centered text content with downward arrow */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-8">
+          <h1 className="font-serif text-white text-[clamp(3rem,8vw,5.5rem)] leading-[1.1] tracking-tight text-center text-balance">
+            Impact Starts Here
           </h1>
-          <p
-            key={`p-${current}`}
-            className="font-sans text-white/80 text-[clamp(0.9rem,1.5vw,1.1rem)] leading-relaxed mb-8 max-w-xl animate-fade-up"
-          >
-            {slide?.subheading}
-          </p>
-          <div className="flex flex-wrap gap-4">
-            {slide?.primaryCta && (
-              <a
-                href={slide.primaryCta.href}
-                className="font-sans font-semibold tracking-widest uppercase text-sm px-7 py-3 bg-white text-school-heading hover:bg-white/90 transition-colors"
-              >
-                {slide.primaryCta.label}
-              </a>
-            )}
-            {slide?.secondaryCta && (
-              <a
-                href={slide.secondaryCta.href}
-                className="font-sans font-semibold tracking-widest uppercase text-sm px-7 py-3 border border-white text-white hover:bg-white/10 transition-colors"
-              >
-                {slide.secondaryCta.label}
-              </a>
-            )}
+          {/* Downward arrow animation */}
+          <div className="mt-12 md:mt-16 animate-bounce">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-white"
+            >
+              <polyline points="8 12 16 20 24 12"></polyline>
+            </svg>
           </div>
         </div>
 
