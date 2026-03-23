@@ -138,13 +138,13 @@ export default function BeyondClassroomSection() {
           Where every child is known, valued and inspired
         </p>
 
-        {/* Admin trigger — triple-click the eyebrow text counter */}
+        {/* Admin trigger — triple-click to unlock */}
         <button
           onClick={handleAdminTrigger}
-          className="absolute top-0 right-6 font-sans text-[10px] text-school-subtle/30 hover:text-school-subtle/60 transition-colors px-2 py-1"
+          className="absolute top-0 right-6 font-sans text-[10px] tracking-widest uppercase px-3 py-1.5 border border-dashed border-school-divider text-school-subtle/50 hover:text-school-subtle hover:border-school-divider transition-colors"
           aria-label="Admin trigger"
         >
-          {tabs.length} tabs
+          Edit Section
         </button>
 
         {/* Gear icon after PIN unlock */}
@@ -152,9 +152,10 @@ export default function BeyondClassroomSection() {
           <button
             onClick={() => setEditorOpen(true)}
             aria-label="Edit section"
-            className="absolute top-0 right-16 w-8 h-8 flex items-center justify-center rounded-full border border-school-divider text-school-subtle hover:text-school-heading hover:border-school-heading transition-colors"
+            className="absolute top-0 right-6 inline-flex items-center gap-2 font-sans text-[10px] font-semibold tracking-widest uppercase px-3 py-1.5 border border-school-heading text-school-heading hover:bg-school-heading hover:text-white transition-colors"
           >
-            <Settings size={14} />
+            <Settings size={12} />
+            Edit Section
           </button>
         )}
       </div>

@@ -25,12 +25,12 @@ export default function FooterCtaSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">
         {/* School logo */}
-        <div className="mb-10">
+        <div className="mb-10 relative" style={{ width: 140, height: 140 }}>
           <Image
             src="/images/stepping-stones-logo-white.png"
             alt="Stepping Stones School Logo"
-            width={140}
-            height={140}
+            fill
+            className="object-contain"
             style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
             priority
           />
