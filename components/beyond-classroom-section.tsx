@@ -18,8 +18,8 @@ const TABS: TabContent[] = [
       'Through competitive sport, Stepping Stones students build resilience, teamwork, and the lifelong discipline that defines great character.',
     ctaText: 'View Programmes',
     ctaHref: '#sports',
-    image: '/images/beyond-athletics-main.jpg',
-    imageAlt: 'Students competing in athletics',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-7mKgf4JXOVjCVuuzXcyLLseZMR1mbM.jpg',
+    imageAlt: 'Students playing basketball on the school court',
   },
   {
     id: 'arts',
@@ -161,11 +161,8 @@ export default function BeyondClassroomSection() {
 
       {/* Main Split Panel */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        {/* Tab Bar - Moved to Top */}
-        <div
-          className="flex items-stretch"
-          style={{ borderBottom: '1px solid #e5e5e5' }}
-        >
+        {/* Tab Bar - At Top */}
+        <div className="flex items-stretch" style={{ borderBottom: '1px solid #e5e5e5' }}>
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
             return (
@@ -176,18 +173,13 @@ export default function BeyondClassroomSection() {
                 onClick={() => handleTabChange(tab.id)}
                 onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)}
                 className="flex-1 flex items-center justify-center py-6 cursor-pointer relative transition-colors duration-300"
-                style={{
-                  borderRight: '1px solid #e5e5e5',
-                  background: isActive ? '#fafafa' : 'white',
-                }}
+                style={{ borderRight: '1px solid #e5e5e5', background: isActive ? '#fafafa' : 'white' }}
               >
                 <span
                   className="font-sans font-semibold tracking-[0.16em] uppercase text-center leading-tight"
                   style={{
                     fontSize: '10.5px',
-                    color: isActive
-                      ? 'var(--color-accent-red)'
-                      : 'var(--color-school-heading)',
+                    color: isActive ? 'var(--color-accent-red)' : 'var(--color-school-heading)',
                     transition: 'color 0.3s',
                   }}
                 >
@@ -196,10 +188,7 @@ export default function BeyondClassroomSection() {
                 {isActive && (
                   <div
                     className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px]"
-                    style={{
-                      background: 'var(--color-accent-red)',
-                      width: '2.5rem',
-                    }}
+                    style={{ background: 'var(--color-accent-red)', width: '2.5rem' }}
                   />
                 )}
               </div>
@@ -207,9 +196,9 @@ export default function BeyondClassroomSection() {
           })}
         </div>
 
-        {/* Content Grid */}
+        {/* Content Grid - Image and Card */}
         <div className="grid lg:grid-cols-[1fr_420px] overflow-hidden" style={{ minHeight: '520px' }}>
-          {/* Left: Single Image */}
+          {/* Left: Image */}
           <div className="relative bg-neutral-900 overflow-hidden" style={{ minHeight: '460px' }}>
             <div
               key={activeContent.id}
@@ -228,18 +217,16 @@ export default function BeyondClassroomSection() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 66vw"
               />
-              {/* Subtle vignette */}
               <div
                 className="absolute inset-0"
                 style={{
-                  background:
-                    'linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 50%, transparent 100%)',
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 50%, transparent 100%)',
                 }}
               />
             </div>
           </div>
 
-          {/* Right: Red Content Card */}
+          {/* Right: Content Card */}
           <div
             key={`card-${activeContent.id}`}
             className="flex flex-col justify-between p-10 md:p-12 lg:p-14"
@@ -251,7 +238,6 @@ export default function BeyondClassroomSection() {
             }}
           >
             <div>
-              {/* Eyebrow */}
               <div className="mb-7">
                 <span
                   className="font-sans font-semibold text-white/80 tracking-[0.22em] uppercase block mb-3"
@@ -262,7 +248,6 @@ export default function BeyondClassroomSection() {
                 <div className="w-10 h-[2px] bg-white/50" />
               </div>
 
-              {/* Title */}
               <h3
                 className="font-serif text-white leading-[1.15] mb-7"
                 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)' }}
@@ -270,7 +255,6 @@ export default function BeyondClassroomSection() {
                 {activeContent.title}
               </h3>
 
-              {/* Bold intro */}
               <p
                 className="font-sans font-bold text-white leading-snug mb-4"
                 style={{ fontSize: '0.95rem', letterSpacing: '0.01em' }}
@@ -278,7 +262,6 @@ export default function BeyondClassroomSection() {
                 {activeContent.boldIntro.toUpperCase()}
               </p>
 
-              {/* Body */}
               <p
                 className="font-sans text-white/90 leading-relaxed"
                 style={{ fontSize: '0.97rem' }}
@@ -287,7 +270,6 @@ export default function BeyondClassroomSection() {
               </p>
             </div>
 
-            {/* CTA */}
             <a
               href={activeContent.ctaHref}
               className="inline-flex items-center gap-3 text-white font-sans font-bold tracking-[0.18em] uppercase mt-10 group"
