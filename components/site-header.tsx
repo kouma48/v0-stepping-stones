@@ -49,10 +49,10 @@ export default function SiteHeader() {
         }}
       >
         <div className="max-w-[1400px] mx-auto px-8 md:px-14">
-          <div className="relative flex items-center justify-center" style={{ height: scrolled ? 80 : 140, transition: 'height 0.5s ease' }}>
+          <div className="relative flex items-center" style={{ height: scrolled ? 80 : 160, transition: 'height 0.5s ease' }}>
 
             {/* LEFT — Inquire / Visit / Apply */}
-            <div className="flex items-center gap-7 w-[38%]" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
+            <div className="flex items-center gap-7 flex-1" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
               {CTA_LINKS.map((link) => (
                 <Link
                   key={link.label}
@@ -72,21 +72,26 @@ export default function SiteHeader() {
               ))}
             </div>
 
-            {/* CENTRE — Logo (absolutely centred) */}
+            {/* CENTRE — Logo pinned to horizontal & vertical centre with top offset */}
             <Link
               href="/"
-              className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center"
-              style={{ transform: 'translateX(-50%)', paddingTop: scrolled ? '0px' : '12px' }}
+              className="absolute flex flex-col items-center"
+              style={{
+                left: '50%',
+                top: scrolled ? '50%' : '16px',
+                transform: scrolled ? 'translate(-50%, -50%)' : 'translateX(-50%)',
+                transition: 'top 0.5s ease, transform 0.5s ease',
+              }}
               aria-label="Stepping Stones School — home"
             >
               {/* White logo: shown on transparent header */}
               <div
-                className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
-                style={{ opacity: isLight ? 0 : 1 }}
+                className="transition-opacity duration-500"
+                style={{ opacity: isLight ? 0 : 1, position: isLight ? 'absolute' : 'relative' }}
               >
-                <div 
-                  className="relative transition-all duration-500" 
-                  style={{ width: scrolled ? 90 : 180, height: scrolled ? 90 : 180 }}
+                <div
+                  className="relative transition-all duration-500"
+                  style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
                 >
                   <Image
                     src="/images/logo-white.png"
@@ -100,11 +105,11 @@ export default function SiteHeader() {
               {/* Colour logo: shown on scrolled white header */}
               <div
                 className="transition-opacity duration-500"
-                style={{ opacity: isLight ? 1 : 0 }}
+                style={{ opacity: isLight ? 1 : 0, position: isLight ? 'relative' : 'absolute' }}
               >
-                <div 
-                  className="relative transition-all duration-500" 
-                  style={{ width: scrolled ? 90 : 180, height: scrolled ? 90 : 180 }}
+                <div
+                  className="relative transition-all duration-500"
+                  style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
                 >
                   <Image
                     src="/images/logo-colour.png"
@@ -118,7 +123,7 @@ export default function SiteHeader() {
             </Link>
 
             {/* RIGHT — Menu label + Hamburger */}
-            <div className="flex items-center justify-end gap-3 w-[38%] ml-auto" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
+            <div className="flex items-center justify-end gap-3 flex-1" style={{ opacity: scrolled ? 1 : 0.95, transition: 'opacity 0.5s ease' }}>
               <span
                 className="hidden md:block font-sans font-semibold tracking-[0.22em] uppercase transition-colors duration-300"
                 style={{

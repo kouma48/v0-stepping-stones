@@ -130,6 +130,7 @@ export default function HeroCarousel() {
                 src={s.media.src}
                 alt={s.heading}
                 fill
+                priority
                 loading="eager"
                 className="object-cover"
                 sizes="100vw"
