@@ -31,8 +31,7 @@ export default function FooterCtaSection() {
             alt="Stepping Stones School Logo"
             width={140}
             height={140}
-            className="drop-shadow-lg"
-            style={{ maxWidth: '140px', height: 'auto', filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
+            style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
           />
         </div>
 

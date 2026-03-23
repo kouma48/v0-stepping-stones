@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { ArrowRight, Play } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 interface TabContent {
   id: string
@@ -166,40 +166,8 @@ export default function BeyondClassroomSection() {
               />
             </div>
 
-            {/* Play Button */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-              <div
-                className="group flex items-center justify-center w-16 h-16 rounded-full cursor-pointer"
-                role="button"
-                tabIndex={0}
-                aria-label="Play video"
-                style={{
-                  background: 'rgba(255,255,255,0.18)',
-                  border: '2px solid rgba(255,255,255,0.7)',
-                  backdropFilter: 'blur(4px)',
-                  transition: 'background 0.3s',
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = 'rgba(193,31,30,0.85)')
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = 'rgba(255,255,255,0.18)')
-                }
-              >
-                <Play
-                  size={22}
-                  fill="white"
-                  stroke="none"
-                  style={{ marginLeft: '3px' }}
-                />
-              </div>
-              <span
-                className="font-sans font-semibold tracking-[0.22em] uppercase text-white"
-                style={{ fontSize: '11px', letterSpacing: '0.22em' }}
-              >
-                Watch Full Film
-              </span>
-            </div>
+            {/* Play Button - Removed */}
+            <div className="absolute inset-0" />
           </div>
 
           {/* Right: Red Content Card */}
