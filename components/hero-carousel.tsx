@@ -131,6 +131,7 @@ export default function HeroCarousel() {
                 alt={s.heading}
                 fill
                 priority
+                fetchPriority="high"
                 loading="eager"
                 className="object-cover"
                 sizes="100vw"

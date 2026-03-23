@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { X, Info, MapPin, Send } from 'lucide-react'
@@ -97,6 +97,9 @@ export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [hoveredNav, setHoveredNav] = useState<number | null>(null)
+  const [submenuTop, setSubmenuTop] = useState(0)
+  const navItemRefs = useRef<(HTMLAnchorElement | null)[]>([])
+  const navColumnRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     function onScroll() { setScrolled(window.scrollY > 40) }
@@ -112,7 +115,17 @@ export default function SiteHeader() {
 
   const isLight = scrolled
   const activeNav = hoveredNav !== null ? MEGA_NAV[hoveredNav] : null
-  const activeImage = activeNav?.image || '/images/hero-1.jpg'
+
+  function handleNavHover(i: number) {
+    setHoveredNav(i)
+    const item = navItemRefs.current[i]
+    const col = navColumnRef.current
+    if (item && col) {
+      const itemRect = item.getBoundingClientRect()
+      const colRect = col.getBoundingClientRect()
+      setSubmenuTop(itemRect.top - colRect.top)
+    }
+  }
 
   return (
     <>
@@ -303,21 +316,25 @@ export default function SiteHeader() {
               </button>
             </div>
 
-            {/* Main content: nav + submenu */}
-            <div className="flex flex-1 overflow-hidden">
+            {/* Main content: nav + submenu — shared hover zone */}
+            <div
+              className="flex flex-1 overflow-hidden"
+              onMouseLeave={() => setHoveredNav(null)}
+            >
               {/* Primary nav column */}
               <nav
-                className="flex flex-col justify-center px-8 md:px-12 py-10 w-full md:w-1/2 border-r border-gray-100"
+                ref={navColumnRef}
+                className="relative flex flex-col justify-center px-8 md:px-12 py-10 w-full md:w-1/2 border-r border-gray-100"
                 aria-label="Main navigation"
-                onMouseLeave={() => setHoveredNav(null)}
               >
                 {MEGA_NAV.map((nav, i) => (
                   <Link
                     key={nav.label}
                     href={nav.href}
+                    ref={(el) => { navItemRefs.current[i] = el }}
                     onClick={() => setMenuOpen(false)}
-                    onMouseEnter={() => setHoveredNav(i)}
-                    className="group relative font-serif py-3 transition-colors duration-200"
+                    onMouseEnter={() => handleNavHover(i)}
+                    className="relative font-serif py-3 transition-colors duration-200"
                     style={{
                       fontSize: 'clamp(1.4rem, 2.5vw, 1.75rem)',
                       color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
@@ -336,31 +353,37 @@ export default function SiteHeader() {
                 ))}
               </nav>
 
-              {/* Submenu column (visible when item hovered) */}
-              <div
-                className="hidden md:flex flex-col justify-center px-10 py-10 w-1/2 transition-opacity duration-300"
-                style={{ opacity: hoveredNav !== null ? 1 : 0 }}
-              >
-                {activeNav && (
-                  <div className="flex flex-col gap-1">
-                    {activeNav.submenu.map((sub, i) => (
-                      <Link
-                        key={sub.label}
-                        href={sub.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="font-sans py-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
-                        style={{
-                          fontSize: '14px',
-                          opacity: hoveredNav !== null ? 1 : 0,
-                          transform: hoveredNav !== null ? 'translateX(0)' : 'translateX(8px)',
-                          transition: `opacity 0.3s ease ${i * 40}ms, transform 0.3s ease ${i * 40}ms, color 0.2s`,
-                        }}
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+              {/* Submenu column — absolutely positioned to align with hovered item */}
+              <div className="hidden md:block relative w-1/2">
+                <div
+                  className="absolute left-0 px-10 transition-opacity duration-200"
+                  style={{
+                    top: submenuTop,
+                    opacity: hoveredNav !== null ? 1 : 0,
+                    pointerEvents: hoveredNav !== null ? 'all' : 'none',
+                  }}
+                >
+                  {activeNav && (
+                    <div className="flex flex-col gap-0">
+                      {activeNav.submenu.map((sub, i) => (
+                        <Link
+                          key={sub.label}
+                          href={sub.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="font-sans py-2 text-gray-500 hover:text-gray-900 transition-colors duration-200"
+                          style={{
+                            fontSize: '14px',
+                            opacity: hoveredNav !== null ? 1 : 0,
+                            transform: hoveredNav !== null ? 'translateX(0)' : 'translateX(8px)',
+                            transition: `opacity 0.25s ease ${i * 35}ms, transform 0.25s ease ${i * 35}ms, color 0.2s`,
+                          }}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
