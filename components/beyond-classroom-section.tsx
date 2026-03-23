@@ -18,7 +18,7 @@ const TABS: TabContent[] = [
       'Through competitive sport, Stepping Stones students build resilience, teamwork, and the lifelong discipline that defines great character.',
     ctaText: 'View Programmes',
     ctaHref: '#sports',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-7mKgf4JXOVjCVuuzXcyLLseZMR1mbM.jpg',
+    image: '/images/beyond-athletics-main.jpg',
     imageAlt: 'Students playing basketball on the school court',
   },
   {
@@ -31,7 +31,7 @@ const TABS: TabContent[] = [
       'Through music, drama, and dance, Stepping Stones students discover their unique creative voice and learn the power of passionate self-expression.',
     ctaText: 'View Programmes',
     ctaHref: '#arts',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-MrVCddzOJu5XxE39un5Fr2lmYu6VJy.jpg',
+    image: '/images/beyond-arts-main.jpg',
     imageAlt: 'Students with musical instruments in music room',
   },
   {
@@ -44,7 +44,7 @@ const TABS: TabContent[] = [
       'Our pastoral team nurtures emotional well-being and moral character, ensuring every child feels deeply valued, safe, and supported throughout their journey.',
     ctaText: 'View Programmes',
     ctaHref: '#pastoral',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-GTnteW0Yb9PwLipB1bLpRw2mdFegmW.jpg',
+    image: '/images/beyond-pastoral-main.jpg',
     imageAlt: 'Teacher providing one-on-one support to a student at computer',
   },
   {
