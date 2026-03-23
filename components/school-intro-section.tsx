@@ -42,10 +42,10 @@ function Reveal({
 // ─── Stats strip ────────────────────────────────────────────────────────────
 
 const stats = [
-  { value: '3–18', label: 'Ages welcomed' },
-  { value: '250+', label: 'Pupils enrolled' },
-  { value: '95%', label: 'University placement' },
-  { value: '40+', label: 'Co-curricular activities' },
+  { value: '16+', label: 'Years of excellence' },
+  { value: '1,500+', label: 'Learners in our community' },
+  { value: '500+', label: 'Girls supported annually' },
+  { value: '15+', label: 'Community projects' },
 ]
 
 // ─── Main section ───────────────────────────────────────────────────────────
@@ -136,10 +136,10 @@ export default function SchoolIntroSection() {
           </p>
           <div className="pt-4 border-t border-school-divider">
             <p className="text-crimson text-[0.88rem] font-sans tracking-wide">
-              Mrs Sarah Thompson, MA, PGCE
+              Lily Kitala
             </p>
             <p className="text-school-body font-semibold text-[0.88rem] tracking-wide">
-              Head of Stepping Stones School
+              Principal
             </p>
           </div>
         </Reveal>
