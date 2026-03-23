@@ -20,12 +20,12 @@ const UTILITY_LINKS = [
   { label: 'Contact', href: '/contact-us/' },
 ]
 
-// Mega menu navigation structure with submenus and images
+// Mega menu navigation structure with submenus and contextual images
 const MEGA_NAV = [
   {
     label: 'About Us',
     href: '/#',
-    image: '/images/hero-1.jpg',
+    image: '/images/about-us.jpg',
     submenu: [
       { label: 'Welcome Message', href: '/welcome-message/' },
       { label: 'Our Story', href: '/our-story/' },
@@ -37,7 +37,7 @@ const MEGA_NAV = [
   {
     label: 'Academics',
     href: '/#',
-    image: '/images/hero-2.jpg',
+    image: '/images/academics.jpg',
     submenu: [
       { label: 'Kindergarten', href: '/kindergarten/' },
       { label: 'Lower Primary', href: '/lower-primary/' },
@@ -50,7 +50,7 @@ const MEGA_NAV = [
   {
     label: 'Admissions',
     href: '/#',
-    image: '/images/hero-3.jpg',
+    image: '/images/admissions.jpg',
     submenu: [
       { label: 'Why Stepping Stones', href: '/why-stepping-stones/' },
       { label: 'Admissions Process', href: '/admissions-process/' },
@@ -62,7 +62,7 @@ const MEGA_NAV = [
   {
     label: 'School Life',
     href: '/#',
-    image: '/images/hero-1.jpg',
+    image: '/images/school-life.jpg',
     submenu: [
       { label: 'Daily Life', href: '/daily-life/' },
       { label: 'Co-curricular Programs', href: '/co-curricular-programs/' },
@@ -73,13 +73,13 @@ const MEGA_NAV = [
   {
     label: 'News',
     href: '/news/',
-    image: '/images/hero-2.jpg',
+    image: '/images/academics.jpg',
     submenu: [],
   },
   {
     label: 'Events',
     href: '/events/',
-    image: '/images/hero-3.jpg',
+    image: '/images/school-life.jpg',
     submenu: [],
   },
 ]
