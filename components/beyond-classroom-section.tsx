@@ -57,8 +57,8 @@ const TABS: TabContent[] = [
       'Through leadership clubs, life skills training, and global engagement, Stepping Stones equips students with the tools to make a profound impact in the world.',
     ctaText: 'View Programmes',
     ctaHref: '#development',
-    image: '/images/beyond-development-main.jpg',
-    imageAlt: 'Students in cultural event',
+    image: '/images/student-development.jpg',
+    imageAlt: 'Students collaborating and studying together on campus',
   },
   {
     id: 'service',
