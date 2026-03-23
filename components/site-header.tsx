@@ -5,91 +5,82 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { X, Info, MapPin, Send } from 'lucide-react'
 
+// Bottom CTA bar links
 const CTA_LINKS = [
-  { label: 'Inquire', href: '#inquire', icon: Info },
-  { label: 'Visit', href: '#visit', icon: MapPin },
-  { label: 'Apply', href: '#apply', icon: Send },
+  { label: 'Inquire', href: '/contact-us/', icon: Info },
+  { label: 'Visit', href: '/book-a-visit/', icon: MapPin },
+  { label: 'Apply', href: '/apply-now/', icon: Send },
 ]
 
+// Utility bar links
 const UTILITY_LINKS = [
-  { label: 'Parents', href: '#parents' },
-  { label: 'Alumni', href: '#alumni' },
-  { label: 'Calendar', href: '#calendar' },
-  { label: 'Careers', href: '#careers' },
-  { label: 'Giving', href: '#giving' },
+  { label: 'News', href: '/news/' },
+  { label: 'Events', href: '/events/' },
+  { label: 'Careers', href: '/careers/' },
+  { label: 'Contact', href: '/contact-us/' },
 ]
 
 // Mega menu navigation structure with submenus and images
 const MEGA_NAV = [
   {
-    label: 'About',
-    href: '#about',
+    label: 'About Us',
+    href: '/#',
     image: '/images/hero-1.jpg',
     submenu: [
-      { label: 'Our Story', href: '#our-story' },
-      { label: 'Mission & Values', href: '#mission' },
-      { label: 'Leadership', href: '#leadership' },
-      { label: 'Campus & Facilities', href: '#campus' },
-      { label: 'Accreditation', href: '#accreditation' },
+      { label: 'Welcome Message', href: '/welcome-message/' },
+      { label: 'Our Story', href: '/our-story/' },
+      { label: 'Our Leadership', href: '/our-leadership/' },
+      { label: 'Our Campus', href: '/our-campus/' },
+      { label: 'Careers', href: '/careers/' },
     ],
   },
   {
     label: 'Academics',
-    href: '#academics',
+    href: '/#',
     image: '/images/hero-2.jpg',
     submenu: [
-      { label: 'Early Years', href: '#early-years' },
-      { label: 'Primary School', href: '#primary' },
-      { label: 'Middle School', href: '#middle' },
-      { label: 'Upper School', href: '#upper' },
-      { label: 'Curriculum', href: '#curriculum' },
-      { label: 'Learning Support', href: '#learning-support' },
-    ],
-  },
-  {
-    label: 'Life at Stepping Stones',
-    href: '#life',
-    image: '/images/hero-3.jpg',
-    submenu: [
-      { label: 'Sports & Athletics', href: '#sports' },
-      { label: 'Performing Arts', href: '#arts' },
-      { label: 'Pastoral Care', href: '#pastoral' },
-      { label: 'Clubs & Activities', href: '#clubs' },
-      { label: 'Student Leadership', href: '#leadership' },
+      { label: 'Kindergarten', href: '/kindergarten/' },
+      { label: 'Lower Primary', href: '/lower-primary/' },
+      { label: 'Upper Primary', href: '/upper-primary/' },
+      { label: 'Junior Secondary', href: '/junior-secondary/' },
+      { label: 'Learning Support', href: '/learning-support/' },
+      { label: 'Beyond Classroom', href: '/beyond-classroom/' },
     ],
   },
   {
     label: 'Admissions',
-    href: '#admissions',
-    image: '/images/hero-1.jpg',
-    submenu: [
-      { label: 'How to Apply', href: '#how-to-apply' },
-      { label: 'Tuition & Fees', href: '#tuition' },
-      { label: 'Scholarships', href: '#scholarships' },
-      { label: 'Open Days', href: '#open-days' },
-      { label: 'FAQs', href: '#faqs' },
-    ],
-  },
-  {
-    label: 'News & Events',
-    href: '#news',
-    image: '/images/hero-2.jpg',
-    submenu: [
-      { label: 'Latest News', href: '#latest-news' },
-      { label: 'Upcoming Events', href: '#events' },
-      { label: 'School Calendar', href: '#calendar' },
-      { label: 'Newsletter', href: '#newsletter' },
-    ],
-  },
-  {
-    label: 'Contact',
-    href: '#contact',
+    href: '/#',
     image: '/images/hero-3.jpg',
     submenu: [
-      { label: 'Get in Touch', href: '#get-in-touch' },
-      { label: 'Location & Directions', href: '#location' },
-      { label: 'Enquiry Form', href: '#enquiry' },
+      { label: 'Why Stepping Stones', href: '/why-stepping-stones/' },
+      { label: 'Admissions Process', href: '/admissions-process/' },
+      { label: 'Apply Now', href: '/apply-now/' },
+      { label: 'Fees Structure', href: '/fees-structure/' },
+      { label: 'Book a Visit', href: '/book-a-visit/' },
     ],
+  },
+  {
+    label: 'School Life',
+    href: '/#',
+    image: '/images/hero-1.jpg',
+    submenu: [
+      { label: 'Daily Life', href: '/daily-life/' },
+      { label: 'Co-curricular Programs', href: '/co-curricular-programs/' },
+      { label: 'Student Development', href: '/student-development/' },
+      { label: 'Student Well Being', href: '/student-well-being/' },
+    ],
+  },
+  {
+    label: 'News',
+    href: '/news/',
+    image: '/images/hero-2.jpg',
+    submenu: [],
+  },
+  {
+    label: 'Events',
+    href: '/events/',
+    image: '/images/hero-3.jpg',
+    submenu: [],
   },
 ]
 
@@ -147,6 +138,7 @@ export default function SiteHeader() {
                 <Link
                   key={link.label}
                   href={link.href}
+                  target="_parent"
                   className="relative font-sans font-semibold tracking-[0.22em] uppercase transition-colors duration-300 group hidden md:block"
                   style={{
                     fontSize: '10px',
@@ -165,6 +157,7 @@ export default function SiteHeader() {
             {/* CENTRE — Logo pinned to horizontal & vertical centre with top offset */}
             <Link
               href="/"
+              target="_parent"
               className="absolute flex flex-col items-center"
               style={{
                 left: '50%',
@@ -298,6 +291,7 @@ export default function SiteHeader() {
                   <Link
                     key={link.label}
                     href={link.href}
+                    target="_parent"
                     onClick={() => setMenuOpen(false)}
                     className="font-sans font-semibold tracking-[0.18em] uppercase text-gray-500 hover:text-gray-900 transition-colors duration-200"
                     style={{ fontSize: '9px' }}
@@ -331,6 +325,7 @@ export default function SiteHeader() {
                   <Link
                     key={nav.label}
                     href={nav.href}
+                    target="_parent"
                     ref={(el) => { navItemRefs.current[i] = el }}
                     onClick={() => setMenuOpen(false)}
                     onMouseEnter={() => handleNavHover(i)}
@@ -369,6 +364,7 @@ export default function SiteHeader() {
                         <Link
                           key={sub.label}
                           href={sub.href}
+                          target="_parent"
                           onClick={() => setMenuOpen(false)}
                           className="font-sans py-2 text-gray-500 hover:text-gray-900 transition-colors duration-200"
                           style={{
@@ -398,6 +394,7 @@ export default function SiteHeader() {
                   <Link
                     key={link.label}
                     href={link.href}
+                    target="_parent"
                     onClick={() => setMenuOpen(false)}
                     className="flex-1 flex items-center justify-center gap-3 py-5 text-white hover:bg-white/10 transition-colors duration-200 border-r border-white/20 last:border-r-0"
                   >
