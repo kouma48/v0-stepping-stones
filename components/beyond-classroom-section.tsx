@@ -216,6 +216,8 @@ export default function BeyondClassroomSection() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 66vw"
+                crossOrigin="anonymous"
+                priority={activeTab === activeContent.id}
               />
               <div
                 className="absolute inset-0"
