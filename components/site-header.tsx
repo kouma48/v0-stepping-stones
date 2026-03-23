@@ -3,26 +3,100 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { X } from 'lucide-react'
+import { X, Info, MapPin, Send } from 'lucide-react'
 
 const CTA_LINKS = [
-  { label: 'Inquire', href: '#inquire' },
-  { label: 'Visit', href: '#visit' },
-  { label: 'Apply', href: '#apply' },
+  { label: 'Inquire', href: '#inquire', icon: Info },
+  { label: 'Visit', href: '#visit', icon: MapPin },
+  { label: 'Apply', href: '#apply', icon: Send },
 ]
 
-const NAV_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'Academics', href: '#academics' },
-  { label: 'Life at Stepping Stones', href: '#life' },
-  { label: 'Admissions', href: '#admissions' },
-  { label: 'News & Events', href: '#news' },
-  { label: 'Contact', href: '#contact' },
+const UTILITY_LINKS = [
+  { label: 'Parents', href: '#parents' },
+  { label: 'Alumni', href: '#alumni' },
+  { label: 'Calendar', href: '#calendar' },
+  { label: 'Careers', href: '#careers' },
+  { label: 'Giving', href: '#giving' },
+]
+
+// Mega menu navigation structure with submenus and images
+const MEGA_NAV = [
+  {
+    label: 'About',
+    href: '#about',
+    image: '/images/hero-1.jpg',
+    submenu: [
+      { label: 'Our Story', href: '#our-story' },
+      { label: 'Mission & Values', href: '#mission' },
+      { label: 'Leadership', href: '#leadership' },
+      { label: 'Campus & Facilities', href: '#campus' },
+      { label: 'Accreditation', href: '#accreditation' },
+    ],
+  },
+  {
+    label: 'Academics',
+    href: '#academics',
+    image: '/images/hero-2.jpg',
+    submenu: [
+      { label: 'Early Years', href: '#early-years' },
+      { label: 'Primary School', href: '#primary' },
+      { label: 'Middle School', href: '#middle' },
+      { label: 'Upper School', href: '#upper' },
+      { label: 'Curriculum', href: '#curriculum' },
+      { label: 'Learning Support', href: '#learning-support' },
+    ],
+  },
+  {
+    label: 'Life at Stepping Stones',
+    href: '#life',
+    image: '/images/hero-3.jpg',
+    submenu: [
+      { label: 'Sports & Athletics', href: '#sports' },
+      { label: 'Performing Arts', href: '#arts' },
+      { label: 'Pastoral Care', href: '#pastoral' },
+      { label: 'Clubs & Activities', href: '#clubs' },
+      { label: 'Student Leadership', href: '#leadership' },
+    ],
+  },
+  {
+    label: 'Admissions',
+    href: '#admissions',
+    image: '/images/hero-1.jpg',
+    submenu: [
+      { label: 'How to Apply', href: '#how-to-apply' },
+      { label: 'Tuition & Fees', href: '#tuition' },
+      { label: 'Scholarships', href: '#scholarships' },
+      { label: 'Open Days', href: '#open-days' },
+      { label: 'FAQs', href: '#faqs' },
+    ],
+  },
+  {
+    label: 'News & Events',
+    href: '#news',
+    image: '/images/hero-2.jpg',
+    submenu: [
+      { label: 'Latest News', href: '#latest-news' },
+      { label: 'Upcoming Events', href: '#events' },
+      { label: 'School Calendar', href: '#calendar' },
+      { label: 'Newsletter', href: '#newsletter' },
+    ],
+  },
+  {
+    label: 'Contact',
+    href: '#contact',
+    image: '/images/hero-3.jpg',
+    submenu: [
+      { label: 'Get in Touch', href: '#get-in-touch' },
+      { label: 'Location & Directions', href: '#location' },
+      { label: 'Enquiry Form', href: '#enquiry' },
+    ],
+  },
 ]
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [hoveredNav, setHoveredNav] = useState<number | null>(null)
 
   useEffect(() => {
     function onScroll() { setScrolled(window.scrollY > 40) }
@@ -32,10 +106,13 @@ export default function SiteHeader() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
+    if (!menuOpen) setHoveredNav(null)
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
   const isLight = scrolled
+  const activeNav = hoveredNav !== null ? MEGA_NAV[hoveredNav] : null
+  const activeImage = activeNav?.image || '/images/hero-1.jpg'
 
   return (
     <>
@@ -158,103 +235,159 @@ export default function SiteHeader() {
         </div>
       </header>
 
-      {/* ── Full-screen Menu Overlay ─────────────────────────────── */}
+      {/* ── Baylor-style Full-screen Mega Menu ─────────────────────────────── */}
       <div
         aria-hidden={!menuOpen}
         className="fixed inset-0 z-[100]"
         style={{
           pointerEvents: menuOpen ? 'all' : 'none',
           opacity: menuOpen ? 1 : 0,
-          transition: 'opacity 0.35s ease',
+          transition: 'opacity 0.4s ease',
         }}
       >
-        {/* Backdrop */}
-        <div
-          className="absolute inset-0"
-          style={{ background: 'rgba(15,44,76,0.55)', backdropFilter: 'blur(4px)' }}
-          onClick={() => setMenuOpen(false)}
-        />
+        {/* Full-screen layout: image left, content right */}
+        <div className="flex h-full">
 
-        {/* Slide-in panel */}
-        <div
-          className="absolute top-0 right-0 h-full flex flex-col w-full md:w-[420px]"
-          style={{
-            background: 'var(--color-school-navy)',
-            transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
-            transition: 'transform 0.45s cubic-bezier(0.22,1,0.36,1)',
-          }}
-        >
-          {/* Panel header */}
-          <div className="flex items-center justify-between px-8 pt-8 pb-6">
-            <div className="relative" style={{ width: 56, height: 56 }}>
-              <Image
-                src="/images/logo-white.png"
-                alt="Stepping Stones School"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <button
-              onClick={() => setMenuOpen(false)}
-              aria-label="Close menu"
-              className="w-9 h-9 flex items-center justify-center"
-              style={{ color: 'rgba(255,255,255,0.55)' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
-            >
-              <X size={20} strokeWidth={1.5} />
-            </button>
+          {/* LEFT — Dynamic image panel (hidden on mobile) */}
+          <div className="hidden md:block relative w-1/2 h-full overflow-hidden">
+            {MEGA_NAV.map((nav, i) => (
+              <div
+                key={nav.label}
+                className="absolute inset-0 transition-opacity duration-500"
+                style={{ opacity: hoveredNav === i ? 1 : (hoveredNav === null && i === 0) ? 1 : 0 }}
+              >
+                <Image
+                  src={nav.image}
+                  alt={nav.label}
+                  fill
+                  priority
+                  loading="eager"
+                  className="object-cover"
+                />
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-black/20" />
+              </div>
+            ))}
           </div>
 
-          <div className="mx-8 h-px mb-8" style={{ background: 'rgba(197,154,73,0.3)' }} />
-
-          {/* Nav links */}
-          <nav className="flex flex-col px-8 flex-1" aria-label="Main navigation">
-            {NAV_LINKS.map((link, i) => (
-              <Link
-                key={link.label}
-                href={link.href}
+          {/* RIGHT — Menu content panel */}
+          <div
+            className="flex flex-col w-full md:w-1/2 h-full bg-white"
+            style={{
+              transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+              transition: 'transform 0.5s cubic-bezier(0.22,1,0.36,1)',
+            }}
+          >
+            {/* Utility bar + close button */}
+            <div className="flex items-center justify-between px-8 md:px-12 py-5 border-b border-gray-100">
+              <nav className="hidden md:flex items-center gap-6" aria-label="Utility navigation">
+                {UTILITY_LINKS.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="font-sans font-semibold tracking-[0.18em] uppercase text-gray-500 hover:text-gray-900 transition-colors duration-200"
+                    style={{ fontSize: '9px' }}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+              <div className="md:hidden" /> {/* Spacer on mobile */}
+              <button
                 onClick={() => setMenuOpen(false)}
-                className="font-serif py-4 border-b transition-colors duration-200"
-                style={{
-                  fontSize: 'clamp(1.15rem,3vw,1.45rem)',
-                  color: 'rgba(255,255,255,0.82)',
-                  borderColor: 'rgba(255,255,255,0.07)',
-                  transitionDelay: menuOpen ? `${60 + i * 40}ms` : '0ms',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.82)')}
+                aria-label="Close menu"
+                className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-900 text-white hover:bg-gray-800 transition-colors duration-200"
               >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+                <X size={18} strokeWidth={1.5} />
+              </button>
+            </div>
 
-          {/* CTA row */}
-          <div className="px-8 pb-12 pt-8">
-            <div className="h-px mb-8" style={{ background: 'rgba(197,154,73,0.3)' }} />
-            <div className="flex flex-wrap gap-3">
-              {CTA_LINKS.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="font-sans font-bold tracking-[0.2em] uppercase px-6 py-3 border transition-all duration-300"
-                  style={{ fontSize: '10px', color: '#ffffff', borderColor: 'rgba(255,255,255,0.25)' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#ffffff'
-                    e.currentTarget.style.color = 'var(--color-school-navy)'
-                    e.currentTarget.style.borderColor = '#ffffff'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = '#ffffff'
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
+            {/* Main content: nav + submenu */}
+            <div className="flex flex-1 overflow-hidden">
+              {/* Primary nav column */}
+              <nav
+                className="flex flex-col justify-center px-8 md:px-12 py-10 w-full md:w-1/2 border-r border-gray-100"
+                aria-label="Main navigation"
+                onMouseLeave={() => setHoveredNav(null)}
+              >
+                {MEGA_NAV.map((nav, i) => (
+                  <Link
+                    key={nav.label}
+                    href={nav.href}
+                    onClick={() => setMenuOpen(false)}
+                    onMouseEnter={() => setHoveredNav(i)}
+                    className="group relative font-serif py-3 transition-colors duration-200"
+                    style={{
+                      fontSize: 'clamp(1.4rem, 2.5vw, 1.75rem)',
+                      color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
+                    }}
+                  >
+                    {nav.label}
+                    {/* Red underline on active */}
+                    <span
+                      className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300"
+                      style={{
+                        width: hoveredNav === i ? '100%' : '0%',
+                        background: '#c11f1e',
+                      }}
+                    />
+                  </Link>
+                ))}
+              </nav>
+
+              {/* Submenu column (visible when item hovered) */}
+              <div
+                className="hidden md:flex flex-col justify-center px-10 py-10 w-1/2 transition-opacity duration-300"
+                style={{ opacity: hoveredNav !== null ? 1 : 0 }}
+              >
+                {activeNav && (
+                  <div className="flex flex-col gap-1">
+                    {activeNav.submenu.map((sub, i) => (
+                      <Link
+                        key={sub.label}
+                        href={sub.href}
+                        onClick={() => setMenuOpen(false)}
+                        className="font-sans py-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+                        style={{
+                          fontSize: '14px',
+                          opacity: hoveredNav !== null ? 1 : 0,
+                          transform: hoveredNav !== null ? 'translateX(0)' : 'translateX(8px)',
+                          transition: `opacity 0.3s ease ${i * 40}ms, transform 0.3s ease ${i * 40}ms, color 0.2s`,
+                        }}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Bottom CTA bar (red) */}
+            <div
+              className="flex items-stretch border-t border-gray-100"
+              style={{ background: '#c11f1e' }}
+            >
+              {CTA_LINKS.map((link) => {
+                const Icon = link.icon
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex-1 flex items-center justify-center gap-3 py-5 text-white hover:bg-white/10 transition-colors duration-200 border-r border-white/20 last:border-r-0"
+                  >
+                    <Icon size={16} strokeWidth={1.5} />
+                    <span
+                      className="font-sans font-bold tracking-[0.2em] uppercase"
+                      style={{ fontSize: '10px' }}
+                    >
+                      {link.label}
+                    </span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
