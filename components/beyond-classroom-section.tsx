@@ -208,9 +208,7 @@ export default function BeyondClassroomSection() {
         </div>
 
         {/* Content Grid */}
-          className="grid lg:grid-cols-[1fr_420px] overflow-hidden"
-          style={{ minHeight: '520px' }}
-        >
+        <div className="grid lg:grid-cols-[1fr_420px] overflow-hidden" style={{ minHeight: '520px' }}>
           {/* Left: Single Image */}
           <div className="relative bg-neutral-900 overflow-hidden" style={{ minHeight: '460px' }}>
             <div
@@ -239,13 +237,9 @@ export default function BeyondClassroomSection() {
                 }}
               />
             </div>
-
-            {/* Play Button - Removed */}
-            <div className="absolute inset-0" />
           </div>
 
-        {/* Content Grid */}
-        <div
+          {/* Right: Red Content Card */}
           <div
             key={`card-${activeContent.id}`}
             className="flex flex-col justify-between p-10 md:p-12 lg:p-14"
