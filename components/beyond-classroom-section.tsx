@@ -31,8 +31,8 @@ const TABS: TabContent[] = [
       'Through music, drama, and dance, Stepping Stones students discover their unique creative voice and learn the power of passionate self-expression.',
     ctaText: 'View Programmes',
     ctaHref: '#arts',
-    image: '/images/beyond-arts-main.jpg',
-    imageAlt: 'Students performing on stage',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-MrVCddzOJu5XxE39un5Fr2lmYu6VJy.jpg',
+    imageAlt: 'Students with musical instruments in music room',
   },
   {
     id: 'pastoral',
