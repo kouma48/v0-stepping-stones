@@ -1,5 +1,5 @@
 'use client'
-// v4 - Cleaned cache, news-only fetch
+// v5 - Clean build, news-only fetch, boxed events layout
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
@@ -74,22 +74,22 @@ export default function NewsEventsSection() {
   const [hoveredSlide, setHoveredSlide] = useState<number | null>(null)
   const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>(FALLBACK_NEWS)
 
-  // Fetch news from RSS feed on mount - NEWS ONLY, no events fetch
+  // Fetch news from RSS feed ONLY - no events API
   useEffect(() => {
-    async function loadNews() {
-      try {
-        const res = await fetch('/api/news')
-        if (res.ok) {
-          const data = await res.json()
-          if (data && data.length > 0) {
-            setFeaturedNews(data)
-          }
+    const controller = new AbortController()
+    
+    fetch('/api/news', { signal: controller.signal })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data && data.length > 0) {
+          setFeaturedNews(data)
         }
-      } catch (err) {
-        // Keep fallback data on error
-      }
-    }
-    loadNews()
+      })
+      .catch(() => {
+        // Keep fallback on error
+      })
+    
+    return () => controller.abort()
   }, [])
 
   const nextSlide = () => {
@@ -260,16 +260,18 @@ export default function NewsEventsSection() {
             </div>
           </div>
 
-          {/* Right: Upcoming Events - STATIC */}
+          {/* Right: Upcoming Events - STATIC with boxed hover effect */}
           <div className="flex flex-col">
-            <div className="space-y-8">
+            <div className="space-y-0">
               {UPCOMING_EVENTS.map((event, index) => (
                 <div key={index}>
-                  <div className="flex items-start gap-6 group cursor-pointer">
-                    <div className="flex-shrink-0 text-center">
+                  <div 
+                    className="flex items-start gap-6 group cursor-pointer p-6 -mx-6 rounded-sm transition-all duration-300 hover:bg-[#0a1f33]"
+                  >
+                    <div className="flex-shrink-0 text-center min-w-[80px]">
                       <div
-                        className="font-serif text-7xl leading-none mb-2 transition-colors"
-                        style={{ color: 'rgba(255,255,255,0.85)' }}
+                        className="font-serif text-6xl md:text-7xl leading-none mb-2 transition-colors"
+                        style={{ color: 'rgba(255,255,255,0.6)' }}
                       >
                         {event.date}
                       </div>
@@ -281,8 +283,8 @@ export default function NewsEventsSection() {
                       </div>
                     </div>
 
-                    <div className="flex-1 pt-3">
-                      <h3 className="font-serif text-xl md:text-2xl text-white mb-3 leading-snug group-hover:text-white/80 transition-colors">
+                    <div className="flex-1 pt-2">
+                      <h3 className="font-sans font-semibold text-lg md:text-xl text-white mb-3 leading-snug group-hover:text-white transition-colors">
                         {event.title}
                       </h3>
                       <div className="flex items-center gap-2 mb-4">
@@ -306,8 +308,8 @@ export default function NewsEventsSection() {
 
                   {index < UPCOMING_EVENTS.length - 1 && (
                     <div
-                      className="mt-8 border-b border-dotted"
-                      style={{ borderColor: 'rgba(255,255,255,0.2)' }}
+                      className="border-b border-dashed mx-0"
+                      style={{ borderColor: 'rgba(255,255,255,0.15)' }}
                     />
                   )}
                 </div>

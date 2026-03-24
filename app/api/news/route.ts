@@ -13,48 +13,30 @@ interface RssItem {
   link: string
 }
 
-function extractImageFromContent(content: string, debug: boolean = false): string | null {
+function extractImageFromContent(content: string): string | null {
   // Try WordPress enclosure tag (most common for featured images)
   const enclosureMatch = content.match(/<enclosure[^>]+url=["']([^"']+)["']/i)
-  if (enclosureMatch) {
-    if (debug) console.log('[v0] Found image in enclosure:', enclosureMatch[1])
-    return enclosureMatch[1]
-  }
+  if (enclosureMatch) return enclosureMatch[1]
   
   // Try to extract the first image URL from img tag
   const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i)
-  if (imgMatch) {
-    if (debug) console.log('[v0] Found image in img tag:', imgMatch[1])
-    return imgMatch[1]
-  }
+  if (imgMatch) return imgMatch[1]
   
   // Try WordPress featured image in media:content
   const mediaMatch = content.match(/<media:content[^>]+url=["']([^"']+)["']/i)
-  if (mediaMatch) {
-    if (debug) console.log('[v0] Found image in media:content:', mediaMatch[1])
-    return mediaMatch[1]
-  }
+  if (mediaMatch) return mediaMatch[1]
   
   // Try media:thumbnail
   const thumbMatch = content.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i)
-  if (thumbMatch) {
-    if (debug) console.log('[v0] Found image in media:thumbnail:', thumbMatch[1])
-    return thumbMatch[1]
-  }
+  if (thumbMatch) return thumbMatch[1]
   
   // Try extracting any image URL from content (WordPress uploads)
   const wpUploadMatch = content.match(/https?:\/\/[^\s"'<>]*wp-content\/uploads[^\s"'<>]*\.(jpg|jpeg|png|gif|webp)/i)
-  if (wpUploadMatch) {
-    if (debug) console.log('[v0] Found image in wp-content:', wpUploadMatch[0])
-    return wpUploadMatch[0]
-  }
+  if (wpUploadMatch) return wpUploadMatch[0]
   
   // Try extracting any image URL from content
   const anyUrl = content.match(/https?:\/\/[^\s"'<>]+\.(jpg|jpeg|png|gif|webp)/i)
-  if (anyUrl) {
-    if (debug) console.log('[v0] Found any image URL:', anyUrl[0])
-    return anyUrl[0]
-  }
+  if (anyUrl) return anyUrl[0]
   
   return null
 }
