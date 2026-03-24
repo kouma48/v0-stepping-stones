@@ -31,13 +31,37 @@ const defaultSlides: Slide[] = [
     primaryCta: { label: 'Discover More', href: '#discover' },
     secondaryCta: { label: 'Apply Now', href: '#admissions' },
   },
+  {
+    id: '4',
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_3729-p7kXtNozwyiIYyDW9N3Ns06ZwoV8kA.jpg' },
+    heading: 'Hands-On Learning Experience',
+    subheading: 'STEM education and practical exploration at every level',
+    primaryCta: { label: 'Explore Academics', href: '#academics' },
+    secondaryCta: { label: 'Learn More', href: '#about' },
+  },
+  {
+    id: '5',
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4673-KIiKnUrkK5Hu00YfKWLA3D5olxwI6Y.jpg' },
+    heading: 'Community & Leadership',
+    subheading: 'Students growing together in service and character',
+    primaryCta: { label: 'Student Life', href: '#student-life' },
+    secondaryCta: { label: 'Events', href: '#events' },
+  },
+  {
+    id: '6',
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4099-OFaJGhqwKjZULAsDhgSKgy4TNcXAgD.jpg' },
+    heading: 'Technology & Innovation',
+    subheading: 'Preparing students for tomorrow through cutting-edge learning',
+    primaryCta: { label: 'Discover Our Labs', href: '#labs' },
+    secondaryCta: { label: 'Apply Now', href: '#admissions' },
+  },
 ]
 
 const AUTOPLAY_INTERVAL = 6000
 
 export default function HeroCarousel() {
   const [slides, setSlides] = useState<Slide[]>(defaultSlides)
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(() => Math.floor(Math.random() * defaultSlides.length))
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(true)
   const [isTransitioning, setIsTransitioning] = useState(false)
