@@ -3,17 +3,24 @@ import Link from 'next/link'
 
 export default function FooterCtaSection() {
   return (
-    <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0a2463] via-[#0a2463]/95 to-[#0a2463]">
-      {/* School Logo */}
-      <div className="relative z-10 mb-12">
-        <Image
-          src="/images/stepping-stones-logo-white.png"
-          alt="Stepping Stones School Logo"
-          width={120}
-          height={120}
-          className="object-contain"
-        />
-      </div>
+    <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden">
+      {/* Background image */}
+      <Image
+        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4204-i40ZghEkDUnm79pliY6Md81liX540O.jpg"
+        alt="Stepping Stones School interior courtyard with multiple floors and flags"
+        fill
+        className="object-cover"
+        sizes="100vw"
+        priority
+      />
+
+      {/* Dark overlay for text readability */}
+      <div 
+        className="absolute inset-0" 
+        style={{ 
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.6) 100%)' 
+        }} 
+      />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">

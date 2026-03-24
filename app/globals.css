@@ -184,6 +184,12 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* ── Fix Next.js Image aspect ratio warnings ─────────────────────────────── */
+  img[src*="stepping-stones-logo"] {
+    width: auto;
+    height: auto;
+  }
 }
 
 /* ── Scroll-reveal animation ─────────────────────────────────────────────── */
