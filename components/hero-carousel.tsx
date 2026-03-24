@@ -61,7 +61,7 @@ const AUTOPLAY_INTERVAL = 6000
 
 export default function HeroCarousel() {
   const [slides, setSlides] = useState<Slide[]>(defaultSlides)
-  const [current, setCurrent] = useState(() => Math.floor(Math.random() * defaultSlides.length))
+  const [current, setCurrent] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(true)
   const [isTransitioning, setIsTransitioning] = useState(false)
@@ -69,9 +69,17 @@ export default function HeroCarousel() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [pinModalOpen, setPinModalOpen] = useState(false)
   const [adminClickCount, setAdminClickCount] = useState(0)
+  const [isHydrated, setIsHydrated] = useState(false)
   const adminClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+
+  // Randomize starting slide after hydration
+  useEffect(() => {
+    setIsHydrated(true)
+    const randomIndex = Math.floor(Math.random() * defaultSlides.length)
+    setCurrent(randomIndex)
+  }, [])
 
   // Clamp current index if slides are removed
   useEffect(() => {

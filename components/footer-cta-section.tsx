@@ -6,8 +6,8 @@ export default function FooterCtaSection() {
     <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden">
       {/* Background image */}
       <Image
-        src="/images/footer-cta-bg.jpg"
-        alt="Students collaborating at Stepping Stones School"
+        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4899-Qin8Dlix7cUSIb98bhO3WeD0e3hn7h.jpg"
+        alt="Students walking in front of school bus at Stepping Stones School"
         fill
         className="object-cover"
         sizes="100vw"
@@ -24,18 +24,6 @@ export default function FooterCtaSection() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">
-        {/* School logo */}
-        <div className="mb-10 relative" style={{ width: 140, height: 140 }}>
-          <Image
-            src="/images/stepping-stones-logo-white.png"
-            alt="Stepping Stones School Logo"
-            fill
-            className="object-contain"
-            style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))' }}
-            priority
-          />
-        </div>
-
         {/* Heading */}
         <h2 
           className="font-serif text-[clamp(2rem,5vw,3.5rem)] leading-[1.15] text-balance mb-12 text-white"
