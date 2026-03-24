@@ -1,5 +1,5 @@
 'use client'
-
+// News-only fetch v2 - events remain static
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
@@ -79,15 +79,21 @@ export default function NewsEventsSection() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        console.log('[v0] Fetching news from /api/news...')
         const response = await fetch('/api/news')
+        console.log('[v0] Response status:', response.status)
         if (response.ok) {
           const data = await response.json()
+          console.log('[v0] News data received:', data?.length, 'items')
+          console.log('[v0] First item image:', data?.[0]?.image)
           if (data && data.length > 0) {
             setFeaturedNews(data)
           }
+        } else {
+          console.log('[v0] Response not ok, using fallback')
         }
       } catch (error) {
-        console.error('Error fetching news:', error)
+        console.error('[v0] Error fetching news:', error)
         // Keep fallback data
       } finally {
         setIsLoading(false)
