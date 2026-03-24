@@ -7,21 +7,22 @@ export default function Footer() {
     <footer className="bg-[#0a2463] text-white">
       {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        {/* Top section with logo and CTA buttons */}
-        <div className="text-center mb-16 pb-12 border-b border-white/20">
-          <div className="flex justify-center mb-8">
-            <div className="relative w-32 h-32">
-              <Image
-                src="/images/stepping-stones-logo-white.png"
-                alt="Stepping Stones School Logo"
-                fill
-                className="object-contain"
-              />
-            </div>
+        {/* Top section with courtyard image and CTA overlay */}
+        <div className="mb-16 pb-12 border-b border-white/20 relative group">
+          {/* Courtyard image */}
+          <div className="relative w-full h-64 md:h-80 mb-8 overflow-hidden">
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4204-5LFvjDvWXEvshgapgefUwiO1P5wfUC.jpg"
+              alt="Stepping Stones School Courtyard"
+              fill
+              className="object-cover"
+            />
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a2463] via-[#0a2463]/40 to-transparent" />
           </div>
           
-          {/* Apply Now and Book Now Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-3xl mx-auto mb-12 border border-white/30">
+          {/* CTA Buttons - positioned over or below image */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-3xl mx-auto mb-8 border border-white/30">
             <Link
               href="/apply/"
               className="px-8 py-6 text-white hover:bg-white/10 transition-colors duration-300 font-sans font-light text-lg tracking-wide border-r border-white/30 text-center"
@@ -36,7 +37,7 @@ export default function Footer() {
             </Link>
           </div>
           
-          <h3 className="font-serif text-3xl md:text-4xl text-balance text-white/70 tracking-widest">
+          <h3 className="text-center font-serif text-3xl md:text-4xl text-balance text-white/70 tracking-widest">
             EMBRACING EXCELLENCE
           </h3>
         </div>
