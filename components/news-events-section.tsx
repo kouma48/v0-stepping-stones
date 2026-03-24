@@ -14,6 +14,14 @@ interface NewsArticle {
   link: string
 }
 
+interface CalendarEvent {
+  date: string
+  month: string
+  title: string
+  time: string
+  link?: string
+}
+
 // Fallback news data used while loading or on error
 const FALLBACK_NEWS: NewsArticle[] = [
   {
@@ -73,8 +81,9 @@ export default function NewsEventsSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [hoveredSlide, setHoveredSlide] = useState<number | null>(null)
   const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>(FALLBACK_NEWS)
+  const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>(UPCOMING_EVENTS)
 
-  // Fetch news from RSS feed ONLY - no events API
+  // Fetch news from RSS feed
   useEffect(() => {
     const controller = new AbortController()
     
@@ -83,6 +92,24 @@ export default function NewsEventsSection() {
       .then(data => {
         if (data && data.length > 0) {
           setFeaturedNews(data)
+        }
+      })
+      .catch(() => {
+        // Keep fallback on error
+      })
+    
+    return () => controller.abort()
+  }, [])
+
+  // Fetch events from calendar feed
+  useEffect(() => {
+    const controller = new AbortController()
+    
+    fetch('/api/events', { signal: controller.signal })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data && data.length > 0) {
+          setUpcomingEvents(data)
         }
       })
       .catch(() => {
@@ -263,7 +290,7 @@ export default function NewsEventsSection() {
           {/* Right: Upcoming Events - STATIC with boxed hover effect */}
           <div className="flex flex-col">
             <div className="space-y-0">
-              {UPCOMING_EVENTS.map((event, index) => (
+              {upcomingEvents.map((event, index) => (
                 <div key={index}>
                   <div 
                     className="flex items-start gap-6 group cursor-pointer p-6 -mx-6 rounded-sm transition-all duration-300 hover:bg-[#0a1f33]"
@@ -306,7 +333,7 @@ export default function NewsEventsSection() {
                     </div>
                   </div>
 
-                  {index < UPCOMING_EVENTS.length - 1 && (
+                  {index < upcomingEvents.length - 1 && (
                     <div
                       className="border-b border-dashed mx-0"
                       style={{ borderColor: 'rgba(255,255,255,0.15)' }}
