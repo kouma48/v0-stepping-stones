@@ -65,49 +65,114 @@ export async function GET() {
     }
 
     const xmlText = await response.text()
-
-    // Parse iCalendar format (ICS)
+    console.log('[v0] Events feed fetched, length:', xmlText.length)
+    
     const events: CalendarEvent[] = []
 
-    // Extract VEVENT blocks
-    const eventMatches = xmlText.match(/BEGIN:VEVENT[\s\S]*?END:VEVENT/g) || []
+    // Try parsing as RSS/XML format first (looking for <item> tags)
+    let eventItems = xmlText.match(/<item>[\s\S]*?<\/item>/gi)
 
-    for (let i = 0; i < Math.min(eventMatches.length, 6); i++) {
-      const eventBlock = eventMatches[i]
+    if (eventItems && eventItems.length > 0) {
+      console.log('[v0] Found', eventItems.length, 'RSS items')
+      
+      for (let i = 0; i < Math.min(eventItems.length, 6); i++) {
+        const item = eventItems[i]
+        
+        // Extract title from <title> tag
+        const titleMatch = item.match(/<title[^>]*>(.+?)<\/title>/i)
+        const title = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '').trim() : `Event ${i + 1}`
+        
+        // Extract date from <description> or custom date field
+        const descMatch = item.match(/<description[^>]*>(.+?)<\/description>/is)
+        const description = descMatch ? descMatch[1] : ''
+        
+        // Try to extract date from description or use other fields
+        const dateMatch = description.match(/(\d{1,2})\s+([A-Za-z]+)/i) || 
+                         item.match(/<dt:startDate[^>]*>(.+?)<\/dt:startDate>/i) ||
+                         item.match(/<start[^>]*>(.+?)<\/start>/i)
+        
+        if (!dateMatch) continue
 
-      // Extract key fields
-      const summaryMatch = eventBlock.match(/SUMMARY:(.+?)(?:\r?\n|$)/i)
-      const dtStartMatch = eventBlock.match(/DTSTART(?:;[^:]*)?:(.+?)(?:\r?\n|$)/i)
-      const dtEndMatch = eventBlock.match(/DTEND(?:;[^:]*)?:(.+?)(?:\r?\n|$)/i)
-      const descriptionMatch = eventBlock.match(/DESCRIPTION:(.+?)(?:\r?\n|$)/i)
+        // Parse event date
+        let dateStr = ''
+        let monthStr = ''
+        
+        if (dateMatch[1] && dateMatch[2]) {
+          // Format: "23 March"
+          dateStr = dateMatch[1]
+          const monthMap: Record<string, string> = {
+            'january': 'January', 'february': 'February', 'march': 'March',
+            'april': 'April', 'may': 'May', 'june': 'June',
+            'july': 'July', 'august': 'August', 'september': 'September',
+            'october': 'October', 'november': 'November', 'december': 'December'
+          }
+          monthStr = monthMap[dateMatch[2].toLowerCase()] || dateMatch[2]
+        } else if (dateMatch[1]) {
+          // Try parsing as ISO date
+          const parsedDate = parseEventDate(dateMatch[1])
+          if (parsedDate) {
+            dateStr = parsedDate.date
+            monthStr = parsedDate.month
+          } else {
+            continue
+          }
+        } else {
+          continue
+        }
 
-      const title = summaryMatch ? summaryMatch[1].trim() : `Event ${i + 1}`
-      const startDate = dtStartMatch ? dtStartMatch[1].trim() : null
-      const endDate = dtEndMatch ? dtEndMatch[1].trim() : null
+        // Extract time information
+        const timeMatch = description.match(/(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)/i) ||
+                         description.match(/(\d{1,2}):(\d{2})/i)
+        const timeStr = timeMatch ? description.substring(description.indexOf(timeMatch[0]), description.indexOf(timeMatch[0]) + 50).split('<')[0] : 'TBD'
 
-      // Check if event has time component (not just date)
-      const hasTime = startDate ? !startDate.match(/^\d{8}$/) : false
-      const isAllDay = !hasTime
+        events.push({
+          date: dateStr,
+          month: monthStr,
+          title,
+          time: timeStr || 'TBD',
+          link: '#',
+        })
+      }
+    } else {
+      console.log('[v0] No RSS items found, trying iCalendar format')
+      
+      // Fall back to iCalendar format (ICS)
+      const eventMatches = xmlText.match(/BEGIN:VEVENT[\s\S]*?END:VEVENT/g) || []
+      console.log('[v0] Found', eventMatches.length, 'iCalendar events')
 
-      const dateInfo = startDate ? parseEventDate(startDate) : null
-      if (!dateInfo) continue
+      for (let i = 0; i < Math.min(eventMatches.length, 6); i++) {
+        const eventBlock = eventMatches[i]
 
-      const time = parseEventTime(startDate, endDate, isAllDay)
+        const summaryMatch = eventBlock.match(/SUMMARY:(.+?)(?:\r?\n|$)/i)
+        const dtStartMatch = eventBlock.match(/DTSTART(?:;[^:]*)?:(.+?)(?:\r?\n|$)/i)
+        const dtEndMatch = eventBlock.match(/DTEND(?:;[^:]*)?:(.+?)(?:\r?\n|$)/i)
 
-      events.push({
-        date: dateInfo.date,
-        month: dateInfo.month,
-        title,
-        time,
-        link: '#', // Calendar feeds don't typically include links
-      })
+        const title = summaryMatch ? summaryMatch[1].trim() : `Event ${i + 1}`
+        const startDate = dtStartMatch ? dtStartMatch[1].trim() : null
+        const endDate = dtEndMatch ? dtEndMatch[1].trim() : null
+
+        const hasTime = startDate ? !startDate.match(/^\d{8}$/) : false
+        const isAllDay = !hasTime
+
+        const dateInfo = startDate ? parseEventDate(startDate) : null
+        if (!dateInfo) continue
+
+        const time = parseEventTime(startDate, endDate, isAllDay)
+
+        events.push({
+          date: dateInfo.date,
+          month: dateInfo.month,
+          title,
+          time,
+          link: '#',
+        })
+      }
     }
 
-    // If no events found, return empty array (component will use fallback)
+    console.log('[v0] Returning', events.length, 'events')
     return NextResponse.json(events)
   } catch (error) {
     console.error('[v0] Error fetching events:', error)
-    // Return empty array to trigger fallback in component
     return NextResponse.json([])
   }
 }
