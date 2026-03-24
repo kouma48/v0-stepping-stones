@@ -1,5 +1,5 @@
 'use client'
-// News-only fetch v2 - events remain static
+// v3 - News RSS fetch only, events static
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
@@ -14,7 +14,7 @@ interface NewsArticle {
   link: string
 }
 
-// Fallback news data
+// Fallback news data used while loading or on error
 const FALLBACK_NEWS: NewsArticle[] = [
   {
     id: 1,
@@ -22,7 +22,7 @@ const FALLBACK_NEWS: NewsArticle[] = [
     author: 'Stepping Stones School',
     date: 'Feb 26 2026',
     excerpt:
-      "This year has been a defining moment for Stepping Stones' seventh- and eighth-grade students. They have shaped the future of the campus by being the first to attend independently of both the elementary and secondary campuses.",
+      "This year has been a defining moment for Stepping Stones' seventh- and eighth-grade students.",
     image: '/images/news-feature-1.jpg',
     link: '#',
   },
@@ -32,7 +32,7 @@ const FALLBACK_NEWS: NewsArticle[] = [
     author: 'Stepping Stones School',
     date: 'Mar 15 2026',
     excerpt:
-      'Our annual Science Fair showcased remarkable innovation from students across all year groups. From renewable energy projects to biological research, our young scientists demonstrated exceptional creativity and scientific rigor.',
+      'Our annual Science Fair showcased remarkable innovation from students across all year groups.',
     image: '/images/news-feature-2.jpg',
     link: '#',
   },
@@ -42,7 +42,7 @@ const FALLBACK_NEWS: NewsArticle[] = [
     author: 'Stepping Stones School',
     date: 'Mar 20 2026',
     excerpt:
-      "The spring theatrical production of 'A Midsummer Night's Dream' captivated audiences with stunning performances, elaborate costumes, and creative staging. Our students brought Shakespeare's comedy to life with remarkable talent.",
+      "The spring theatrical production captivated audiences with stunning performances.",
     image: '/images/news-feature-3.jpg',
     link: '#',
   },
@@ -73,34 +73,25 @@ export default function NewsEventsSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [hoveredSlide, setHoveredSlide] = useState<number | null>(null)
   const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>(FALLBACK_NEWS)
-  const [isLoading, setIsLoading] = useState(true)
 
-  // Fetch news from RSS feed on mount
+  // Fetch news from RSS feed on mount - NEWS ONLY, no events fetch
   useEffect(() => {
-    const fetchNews = async () => {
+    async function loadNews() {
       try {
-        console.log('[v0] Fetching news from /api/news...')
-        const response = await fetch('/api/news')
-        console.log('[v0] Response status:', response.status)
-        if (response.ok) {
-          const data = await response.json()
-          console.log('[v0] News data received:', data?.length, 'items')
-          console.log('[v0] First item image:', data?.[0]?.image)
+        console.log('[v0] v3: Fetching news only from /api/news')
+        const res = await fetch('/api/news')
+        if (res.ok) {
+          const data = await res.json()
+          console.log('[v0] v3: Got', data?.length, 'news items')
           if (data && data.length > 0) {
             setFeaturedNews(data)
           }
-        } else {
-          console.log('[v0] Response not ok, using fallback')
         }
-      } catch (error) {
-        console.error('[v0] Error fetching news:', error)
-        // Keep fallback data
-      } finally {
-        setIsLoading(false)
+      } catch (err) {
+        console.error('[v0] v3: News fetch error:', err)
       }
     }
-
-    fetchNews()
+    loadNews()
   }, [])
 
   const nextSlide = () => {
@@ -175,6 +166,7 @@ export default function NewsEventsSection() {
                     fill
                     className="object-cover"
                     sizes="(min-width: 1024px) 60vw, 90vw"
+                    unoptimized
                   />
 
                   {/* Default overlay - title at bottom */}
@@ -186,7 +178,7 @@ export default function NewsEventsSection() {
                     <h3 className="font-serif text-3xl md:text-4xl text-white">{article.title}</h3>
                   </div>
 
-                  {/* Hover overlay - darker red with vignette */}
+                  {/* Hover overlay */}
                   <div
                     className={`absolute inset-0 flex flex-col justify-center px-10 md:px-16 py-12 transition-all duration-500 ${
                       hoveredSlide === index
@@ -270,13 +262,12 @@ export default function NewsEventsSection() {
             </div>
           </div>
 
-          {/* Right: Upcoming Events */}
+          {/* Right: Upcoming Events - STATIC */}
           <div className="flex flex-col">
             <div className="space-y-8">
               {UPCOMING_EVENTS.map((event, index) => (
                 <div key={index}>
                   <div className="flex items-start gap-6 group cursor-pointer">
-                    {/* Date */}
                     <div className="flex-shrink-0 text-center">
                       <div
                         className="font-serif text-7xl leading-none mb-2 transition-colors"
@@ -292,7 +283,6 @@ export default function NewsEventsSection() {
                       </div>
                     </div>
 
-                    {/* Event details */}
                     <div className="flex-1 pt-3">
                       <h3 className="font-serif text-xl md:text-2xl text-white mb-3 leading-snug group-hover:text-white/80 transition-colors">
                         {event.title}
@@ -316,7 +306,6 @@ export default function NewsEventsSection() {
                     </div>
                   </div>
 
-                  {/* Dotted separator */}
                   {index < UPCOMING_EVENTS.length - 1 && (
                     <div
                       className="mt-8 border-b border-dotted"
