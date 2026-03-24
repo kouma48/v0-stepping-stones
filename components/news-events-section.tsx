@@ -106,13 +106,21 @@ export default function NewsEventsSection() {
     const controller = new AbortController()
     
     fetch('/api/events', { signal: controller.signal })
-      .then(res => res.ok ? res.json() : null)
+      .then(res => {
+        console.log('[v0] Events API response status:', res.status)
+        return res.ok ? res.json() : null
+      })
       .then(data => {
+        console.log('[v0] Events data received:', data)
         if (data && data.length > 0) {
+          console.log('[v0] Setting', data.length, 'events')
           setUpcomingEvents(data)
+        } else {
+          console.log('[v0] No events returned, using fallback')
         }
       })
-      .catch(() => {
+      .catch(err => {
+        console.error('[v0] Events fetch error:', err)
         // Keep fallback on error
       })
     
