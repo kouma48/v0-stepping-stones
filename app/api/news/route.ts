@@ -93,28 +93,22 @@ function formatDate(dateString: string): string {
 
 export async function GET() {
   try {
-    console.log('[v0] Fetching RSS feed from:', RSS_FEED_URL)
-    
     const response = await fetch(RSS_FEED_URL, {
-      next: { revalidate: 300 }, // Cache for 5 minutes
+      next: { revalidate: 0 }, // No caching - fetch fresh on every request
       headers: {
         'Accept': 'application/rss+xml, application/xml, text/xml',
       },
     })
 
     if (!response.ok) {
-      console.error('[v0] RSS fetch failed:', response.status)
       throw new Error(`Failed to fetch RSS feed: ${response.status}`)
     }
 
     const xmlText = await response.text()
-    console.log('[v0] RSS feed fetched, length:', xmlText.length)
     
     // Parse RSS XML
     const items: RssItem[] = []
     const itemMatches = xmlText.match(/<item>([\s\S]*?)<\/item>/gi) || []
-    
-    console.log('[v0] Found', itemMatches.length, 'items in RSS feed')
     
     for (let i = 0; i < Math.min(itemMatches.length, 6); i++) {
       const itemXml = itemMatches[i]
@@ -144,25 +138,19 @@ export async function GET() {
       // Extract image from various sources
       let image: string | null = null
       
-      console.log('[v0] Processing item:', title.substring(0, 50))
-      
       // Try item XML first (enclosure, media:content)
-      image = extractImageFromContent(itemXml, true)
+      image = extractImageFromContent(itemXml)
       
       // Then try content encoded section
       if (!image) {
-        console.log('[v0] No image in item XML, trying content...')
-        image = extractImageFromContent(content, true)
+        image = extractImageFromContent(content)
       }
       
       // Fallback to placeholder based on index
       if (!image) {
-        console.log('[v0] No image found, using fallback')
         const placeholderIndex = (i % 3) + 1
         image = `/images/news-feature-${placeholderIndex}.jpg`
       }
-      
-      console.log('[v0] Final image for item:', image)
       
       items.push({
         id: `news-${i + 1}`,
@@ -175,7 +163,6 @@ export async function GET() {
       })
     }
 
-    console.log('[v0] Returning', items.length, 'news items')
     return NextResponse.json(items)
   } catch (error) {
     console.error('Error fetching RSS feed:', error)

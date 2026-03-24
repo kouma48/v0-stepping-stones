@@ -1,5 +1,5 @@
 'use client'
-// v3 - News RSS fetch only, events static
+// v4 - Cleaned cache, news-only fetch
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
@@ -78,17 +78,15 @@ export default function NewsEventsSection() {
   useEffect(() => {
     async function loadNews() {
       try {
-        console.log('[v0] v3: Fetching news only from /api/news')
         const res = await fetch('/api/news')
         if (res.ok) {
           const data = await res.json()
-          console.log('[v0] v3: Got', data?.length, 'news items')
           if (data && data.length > 0) {
             setFeaturedNews(data)
           }
         }
       } catch (err) {
-        console.error('[v0] v3: News fetch error:', err)
+        // Keep fallback data on error
       }
     }
     loadNews()
