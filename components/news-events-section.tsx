@@ -1,70 +1,95 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
 
-const FEATURED_NEWS = [
-  {
-    id: 1,
-    title: 'The Nexus of Greatness',
-    author: 'Jennifer Kepley, Latin Instructor',
-    date: 'Feb 26 2026',
-    excerpt:
-      "This year has been a defining moment for Stepping Stones' seventh- and eighth-grade students. They have shaped the future of the campus by being the first to attend independently of both the elementary and secondary campuses.",
-    image: '/images/news-feature-1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Science Fair Excellence',
-    author: 'Dr. Michael Ouma, Science Department',
-    date: 'Mar 15 2026',
-    excerpt:
-      'Our annual Science Fair showcased remarkable innovation from students across all year groups. From renewable energy projects to biological research, our young scientists demonstrated exceptional creativity and scientific rigor.',
-    image: '/images/news-feature-2.jpg',
-  },
-  {
-    id: 3,
-    title: 'Drama Production Success',
-    author: 'Sarah Wanjiru, Performing Arts',
-    date: 'Mar 20 2026',
-    excerpt:
-      "The spring theatrical production of 'A Midsummer Night's Dream' captivated audiences with stunning performances, elaborate costumes, and creative staging. Our students brought Shakespeare's comedy to life with remarkable talent.",
-    image: '/images/news-feature-3.jpg',
-  },
-]
+interface NewsArticle {
+  id: string | number
+  title: string
+  author?: string
+  date: string
+  excerpt: string
+  image: string
+  link?: string
+}
 
-const UPCOMING_EVENTS = [
-  {
-    date: '23',
-    month: 'March',
-    title: 'Fourth Quarter Begins',
-    time: 'all day',
-  },
-  {
-    date: '25',
-    month: 'March',
-    title: 'National Honor Society Induction Ceremony',
-    time: '6:30 PM - 8:30 PM',
-  },
-  {
-    date: '26',
-    month: 'March',
-    title: 'Board of Directors Meeting',
-    time: '6:00 PM - 9:00 PM',
-  },
-]
+interface Event {
+  id: string | number
+  date: string
+  month: string
+  title: string
+  time: string
+  link?: string
+}
 
 export default function NewsEventsSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [hoveredSlide, setHoveredSlide] = useState<number | null>(null)
+  const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>([])
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
+        const [newsRes, eventsRes] = await Promise.all([
+          fetch('/api/news'),
+          fetch('/api/events'),
+        ])
+
+        if (!newsRes.ok || !eventsRes.ok) {
+          throw new Error('Failed to fetch data')
+        }
+
+        const newsData = await newsRes.json()
+        const eventsData = await eventsRes.json()
+
+        setFeaturedNews(newsData)
+        setUpcomingEvents(eventsData)
+      } catch (err) {
+        console.error('Error fetching news and events:', err)
+        setError('Unable to load news and events. Please try again later.')
+        // Fall back to empty arrays
+        setFeaturedNews([])
+        setUpcomingEvents([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % FEATURED_NEWS.length)
+    setCurrentSlide((prev) => (prev + 1) % (featuredNews.length || 1))
   }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + FEATURED_NEWS.length) % FEATURED_NEWS.length)
+    setCurrentSlide((prev) => (prev - 1 + (featuredNews.length || 1)) % (featuredNews.length || 1))
+  }
+
+  // Show loading or error state
+  if (isLoading) {
+    return (
+      <section className="relative py-20 md:py-24 overflow-hidden" style={{ background: '#0F2C4C' }}>
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 text-center text-white">
+          <p>Loading news and events...</p>
+        </div>
+      </section>
+    )
+  }
+
+  if (error && featuredNews.length === 0 && upcomingEvents.length === 0) {
+    return (
+      <section className="relative py-20 md:py-24 overflow-hidden" style={{ background: '#0F2C4C' }}>
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 text-center text-white">
+          <p>{error}</p>
+        </div>
+      </section>
+    )
   }
 
   return (
