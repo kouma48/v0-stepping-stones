@@ -82,54 +82,52 @@ export async function GET() {
         const titleMatch = item.match(/<title[^>]*>(.+?)<\/title>/i)
         const title = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '').trim() : `Event ${i + 1}`
         
-        // Extract date from <description> or custom date field
-        const descMatch = item.match(/<description[^>]*>(.+?)<\/description>/is)
-        const description = descMatch ? descMatch[1] : ''
-        
-        // Try to extract date from description or use other fields
-        const dateMatch = description.match(/(\d{1,2})\s+([A-Za-z]+)/i) || 
-                         item.match(/<dt:startDate[^>]*>(.+?)<\/dt:startDate>/i) ||
-                         item.match(/<start[^>]*>(.+?)<\/start>/i)
-        
-        if (!dateMatch) continue
-
-        // Parse event date
+        // Extract date from pubDate tag (RSS standard) - Format: Mon, 23 Mar 2026 00:00:00 GMT
+        const pubDateMatch = item.match(/<pubDate[^>]*>(.+?)<\/pubDate>/i)
         let dateStr = ''
         let monthStr = ''
         
-        if (dateMatch[1] && dateMatch[2]) {
-          // Format: "23 March"
-          dateStr = dateMatch[1]
-          const monthMap: Record<string, string> = {
-            'january': 'January', 'february': 'February', 'march': 'March',
-            'april': 'April', 'may': 'May', 'june': 'June',
-            'july': 'July', 'august': 'August', 'september': 'September',
-            'october': 'October', 'november': 'November', 'december': 'December'
-          }
-          monthStr = monthMap[dateMatch[2].toLowerCase()] || dateMatch[2]
-        } else if (dateMatch[1]) {
-          // Try parsing as ISO date
-          const parsedDate = parseEventDate(dateMatch[1])
+        if (pubDateMatch) {
+          const pubDateStr = pubDateMatch[1].trim()
+          console.log('[v0] Parsing pubDate:', pubDateStr)
+          const parsedDate = parseEventDate(pubDateStr)
           if (parsedDate) {
             dateStr = parsedDate.date
             monthStr = parsedDate.month
-          } else {
-            continue
           }
-        } else {
+        }
+        
+        // Fallback: try description for date/time info
+        const descMatch = item.match(/<description[^>]*>(.+?)<\/description>/is)
+        const description = descMatch ? descMatch[1].replace(/<[^>]*>/g, '') : ''
+        
+        // If still no date, skip
+        if (!dateStr || !monthStr) {
+          console.log('[v0] Skipping event - no date found:', title)
           continue
         }
 
-        // Extract time information
-        const timeMatch = description.match(/(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)/i) ||
-                         description.match(/(\d{1,2}):(\d{2})/i)
-        const timeStr = timeMatch ? description.substring(description.indexOf(timeMatch[0]), description.indexOf(timeMatch[0]) + 50).split('<')[0] : 'TBD'
+        // Extract time information from description
+        let timeStr = 'TBD'
+        
+        // Check for "all day" pattern
+        if (description.toLowerCase().includes('all day')) {
+          timeStr = 'all day'
+        } else {
+          // Look for time patterns like "6:30 PM - 8:30 PM" or "6:30 PM"
+          const timeMatch = description.match(/(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)(\s*-\s*(\d{1,2}):(\d{2})\s*(AM|PM|am|pm))?/i)
+          if (timeMatch) {
+            timeStr = timeMatch[0].trim()
+          }
+        }
+
+        console.log('[v0] Parsed event:', { title, date: dateStr, month: monthStr, time: timeStr })
 
         events.push({
           date: dateStr,
           month: monthStr,
           title,
-          time: timeStr || 'TBD',
+          time: timeStr,
           link: '#',
         })
       }
