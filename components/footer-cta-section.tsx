@@ -6,8 +6,8 @@ export default function FooterCtaSection() {
     <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden">
       {/* Background image */}
       <Image
-        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4899-Qin8Dlix7cUSIb98bhO3WeD0e3hn7h.jpg"
-        alt="Students walking in front of school bus at Stepping Stones School"
+        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4204-i40ZghEkDUnm79pliY6Md81liX540O.jpg"
+        alt="Stepping Stones School interior courtyard with multiple floors and flags"
         fill
         className="object-cover"
         sizes="100vw"
