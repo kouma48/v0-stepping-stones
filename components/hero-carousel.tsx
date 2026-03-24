@@ -9,7 +9,7 @@ import { CarouselPortals } from './carousel-portals'
 const defaultSlides: Slide[] = [
   {
     id: '1',
-    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4219-PjvUy4VQ7yQrEJF9T1NTuIlxjnKzrp.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4219-PjvUy4VQ7yQrEJF9T1NTuIlxjnKzrp.webp' },
     heading: 'Nurturing Principled Hearts',
     subheading: 'A co-educational independent school from Early Years to Sixth Form',
     primaryCta: { label: 'Learn More', href: '#about' },
@@ -17,7 +17,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: '2',
-    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4754-AhfjvtchhsLEcDDAb3gKneB8EhVPRW.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4754-AhfjvtchhsLEcDDAb3gKneB8EhVPRW.webp' },
     heading: 'Brilliant Minds in the Making',
     subheading: 'Small classes, exceptional teachers, and boundless opportunity',
     primaryCta: { label: 'Our Approach', href: '#approach' },
@@ -25,7 +25,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: '3',
-    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4801-1fqYCvYi05mWOyhCtnQTVINJLeFbHV.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4801-1fqYCvYi05mWOyhCtnQTVINJLeFbHV.webp' },
     heading: 'Every Child Finds Their Stage',
     subheading: 'Arts, sport, academia — a whole-child education that lasts a lifetime',
     primaryCta: { label: 'Discover More', href: '#discover' },
@@ -33,7 +33,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: '4',
-    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_3729-p7kXtNozwyiIYyDW9N3Ns06ZwoV8kA.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_3729-p7kXtNozwyiIYyDW9N3Ns06ZwoV8kA.webp' },
     heading: 'Hands-On Learning Experience',
     subheading: 'STEM education and practical exploration at every level',
     primaryCta: { label: 'Explore Academics', href: '#academics' },
@@ -41,7 +41,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: '5',
-    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4673-KIiKnUrkK5Hu00YfKWLA3D5olxwI6Y.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4673-KIiKnUrkK5Hu00YfKWLA3D5olxwI6Y.webp' },
     heading: 'Community & Leadership',
     subheading: 'Students growing together in service and character',
     primaryCta: { label: 'Student Life', href: '#student-life' },
@@ -49,7 +49,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: '6',
-    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4099-OFaJGhqwKjZULAsDhgSKgy4TNcXAgD.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4099-OFaJGhqwKjZULAsDhgSKgy4TNcXAgD.webp' },
     heading: 'Technology & Innovation',
     subheading: 'Preparing students for tomorrow through cutting-edge learning',
     primaryCta: { label: 'Discover Our Labs', href: '#labs' },
