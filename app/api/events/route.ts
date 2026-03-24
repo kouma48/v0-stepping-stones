@@ -82,6 +82,10 @@ export async function GET() {
         const titleMatch = item.match(/<title[^>]*>(.+?)<\/title>/i)
         const title = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '').trim() : `Event ${i + 1}`
         
+        // Extract link from <link> tag
+        const linkMatch = item.match(/<link[^>]*>(.+?)<\/link>/i)
+        const link = linkMatch ? linkMatch[1].trim() : '#'
+        
         // Extract date from pubDate tag (RSS standard) - Format: Mon, 23 Mar 2026 00:00:00 GMT
         const pubDateMatch = item.match(/<pubDate[^>]*>(.+?)<\/pubDate>/i)
         let dateStr = ''
@@ -121,14 +125,14 @@ export async function GET() {
           }
         }
 
-        console.log('[v0] Parsed event:', { title, date: dateStr, month: monthStr, time: timeStr })
+        console.log('[v0] Parsed event:', { title, date: dateStr, month: monthStr, time: timeStr, link })
 
         events.push({
           date: dateStr,
           month: monthStr,
           title,
           time: timeStr,
-          link: '#',
+          link,
         })
       }
     } else {

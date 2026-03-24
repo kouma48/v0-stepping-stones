@@ -332,7 +332,9 @@ export default function NewsEventsSection() {
                         </span>
                       </div>
                       <a
-                        href="#"
+                        href={event.link || '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 font-sans text-xs tracking-widest uppercase group-hover:gap-3 transition-all"
                         style={{ color: 'rgba(255,255,255,0.9)' }}
                       >
