@@ -18,7 +18,7 @@ const TABS: TabContent[] = [
       'Through competitive sport, Stepping Stones students build resilience, teamwork, and the lifelong discipline that defines great character.',
     ctaText: 'View Programmes',
     ctaHref: '#sports',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/athletcis-w8InpzMK32FEzMTCMaiA1nVtThsHEG.jpg',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/athletcis-gPLP2PmQ7bq5SyloslzRd0uqNS0TRX.jpg',
     imageAlt: 'Students playing basketball on the school court',
   },
   {
