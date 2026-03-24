@@ -1,36 +1,50 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
 
-const FEATURED_NEWS = [
+interface NewsArticle {
+  id: string | number
+  title: string
+  author: string
+  date: string
+  excerpt: string
+  image: string
+  link: string
+}
+
+// Fallback news data
+const FALLBACK_NEWS: NewsArticle[] = [
   {
     id: 1,
     title: 'The Nexus of Greatness',
-    author: 'Jennifer Kepley, Latin Instructor',
+    author: 'Stepping Stones School',
     date: 'Feb 26 2026',
     excerpt:
       "This year has been a defining moment for Stepping Stones' seventh- and eighth-grade students. They have shaped the future of the campus by being the first to attend independently of both the elementary and secondary campuses.",
     image: '/images/news-feature-1.jpg',
+    link: '#',
   },
   {
     id: 2,
     title: 'Science Fair Excellence',
-    author: 'Dr. Michael Ouma, Science Department',
+    author: 'Stepping Stones School',
     date: 'Mar 15 2026',
     excerpt:
       'Our annual Science Fair showcased remarkable innovation from students across all year groups. From renewable energy projects to biological research, our young scientists demonstrated exceptional creativity and scientific rigor.',
     image: '/images/news-feature-2.jpg',
+    link: '#',
   },
   {
     id: 3,
     title: 'Drama Production Success',
-    author: 'Sarah Wanjiru, Performing Arts',
+    author: 'Stepping Stones School',
     date: 'Mar 20 2026',
     excerpt:
       "The spring theatrical production of 'A Midsummer Night's Dream' captivated audiences with stunning performances, elaborate costumes, and creative staging. Our students brought Shakespeare's comedy to life with remarkable talent.",
     image: '/images/news-feature-3.jpg',
+    link: '#',
   },
 ]
 
@@ -58,13 +72,37 @@ const UPCOMING_EVENTS = [
 export default function NewsEventsSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [hoveredSlide, setHoveredSlide] = useState<number | null>(null)
+  const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>(FALLBACK_NEWS)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Fetch news from RSS feed on mount
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await fetch('/api/news')
+        if (response.ok) {
+          const data = await response.json()
+          if (data && data.length > 0) {
+            setFeaturedNews(data)
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching news:', error)
+        // Keep fallback data
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchNews()
+  }, [])
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % FEATURED_NEWS.length)
+    setCurrentSlide((prev) => (prev + 1) % featuredNews.length)
   }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + FEATURED_NEWS.length) % FEATURED_NEWS.length)
+    setCurrentSlide((prev) => (prev - 1 + featuredNews.length) % featuredNews.length)
   }
 
   return (
@@ -115,7 +153,7 @@ export default function NewsEventsSection() {
 
             {/* Carousel container */}
             <div className="relative aspect-[4/3] rounded-sm overflow-hidden">
-              {FEATURED_NEWS.map((article, index) => (
+              {featuredNews.map((article, index) => (
                 <div
                   key={article.id}
                   className={`absolute inset-0 transition-opacity duration-700 ${
@@ -162,7 +200,8 @@ export default function NewsEventsSection() {
                       {article.excerpt}
                     </p>
                     <a
-                      href="#"
+                      href={article.link}
+                      target="_parent"
                       className="inline-flex items-center gap-2 font-sans text-sm tracking-widest uppercase text-white hover:gap-3 transition-all"
                     >
                       READ MORE <ArrowRight className="w-4 h-4" />
@@ -191,7 +230,7 @@ export default function NewsEventsSection() {
             {/* Carousel dots and arrows */}
             <div className="flex justify-between items-center mt-6">
               <div className="flex gap-2">
-                {FEATURED_NEWS.map((_, index) => (
+                {featuredNews.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
@@ -285,13 +324,15 @@ export default function NewsEventsSection() {
             {/* Bottom buttons */}
             <div className="flex gap-4 mt-12 pt-8">
               <a
-                href="#"
+                href="/news/"
+                target="_parent"
                 className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
               >
                 MORE NEWS
               </a>
               <a
-                href="#"
+                href="/events/"
+                target="_parent"
                 className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
               >
                 FULL CALENDAR
