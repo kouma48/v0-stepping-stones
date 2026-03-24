@@ -57,7 +57,16 @@ const defaultSlides: Slide[] = [
   },
 ]
 
-const AUTOPLAY_INTERVAL = 6000
+const AUTOPLAY_INTERVAL = 7000
+const TRANSITION_DURATION = 1200 // ms for crossfade
+
+// Ken Burns animation variants - subtle zoom and pan effects
+const kenBurnsVariants = [
+  'animate-ken-burns-1',
+  'animate-ken-burns-2',
+  'animate-ken-burns-3',
+  'animate-ken-burns-4',
+]
 
 export default function HeroCarousel() {
   const [slides, setSlides] = useState<Slide[]>(defaultSlides)
@@ -74,11 +83,21 @@ export default function HeroCarousel() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
-  // Randomize starting slide after hydration
+  // Randomize starting slide after hydration with a small delay
   useEffect(() => {
-    setIsHydrated(true)
-    const randomIndex = Math.floor(Math.random() * defaultSlides.length)
-    setCurrent(randomIndex)
+    // Use requestAnimationFrame to ensure we're past the hydration phase
+    const raf = requestAnimationFrame(() => {
+      setIsHydrated(true)
+      // Small timeout to ensure hydration is fully complete before randomizing
+      const timeout = setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * defaultSlides.length)
+        if (randomIndex !== 0) {
+          setCurrent(randomIndex)
+        }
+      }, 50)
+      return () => clearTimeout(timeout)
+    })
+    return () => cancelAnimationFrame(raf)
   }, [])
 
   // Clamp current index if slides are removed
@@ -90,10 +109,10 @@ export default function HeroCarousel() {
     (index: number) => {
       if (isTransitioning) return
       setIsTransitioning(true)
+      setCurrent((index + slides.length) % slides.length)
       setTimeout(() => {
-        setCurrent((index + slides.length) % slides.length)
         setIsTransitioning(false)
-      }, 300)
+      }, TRANSITION_DURATION)
     },
     [isTransitioning, slides.length]
   )
@@ -147,45 +166,52 @@ export default function HeroCarousel() {
         aria-label="Hero carousel"
       >
         {/* Slides */}
-        {slides.map((s, i) => (
-          <div
-            key={s.id}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              i === current
-                ? isTransitioning ? 'opacity-0' : 'opacity-100'
-                : 'opacity-0 pointer-events-none'
-            }`}
-            aria-hidden={i !== current}
-          >
-            {s.media.type === 'image' ? (
-              <Image
-                src={s.media.src}
-                alt={s.heading}
-                fill
-                priority
-                fetchPriority="high"
-                loading="eager"
-                className="object-cover"
-                sizes="100vw"
-              />
-            ) : (
-              <video
-                ref={(el) => { videoRefs.current[i] = el }}
-                src={s.media.src}
-                poster={(s.media as SlideMedia & { type: 'video'; poster?: string }).poster}
-                autoPlay={i === current && isPlaying}
-                loop
-                muted={isMuted}
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            )}
-            {/* Bottom overlay — darkens lower portion for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            {/* Top overlay — darkens upper portion for header/logo legibility */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-transparent" />
-          </div>
-        ))}
+        {slides.map((s, i) => {
+          const isActive = i === current
+          const kenBurnsClass = kenBurnsVariants[i % kenBurnsVariants.length]
+          
+          return (
+            <div
+              key={s.id}
+              suppressHydrationWarning
+              className={`absolute inset-0 transition-opacity ease-in-out ${
+                isActive ? 'opacity-100 z-[1]' : 'opacity-0 z-0 pointer-events-none'
+              }`}
+              style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
+              aria-hidden={!isActive}
+            >
+              {s.media.type === 'image' ? (
+                <div className="absolute inset-0 overflow-hidden">
+                  <Image
+                    src={s.media.src}
+                    alt={s.heading}
+                    fill
+                    priority
+                    fetchPriority="high"
+                    loading="eager"
+                    className={`object-cover ${isActive ? kenBurnsClass : ''}`}
+                    sizes="100vw"
+                  />
+                </div>
+              ) : (
+                <video
+                  ref={(el) => { videoRefs.current[i] = el }}
+                  src={s.media.src}
+                  poster={(s.media as SlideMedia & { type: 'video'; poster?: string }).poster}
+                  autoPlay={isActive && isPlaying}
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              )}
+              {/* Bottom overlay — darkens lower portion for text legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              {/* Top overlay — darkens upper portion for header/logo legibility */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-transparent" />
+            </div>
+          )
+        })}
 
         {/* Centered text positioned toward bottom with downward arrow */}
         <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-20 md:pb-32 z-10 px-8">
@@ -211,10 +237,11 @@ export default function HeroCarousel() {
         </div>
 
         {/* Right-edge dot indicators */}
-        <div className="absolute right-5 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10">
+        <div className="absolute right-5 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10" suppressHydrationWarning>
           {slides.map((_, i) => (
             <button
               key={i}
+              suppressHydrationWarning
               onClick={() => goTo(i)}
               aria-label={`Go to slide ${i + 1}`}
               className={`w-2 rounded-full transition-all duration-300 ${
