@@ -21,16 +21,16 @@ export default function Footer() {
           </div>
           
           {/* Apply Now and Book Now Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-3xl mx-auto mb-12 border border-white/30">
             <Link
               href="/apply/"
-              className="px-8 py-4 border-2 border-white/40 text-white hover:border-white hover:bg-white/5 transition-all duration-300 font-sans font-light text-lg tracking-wide"
+              className="px-8 py-6 text-white hover:bg-white/10 transition-colors duration-300 font-sans font-light text-lg tracking-wide border-r border-white/30 text-center"
             >
               Apply Now
             </Link>
             <Link
               href="/book-a-visit/"
-              className="px-8 py-4 border-2 border-white/40 text-white hover:border-white hover:bg-white/5 transition-all duration-300 font-sans font-light text-lg tracking-wide"
+              className="px-8 py-6 text-white hover:bg-white/10 transition-colors duration-300 font-sans font-light text-lg tracking-wide text-center"
             >
               Book Now
             </Link>
