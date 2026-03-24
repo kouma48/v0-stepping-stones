@@ -14,16 +14,28 @@ interface RssItem {
 }
 
 function extractImageFromContent(content: string): string | null {
-  // Try to extract the first image URL from the content
+  // Try to extract the first image URL from img tag
   const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i)
   if (imgMatch) {
     return imgMatch[1]
   }
   
-  // Try media:content or enclosure
-  const mediaMatch = content.match(/url=["']([^"']+\.(jpg|jpeg|png|gif|webp))["']/i)
+  // Try WordPress featured image in media:content
+  const mediaMatch = content.match(/<media:content[^>]+url=["']([^"']+)["']/i)
   if (mediaMatch) {
     return mediaMatch[1]
+  }
+  
+  // Try media:thumbnail
+  const thumbMatch = content.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i)
+  if (thumbMatch) {
+    return thumbMatch[1]
+  }
+  
+  // Try extracting any image URL from content
+  const anyUrl = content.match(/https?:\/\/[^\s"'<>]+\.(jpg|jpeg|png|gif|webp)/i)
+  if (anyUrl) {
+    return anyUrl[0]
   }
   
   return null
@@ -63,6 +75,8 @@ function formatDate(dateString: string): string {
 
 export async function GET() {
   try {
+    console.log('[v0] Fetching RSS feed from:', RSS_FEED_URL)
+    
     const response = await fetch(RSS_FEED_URL, {
       next: { revalidate: 300 }, // Cache for 5 minutes
       headers: {
@@ -71,14 +85,18 @@ export async function GET() {
     })
 
     if (!response.ok) {
+      console.error('[v0] RSS fetch failed:', response.status)
       throw new Error(`Failed to fetch RSS feed: ${response.status}`)
     }
 
     const xmlText = await response.text()
+    console.log('[v0] RSS feed fetched, length:', xmlText.length)
     
     // Parse RSS XML
     const items: RssItem[] = []
     const itemMatches = xmlText.match(/<item>([\s\S]*?)<\/item>/gi) || []
+    
+    console.log('[v0] Found', itemMatches.length, 'items in RSS feed')
     
     for (let i = 0; i < Math.min(itemMatches.length, 6); i++) {
       const itemXml = itemMatches[i]
@@ -105,14 +123,21 @@ export async function GET() {
       
       const excerpt = extractExcerpt(content, 250)
       
-      // Extract image from content or media tags
-      let image = extractImageFromContent(itemXml)
+      // Extract image from various sources
+      let image: string | null = null
+      
+      // Try media:content first
+      image = extractImageFromContent(itemXml)
+      
+      // Then try content encoded section
       if (!image) {
         image = extractImageFromContent(content)
       }
-      // Fallback image
+      
+      // Fallback to placeholder based on index
       if (!image) {
-        image = '/images/news-feature-1.jpg'
+        const placeholderIndex = (i % 3) + 1
+        image = `/images/news-feature-${placeholderIndex}.jpg`
       }
       
       items.push({
@@ -126,6 +151,7 @@ export async function GET() {
       })
     }
 
+    console.log('[v0] Returning', items.length, 'news items')
     return NextResponse.json(items)
   } catch (error) {
     console.error('Error fetching RSS feed:', error)
