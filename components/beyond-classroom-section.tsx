@@ -44,8 +44,8 @@ const TABS: TabContent[] = [
       'Our pastoral team nurtures emotional well-being and moral character, ensuring every child feels deeply valued, safe, and supported throughout their journey.',
     ctaText: 'View Programmes',
     ctaHref: '#pastoral',
-    image: '/images/beyond-pastoral-main.jpg',
-    imageAlt: 'Teacher providing one-on-one support to a student at computer',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pastoralcare-tqeY9xkpNTOMKsJE1hzesl7RAWA8J2.jpg',
+    imageAlt: 'Teacher nurturing young students in a collaborative learning environment',
   },
   {
     id: 'development',
