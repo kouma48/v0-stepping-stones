@@ -5,6 +5,7 @@ import LearningSection from '@/components/learning-section'
 import BeyondClassroomSection from '@/components/beyond-classroom-section'
 import NewsEventsSection from '@/components/news-events-section'
 import FooterCtaSection from '@/components/footer-cta-section'
+import Footer from '@/components/footer'
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <BeyondClassroomSection />
       <NewsEventsSection />
       <FooterCtaSection />
+      <Footer />
     </main>
   )
 }
