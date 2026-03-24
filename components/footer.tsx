@@ -4,12 +4,12 @@ import { Facebook, Twitter, Youtube, Linkedin } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0F2C4C] text-white">
+    <footer className="bg-[#0a2463] text-white">
       {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        {/* Top section with logo and tagline */}
+        {/* Top section with logo and CTA buttons */}
         <div className="text-center mb-16 pb-12 border-b border-white/20">
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-8">
             <div className="relative w-32 h-32">
               <Image
                 src="/images/stepping-stones-logo-white.png"
@@ -19,7 +19,24 @@ export default function Footer() {
               />
             </div>
           </div>
-          <h3 className="font-serif text-3xl md:text-4xl text-balance text-white/80 tracking-wide">
+          
+          {/* Apply Now and Book Now Buttons */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
+            <Link
+              href="/apply/"
+              className="px-8 py-4 border-2 border-white/40 text-white hover:border-white hover:bg-white/5 transition-all duration-300 font-sans font-light text-lg tracking-wide"
+            >
+              Apply Now
+            </Link>
+            <Link
+              href="/book-a-visit/"
+              className="px-8 py-4 border-2 border-white/40 text-white hover:border-white hover:bg-white/5 transition-all duration-300 font-sans font-light text-lg tracking-wide"
+            >
+              Book Now
+            </Link>
+          </div>
+          
+          <h3 className="font-serif text-3xl md:text-4xl text-balance text-white/70 tracking-widest">
             EMBRACING EXCELLENCE
           </h3>
         </div>
