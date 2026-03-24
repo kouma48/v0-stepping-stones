@@ -9,7 +9,7 @@ import { CarouselPortals } from './carousel-portals'
 const defaultSlides: Slide[] = [
   {
     id: '1',
-    media: { type: 'image', src: '/images/hero-1.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4219-PjvUy4VQ7yQrEJF9T1NTuIlxjnKzrp.jpg' },
     heading: 'Nurturing Principled Hearts',
     subheading: 'A co-educational independent school from Early Years to Sixth Form',
     primaryCta: { label: 'Learn More', href: '#about' },
@@ -17,7 +17,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: '2',
-    media: { type: 'image', src: '/images/hero-2.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4754-AhfjvtchhsLEcDDAb3gKneB8EhVPRW.jpg' },
     heading: 'Brilliant Minds in the Making',
     subheading: 'Small classes, exceptional teachers, and boundless opportunity',
     primaryCta: { label: 'Our Approach', href: '#approach' },
@@ -25,7 +25,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: '3',
-    media: { type: 'image', src: '/images/hero-3.jpg' },
+    media: { type: 'image', src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4801-1fqYCvYi05mWOyhCtnQTVINJLeFbHV.jpg' },
     heading: 'Every Child Finds Their Stage',
     subheading: 'Arts, sport, academia — a whole-child education that lasts a lifetime',
     primaryCta: { label: 'Discover More', href: '#discover' },
