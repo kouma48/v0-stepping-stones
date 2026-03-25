@@ -23,27 +23,38 @@ export default function FooterCtaSection() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-5xl mx-auto">
-        {/* CTA buttons - Winchester College style with borders */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-3xl mb-20 border border-white/30">
+      <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">
+        {/* Heading */}
+        <h2 
+          className="font-serif text-[clamp(2rem,5vw,3.5rem)] leading-[1.15] text-balance mb-12 text-white"
+        >
+          We would love to discuss your place at Stepping Stones.
+        </h2>
+
+        {/* CTA buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
+          <a
+            href="/contact-us/"
+            className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
+            style={{ background: 'var(--color-accent-red)' }}
+          >
+            Inquire
+          </a>
           <a
             href="/apply-now/"
-            className="px-8 md:px-12 py-8 md:py-10 text-white font-sans font-light text-xl md:text-2xl tracking-wide hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center"
+            className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
+            style={{ background: 'var(--color-accent-red)' }}
           >
-            Apply Now
+            Apply
           </a>
           <a
             href="/book-a-visit/"
-            className="px-8 md:px-12 py-8 md:py-10 text-white font-sans font-light text-xl md:text-2xl tracking-wide hover:bg-white/10 transition-colors duration-300 text-center"
+            className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
+            style={{ background: 'var(--color-accent-red)' }}
           >
-            Book Now
+            Arrange a Tour
           </a>
         </div>
-
-        {/* Tagline - Large semi-transparent elegant text (Winchester style) */}
-        <h3 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white/25 tracking-widest font-light text-balance leading-tight">
-          EMBRACING<br />EXCELLENCE
-        </h3>
       </div>
     </section>
   )
