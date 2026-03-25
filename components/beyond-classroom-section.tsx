@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Settings } from 'lucide-react'
 import { BeyondClassroomEditorPortals, type BeyondTab } from './beyond-classroom-editor'
@@ -79,6 +79,7 @@ export default function BeyondClassroomSection() {
   const [tabs, setTabs] = useState<TabContent[]>(TABS)
   const [activeTab, setActiveTab] = useState('athletics')
   const [animating, setAnimating] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
   // CMS state
   const [isAdmin, setIsAdmin] = useState(false)
   const [pinModalOpen, setPinModalOpen] = useState(false)
@@ -86,15 +87,21 @@ export default function BeyondClassroomSection() {
   const triggerClickCount = useRef(0)
   const triggerTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  // Mark as hydrated immediately on mount for instant interactivity
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
+
   const activeContent = tabs.find((t) => t.id === activeTab) || tabs[0]
 
   function handleTabChange(id: string) {
-    if (id === activeTab) return
+    if (id === activeTab || !isHydrated) return
     setAnimating(true)
+    // Reduced timeout for snappier response
     setTimeout(() => {
       setActiveTab(id)
       setAnimating(false)
-    }, 320)
+    }, 200)
   }
 
   function handleAdminTrigger() {
@@ -167,13 +174,12 @@ export default function BeyondClassroomSection() {
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
             return (
-              <div
+              <button
                 key={tab.id}
-                role="button"
-                tabIndex={0}
+                type="button"
                 onClick={() => handleTabChange(tab.id)}
                 onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)}
-                className="flex-1 flex items-center justify-center py-6 cursor-pointer relative transition-colors duration-300"
+                className="flex-1 flex items-center justify-center py-6 cursor-pointer relative transition-colors duration-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
                 style={{ borderRight: '1px solid #e5e5e5', background: isActive ? '#fafafa' : 'white' }}
               >
                 <span
@@ -192,7 +198,7 @@ export default function BeyondClassroomSection() {
                     style={{ background: 'var(--color-accent-red)', width: '2.5rem' }}
                   />
                 )}
-              </div>
+              </button>
             )
           })}
         </div>
@@ -218,7 +224,8 @@ export default function BeyondClassroomSection() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 66vw"
                 crossOrigin="anonymous"
-                priority={activeTab === activeContent.id}
+                priority
+                loading="eager"
               />
               <div
                 className="absolute inset-0"
