@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
 
           {/* Large tagline - Winchester College style semi-transparent - single line */}
-          <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden text-center">
+          <div className="relative left-1/2 -translate-x-1/2 overflow-hidden text-center" style={{ width: '70vw' }}>
             <h2
               className="font-serif text-white/25 tracking-widest font-light whitespace-nowrap"
               style={{ fontSize: 'clamp(2rem, 6.5vw, 5.5rem)' }}
