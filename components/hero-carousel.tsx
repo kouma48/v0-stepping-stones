@@ -83,14 +83,19 @@ export default function HeroCarousel() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
-  // Randomize starting slide after hydration with a small delay
+  // Randomize image load order and starting slide after hydration
   useEffect(() => {
     // Use requestAnimationFrame to ensure we're past the hydration phase
     const raf = requestAnimationFrame(() => {
       setIsHydrated(true)
       // Small timeout to ensure hydration is fully complete before randomizing
       const timeout = setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * defaultSlides.length)
+        // Shuffle slides array to randomize load order
+        const shuffled = [...defaultSlides].sort(() => Math.random() - 0.5)
+        setSlides(shuffled)
+        
+        // Set random starting slide
+        const randomIndex = Math.floor(Math.random() * shuffled.length)
         if (randomIndex !== 0) {
           setCurrent(randomIndex)
         }
