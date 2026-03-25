@@ -176,7 +176,7 @@ export default function SiteHeader() {
                   src="/images/logo-white.png"
                   alt="Stepping Stones School"
                   fill
-                  className="object-contain w-auto h-auto"
+                  className="object-contain"
                   priority
                 />
               </div>
@@ -189,7 +189,7 @@ export default function SiteHeader() {
                   src="/images/logo-colour.png"
                   alt="Stepping Stones School"
                   fill
-                  className="object-contain w-auto h-auto"
+                  className="object-contain"
                   priority
                 />
               </div>
