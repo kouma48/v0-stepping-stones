@@ -16,6 +16,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '*.steppingstones.co.ke',
       },
+      {
+        protocol: 'https',
+        hostname: 'hebbkx1anhila5yf.public.blob.vercel-storage.com',
+      },
     ],
   },
 }
