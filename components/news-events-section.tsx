@@ -165,9 +165,11 @@ export default function NewsEventsSection() {
           What's On & What's New
         </h2>
 
-        <div className="grid lg:grid-cols-[1fr_500px] gap-12 lg:gap-16 items-start">
-          {/* Left: Featured News Carousel */}
-          <div className="relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16 items-start">
+            {/* Left: Featured News Carousel - Boxed */}
+            <div className="flex justify-center">
+              <div className="relative w-full max-w-sm">
             {/* Vertical "FEATURED NEWS" label */}
             <div
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 hidden xl:block"
@@ -293,6 +295,7 @@ export default function NewsEventsSection() {
                 </button>
               </div>
             </div>
+            </div>
           </div>
 
           {/* Right: Upcoming Events - STATIC with boxed hover effect */}
@@ -371,6 +374,7 @@ export default function NewsEventsSection() {
               </a>
             </div>
           </div>
+            </div>
         </div>
       </div>
     </section>
