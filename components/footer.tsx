@@ -37,9 +37,14 @@ export default function Footer() {
           </div>
 
           {/* Large tagline - Winchester College style semi-transparent - single line */}
-          <h2 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white/25 tracking-widest font-light whitespace-nowrap text-center">
-            EMBRACING EXCELLENCE
-          </h2>
+          <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden text-center">
+            <h2
+              className="font-serif text-white/25 tracking-widest font-light whitespace-nowrap"
+              style={{ fontSize: 'clamp(2.5rem, 9vw, 8rem)' }}
+            >
+              EMBRACING EXCELLENCE
+            </h2>
+          </div>
         </div>
 
         {/* Four column layout */}
