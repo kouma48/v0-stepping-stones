@@ -24,49 +24,40 @@ export default function FooterCtaSection() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">
-        {/* School Logo */}
-        <div className="mb-8 md:mb-12">
-          <Image
-            src="/images/stepping-stones-logo-white.png"
-            alt="Stepping Stones School Logo"
-            width={120}
-            height={120}
-          />
-        </div>
+        {/* Heading */}
+        <h2 
+          className="font-serif text-[clamp(2rem,5vw,3.5rem)] leading-[1.15] text-balance mb-12 text-white"
+        >
+          We would love to discuss your place at Stepping Stones.
+        </h2>
 
-        {/* School Name */}
-        <div className="mb-12">
-          <p className="font-serif text-lg md:text-xl text-white/90 tracking-widest">
-            THE
-          </p>
-          <p className="font-serif text-2xl md:text-3xl text-white font-semibold tracking-widest">
-            STEPPING STONES
-          </p>
-          <p className="font-serif text-lg md:text-xl text-white/90 tracking-widest">
-            SCHOOLS
-          </p>
-        </div>
-
-        {/* CTA buttons - Apply Now and Book Now */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-2xl mb-16 border border-white/30">
-          <Link
+        {/* CTA buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
+          <a
+            href="/contact-us/"
+            target="_parent"
+            className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
+            style={{ background: 'var(--color-accent-red)' }}
+          >
+            Inquire
+          </a>
+          <a
             href="/apply-now/"
-            className="px-8 md:px-12 py-6 md:py-8 text-white font-sans font-light text-xl md:text-2xl tracking-wide hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center"
+            target="_parent"
+            className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
+            style={{ background: 'var(--color-accent-red)' }}
           >
-            Apply Now
-          </Link>
-          <Link
+            Apply
+          </a>
+          <a
             href="/book-a-visit/"
-            className="px-8 md:px-12 py-6 md:py-8 text-white font-sans font-light text-xl md:text-2xl tracking-wide hover:bg-white/10 transition-colors duration-300 text-center"
+            target="_parent"
+            className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
+            style={{ background: 'var(--color-accent-red)' }}
           >
-            Book Now
-          </Link>
+            Arrange a Tour
+          </a>
         </div>
-
-        {/* Embracing Excellence tagline */}
-        <h3 className="font-serif text-3xl md:text-5xl text-white/40 tracking-widest font-light">
-          EMBRACING EXCELLENCE
-        </h3>
       </div>
     </section>
   )

@@ -7,6 +7,49 @@ export default function Footer() {
     <footer className="bg-[#0a2463] text-white">
       {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+        {/* Top section with logo and CTA */}
+        <div className="text-center mb-16 pb-16 border-b border-white/20">
+          {/* School Logo */}
+          <div className="mb-6 flex justify-center">
+            <Image
+              src="/images/stepping-stones-logo-white.png"
+              alt="Stepping Stones School Logo"
+              width={100}
+              height={100}
+              className="w-auto h-auto"
+            />
+          </div>
+
+          {/* School Name */}
+          <div className="mb-8">
+            <p className="font-serif text-sm text-white/80 tracking-widest">
+              THE
+            </p>
+            <p className="font-serif text-xl font-semibold text-white tracking-widest">
+              STEPPING STONES
+            </p>
+            <p className="font-serif text-sm text-white/80 tracking-widest">
+              SCHOOLS
+            </p>
+          </div>
+
+          {/* CTA buttons */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-2xl mx-auto mb-8 border border-white/30">
+            <Link
+              href="/apply/"
+              className="px-8 py-5 text-white font-sans font-light text-lg tracking-wide hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center"
+            >
+              Apply Now
+            </Link>
+            <Link
+              href="/book-a-visit/"
+              className="px-8 py-5 text-white font-sans font-light text-lg tracking-wide hover:bg-white/10 transition-colors duration-300 text-center"
+            >
+              Book Now
+            </Link>
+          </div>
+        </div>
+
         {/* Four column layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Column 1: Contact Info */}
