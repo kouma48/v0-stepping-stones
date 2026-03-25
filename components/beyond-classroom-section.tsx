@@ -70,8 +70,8 @@ const TABS: TabContent[] = [
       'Putting empathy into action, our students engage in meaningful community service that builds character and creates lasting positive impact beyond the school gates.',
     ctaText: 'View Programmes',
     ctaHref: '#service',
-    image: '/images/beyond-service-main.jpg',
-    imageAlt: 'Students engaged in community service',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-wYaub8zVt5FfImG18OowA07AeFVVo1.jpg',
+    imageAlt: 'Stepping Stones students and community members distributing donations and supplies',
   },
 ]
 
