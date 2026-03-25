@@ -11,7 +11,7 @@ export default function FooterCtaSection() {
         fill
         className="object-cover"
         sizes="100vw"
-        priority
+        loading="lazy"
       />
 
       {/* Dark overlay for text readability */}

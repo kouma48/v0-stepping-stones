@@ -224,8 +224,7 @@ export default function BeyondClassroomSection() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 66vw"
                 crossOrigin="anonymous"
-                priority
-                loading="eager"
+                loading="lazy"
               />
               <div
                 className="absolute inset-0"

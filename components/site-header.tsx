@@ -254,8 +254,8 @@ export default function SiteHeader() {
                   src={nav.image}
                   alt={nav.label}
                   fill
-                  priority
-                  loading="eager"
+                  priority={i === 0}
+                  loading={i === 0 ? 'eager' : 'lazy'}
                   className="object-cover"
                 />
                 {/* Dark overlay */}
