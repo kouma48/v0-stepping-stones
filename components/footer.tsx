@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
 
           {/* Large tagline - Winchester College style semi-transparent - single line */}
-          <h2 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white/25 tracking-widest font-light whitespace-nowrap">
+          <h2 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white/25 tracking-widest font-light whitespace-nowrap text-center">
             EMBRACING EXCELLENCE
           </h2>
         </div>
