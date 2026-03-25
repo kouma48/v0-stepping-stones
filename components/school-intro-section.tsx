@@ -1,8 +1,6 @@
-'use client'
+import { ReactNode } from 'react'
 
-import { useEffect, useRef, ReactNode } from 'react'
-
-// ─── Scroll-reveal wrapper ───────────────────────────────────────────────────
+// ─── CSS-only reveal wrapper (no JS, uses CSS animation) ────────────────────
 
 function Reveal({
   children,
@@ -13,27 +11,11 @@ function Reveal({
   delay?: number
   className?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.style.transitionDelay = `${delay}ms`
-          el.classList.add('is-visible')
-          observer.unobserve(el)
-        }
-      },
-      { threshold: 0.15 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [delay])
-
   return (
-    <div ref={ref} className={`reveal-on-scroll ${className}`}>
+    <div 
+      className={`animate-fade-in-up ${className}`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
       {children}
     </div>
   )
