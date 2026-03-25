@@ -313,47 +313,77 @@ export default function SiteHeader() {
               >
                 {MEGA_NAV.map((nav, i) => (
                   <div key={nav.label}>
-                    <button
-                      ref={(el) => { navItemRefs.current[i] = el as any }}
-                      onClick={() => {
-                        // On mobile, toggle submenu; on desktop/with no submenu, navigate
-                        if (window.innerWidth < 768 && nav.submenu.length > 0) {
-                          setHoveredNav(hoveredNav === i ? null : i)
-                        } else {
-                          window.open(nav.href, '_parent')
-                          setMenuOpen(false)
-                        }
-                      }}
-                      onMouseEnter={() => handleNavHover(i)}
-                      className="w-full text-left relative font-serif py-3 md:py-3 transition-colors duration-200"
-                      style={{
-                        fontSize: 'clamp(1.1rem, 2.5vw, 1.75rem)',
-                        color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
-                      }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span>{nav.label}</span>
-                        {/* Mobile-only expand indicator */}
-                        {nav.submenu.length > 0 && (
+                    {/* On mobile with submenu: button to toggle. Otherwise: link to navigate */}
+                    {nav.submenu.length > 0 ? (
+                      <>
+                        {/* Desktop: Link that opens on hover */}
+                        <Link
+                          ref={(el) => { navItemRefs.current[i] = el as any }}
+                          href={nav.href}
+                          target="_parent"
+                          onClick={() => setMenuOpen(false)}
+                          onMouseEnter={() => handleNavHover(i)}
+                          className="hidden md:block w-full text-left relative font-serif py-3 transition-colors duration-200"
+                          style={{
+                            fontSize: 'clamp(1.1rem, 2.5vw, 1.75rem)',
+                            color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
+                          }}
+                        >
+                          <span>{nav.label}</span>
                           <span
-                            className="md:hidden text-sm transition-transform duration-200"
+                            className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300"
                             style={{
-                              transform: hoveredNav === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                              width: hoveredNav === i ? '100%' : '0%',
+                              background: '#c11f1e',
                             }}
-                          >
-                            ▾
-                          </span>
-                        )}
-                      </div>
-                      {/* Red underline on active (desktop only) */}
-                      <span
-                        className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300 hidden md:block"
+                          />
+                        </Link>
+                        {/* Mobile: Button to toggle submenu */}
+                        <button
+                          onClick={() => setHoveredNav(hoveredNav === i ? null : i)}
+                          className="md:hidden w-full text-left relative font-serif py-3 transition-colors duration-200"
+                          style={{
+                            fontSize: 'clamp(1.1rem, 2.5vw, 1.75rem)',
+                            color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
+                          }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>{nav.label}</span>
+                            <span
+                              className="text-sm transition-transform duration-200"
+                              style={{
+                                transform: hoveredNav === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                              }}
+                            >
+                              ▾
+                            </span>
+                          </div>
+                        </button>
+                      </>
+                    ) : (
+                      /* No submenu: always a link */
+                      <Link
+                        ref={(el) => { navItemRefs.current[i] = el as any }}
+                        href={nav.href}
+                        target="_parent"
+                        onClick={() => setMenuOpen(false)}
+                        onMouseEnter={() => handleNavHover(i)}
+                        className="block w-full text-left relative font-serif py-3 transition-colors duration-200"
                         style={{
-                          width: hoveredNav === i ? '100%' : '0%',
-                          background: '#c11f1e',
+                          fontSize: 'clamp(1.1rem, 2.5vw, 1.75rem)',
+                          color: hoveredNav === i ? '#c11f1e' : 'var(--color-school-heading)',
                         }}
-                      />
-                    </button>
+                      >
+                        <span>{nav.label}</span>
+                        <span
+                          className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300 hidden md:block"
+                          style={{
+                            width: hoveredNav === i ? '100%' : '0%',
+                            background: '#c11f1e',
+                          }}
+                        />
+                      </Link>
+                    )}
 
                     {/* Mobile submenu — inline below parent item */}
                     {nav.submenu.length > 0 && hoveredNav === i && (
@@ -364,7 +394,7 @@ export default function SiteHeader() {
                             href={sub.href}
                             target="_parent"
                             onClick={() => setMenuOpen(false)}
-                            className="font-sans py-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200"
+                            className="font-sans py-2 text-base text-gray-600 hover:text-gray-900 active:text-gray-900 transition-colors duration-200"
                           >
                             {sub.label}
                           </Link>
