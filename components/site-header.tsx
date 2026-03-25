@@ -173,14 +173,15 @@ export default function SiteHeader() {
                 style={{ opacity: isLight ? 0 : 1, position: isLight ? 'absolute' : 'relative' }}
               >
                 <div
-                  className="relative transition-all duration-500"
+                  className="transition-all duration-500"
                   style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
                 >
                   <Image
                     src="/images/logo-white.png"
                     alt="Stepping Stones School"
-                    fill
-                    className="object-contain"
+                    width={scrolled ? 80 : 160}
+                    height={scrolled ? 80 : 160}
+                    className="w-auto h-auto"
                     priority
                   />
                 </div>
@@ -191,14 +192,15 @@ export default function SiteHeader() {
                 style={{ opacity: isLight ? 1 : 0, position: isLight ? 'relative' : 'absolute' }}
               >
                 <div
-                  className="relative transition-all duration-500"
+                  className="transition-all duration-500"
                   style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
                 >
                   <Image
                     src="/images/logo-colour.png"
                     alt="Stepping Stones School"
-                    fill
-                    className="object-contain"
+                    width={scrolled ? 80 : 160}
+                    height={scrolled ? 80 : 160}
+                    className="w-auto h-auto"
                     priority
                   />
                 </div>

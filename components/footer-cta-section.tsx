@@ -24,17 +24,6 @@ export default function FooterCtaSection() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">
-        {/* School Logo */}
-        <div className="mb-12">
-          <Image
-            src="/images/stepping-stones-logo-white.png"
-            alt="Stepping Stones School Logo"
-            width={140}
-            height={140}
-            className="w-auto h-auto"
-          />
-        </div>
-
         {/* Heading */}
         <h2 
           className="font-serif text-[clamp(2rem,5vw,3.5rem)] leading-[1.15] text-balance mb-12 text-white"
