@@ -7,41 +7,6 @@ export default function Footer() {
     <footer className="bg-[#0a2463] text-white">
       {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        {/* Top section with courtyard image and CTA overlay */}
-        <div className="mb-16 pb-12 border-b border-white/20 relative group">
-          {/* Courtyard image */}
-          <div className="relative w-full h-64 md:h-80 mb-8 overflow-hidden">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4204-5LFvjDvWXEvshgapgefUwiO1P5wfUC.jpg"
-              alt="Stepping Stones School Courtyard"
-              fill
-              className="object-cover"
-            />
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a2463] via-[#0a2463]/40 to-transparent" />
-          </div>
-          
-          {/* CTA Buttons - positioned over or below image */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-3xl mx-auto mb-8 border border-white/30">
-            <Link
-              href="/apply/"
-              className="px-8 py-6 text-white hover:bg-white/10 transition-colors duration-300 font-sans font-light text-lg tracking-wide border-r border-white/30 text-center"
-            >
-              Apply Now
-            </Link>
-            <Link
-              href="/book-a-visit/"
-              className="px-8 py-6 text-white hover:bg-white/10 transition-colors duration-300 font-sans font-light text-lg tracking-wide text-center"
-            >
-              Book Now
-            </Link>
-          </div>
-          
-          <h3 className="text-center font-serif text-3xl md:text-4xl text-balance text-white/70 tracking-widest">
-            EMBRACING EXCELLENCE
-          </h3>
-        </div>
-
         {/* Four column layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Column 1: Contact Info */}

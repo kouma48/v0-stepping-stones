@@ -169,41 +169,29 @@ export default function SiteHeader() {
             >
               {/* White logo: shown on transparent header */}
               <div
-                className="transition-opacity duration-500"
-                style={{ opacity: isLight ? 0 : 1, position: isLight ? 'absolute' : 'relative' }}
+                className="transition-opacity duration-500 relative"
+                style={{ opacity: isLight ? 0 : 1, position: isLight ? 'absolute' : 'relative', width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
               >
-                <div
-                  className="transition-all duration-500"
-                  style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
-                >
-                  <Image
-                    src="/images/logo-white.png"
-                    alt="Stepping Stones School"
-                    width={scrolled ? 80 : 160}
-                    height={scrolled ? 80 : 160}
-                    className="w-auto h-auto"
-                    priority
-                  />
-                </div>
+                <Image
+                  src="/images/logo-white.png"
+                  alt="Stepping Stones School"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
               {/* Colour logo: shown on scrolled white header */}
               <div
-                className="transition-opacity duration-500"
-                style={{ opacity: isLight ? 1 : 0, position: isLight ? 'relative' : 'absolute' }}
+                className="transition-opacity duration-500 relative"
+                style={{ opacity: isLight ? 1 : 0, position: isLight ? 'relative' : 'absolute', width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
               >
-                <div
-                  className="transition-all duration-500"
-                  style={{ width: scrolled ? 80 : 160, height: scrolled ? 80 : 160 }}
-                >
-                  <Image
-                    src="/images/logo-colour.png"
-                    alt="Stepping Stones School"
-                    width={scrolled ? 80 : 160}
-                    height={scrolled ? 80 : 160}
-                    className="w-auto h-auto"
-                    priority
-                  />
-                </div>
+                <Image
+                  src="/images/logo-colour.png"
+                  alt="Stepping Stones School"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
             </Link>
 
