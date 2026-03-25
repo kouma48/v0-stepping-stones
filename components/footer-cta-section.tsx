@@ -7,13 +7,12 @@ export default function FooterCtaSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 max-w-4xl mx-auto">
         {/* School Logo */}
-        <div className="mb-12">
+        <div className="mb-12 w-[140px] h-[140px] relative">
           <Image
             src="/images/stepping-stones-logo-white.png"
             alt="Stepping Stones School Logo"
-            width={140}
-            height={140}
-            style={{ width: 'auto', height: 'auto', maxWidth: '140px', maxHeight: '140px' }}
+            fill
+            className="object-contain"
           />
         </div>
 
