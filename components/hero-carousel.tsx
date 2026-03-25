@@ -186,11 +186,12 @@ export default function HeroCarousel() {
                     src={s.media.src}
                     alt={s.heading}
                     fill
-                    priority
-                    fetchPriority="high"
-                    loading="eager"
+                    priority={i === 0}
+                    fetchPriority={i === 0 ? 'high' : 'low'}
+                    loading={i === 0 ? 'eager' : 'lazy'}
                     className={`object-cover ${isActive ? kenBurnsClass : ''}`}
-                    sizes="100vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                    quality={85}
                   />
                 </div>
               ) : (
