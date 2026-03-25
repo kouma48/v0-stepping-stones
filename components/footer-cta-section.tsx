@@ -35,7 +35,6 @@ export default function FooterCtaSection() {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
           <a
             href="/contact-us/"
-            target="_parent"
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >
@@ -43,7 +42,6 @@ export default function FooterCtaSection() {
           </a>
           <a
             href="/apply-now/"
-            target="_parent"
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >
@@ -51,7 +49,6 @@ export default function FooterCtaSection() {
           </a>
           <a
             href="/book-a-visit/"
-            target="_parent"
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >

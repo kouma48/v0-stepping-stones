@@ -232,7 +232,6 @@ export default function NewsEventsSection() {
                     </p>
                     <a
                       href={article.link}
-                      target="_parent"
                       className="inline-flex items-center gap-2 font-sans text-sm tracking-widest uppercase text-white hover:gap-3 transition-all"
                     >
                       READ MORE <ArrowRight className="w-4 h-4" />
