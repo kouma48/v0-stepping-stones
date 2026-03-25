@@ -20,25 +20,25 @@ export default function Footer() {
             />
           </div>
 
-          {/* CTA buttons - Winchester style bordered boxes */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-3xl mx-auto mb-24 border border-white/30">
+          {/* CTA buttons - Winchester style bordered boxes - wider */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-5xl mx-auto mb-24 border border-white/30">
             <Link
               href="/apply/"
-              className="px-8 md:px-12 py-8 md:py-10 text-white font-sans font-light text-xl md:text-2xl tracking-widest hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center uppercase"
+              className="px-8 md:px-16 py-10 md:py-12 text-white font-sans font-light text-2xl md:text-3xl tracking-widest hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center uppercase"
             >
               Apply Now
             </Link>
             <Link
               href="/book-a-visit/"
-              className="px-8 md:px-12 py-8 md:py-10 text-white font-sans font-light text-xl md:text-2xl tracking-widest hover:bg-white/10 transition-colors duration-300 text-center uppercase"
+              className="px-8 md:px-16 py-10 md:py-12 text-white font-sans font-light text-2xl md:text-3xl tracking-widest hover:bg-white/10 transition-colors duration-300 text-center uppercase"
             >
               Book Now
             </Link>
           </div>
 
-          {/* Large tagline - Winchester College style semi-transparent */}
-          <h2 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white/25 tracking-widest font-light text-balance leading-tight">
-            EMBRACING<br />EXCELLENCE
+          {/* Large tagline - Winchester College style semi-transparent - single line */}
+          <h2 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white/25 tracking-widest font-light whitespace-nowrap">
+            EMBRACING EXCELLENCE
           </h2>
         </div>
 
