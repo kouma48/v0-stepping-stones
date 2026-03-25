@@ -40,7 +40,7 @@ export default function Footer() {
           <div className="relative left-1/2 -translate-x-1/2 overflow-hidden text-center" style={{ width: '70vw' }}>
             <h2
               className="font-serif text-white/25 tracking-widest font-light whitespace-nowrap"
-              style={{ fontSize: 'clamp(2rem, 6.5vw, 5.5rem)' }}
+              style={{ fontSize: 'clamp(1.5rem, 4.5vw, 3.5rem)' }}
             >
               EMBRACING EXCELLENCE
             </h2>
