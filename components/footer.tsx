@@ -12,7 +12,7 @@ export default function Footer() {
           {/* School Logo */}
           <div className="mb-6 flex justify-center">
             <Image
-              src="/images/stepping-stones-logo-white.png"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Copy%20of%20stepping%20stones%20%20logo%20white%20%283%29-aAtNWkmhyFZYigdigK1lpwHS42fmVe.png"
               alt="Stepping Stones School Logo"
               width={100}
               height={100}
