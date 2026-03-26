@@ -308,7 +308,7 @@ export default function SiteHeader() {
               {/* Primary nav column */}
               <nav
                 ref={navColumnRef}
-                className="relative flex flex-col px-8 md:px-12 py-8 md:py-10 w-full md:w-1/2 md:justify-center border-r-0 md:border-r border-gray-100"
+                className="relative flex flex-col px-8 md:px-12 pt-12 md:pt-16 pb-8 md:pb-10 w-full md:w-1/2 md:justify-start border-r-0 md:border-r border-gray-100"
                 aria-label="Main navigation"
               >
                 {MEGA_NAV.map((nav, i) => (
@@ -329,10 +329,12 @@ export default function SiteHeader() {
                           }}
                         >
                           <span>{nav.label}</span>
+                          {/* Underline that extends to border (Baylor style) */}
                           <span
-                            className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300"
+                            className="absolute -bottom-0.5 h-[2px] transition-all duration-300"
                             style={{
-                              width: hoveredNav === i ? '100%' : '0%',
+                              left: 0,
+                              width: hoveredNav === i ? 'calc(100% + 3rem)' : '0%',
                               background: '#c11f1e',
                             }}
                           />
@@ -373,10 +375,12 @@ export default function SiteHeader() {
                         }}
                       >
                         <span>{nav.label}</span>
+                        {/* Underline that extends to border (Baylor style) */}
                         <span
-                          className="absolute left-0 -bottom-0.5 h-[2px] transition-all duration-300 hidden md:block"
+                          className="absolute -bottom-0.5 h-[2px] transition-all duration-300 hidden md:block"
                           style={{
-                            width: hoveredNav === i ? '100%' : '0%',
+                            left: 0,
+                            width: hoveredNav === i ? 'calc(100% + 3rem)' : '0%',
                             background: '#c11f1e',
                           }}
                         />
@@ -404,9 +408,20 @@ export default function SiteHeader() {
 
               {/* Desktop submenu column — absolutely positioned to align with hovered item */}
               <div className="hidden md:block relative w-1/2">
+                {/* Connecting line from active nav to submenu (Baylor style) */}
                 <div
-                  className="absolute left-0 px-10 transition-opacity duration-200"
+                  className="absolute left-0 h-[2px] transition-all duration-300"
                   style={{
+                    top: submenuTop + 12,
+                    width: hoveredNav !== null && activeNav?.submenu.length ? '40px' : '0px',
+                    background: '#c11f1e',
+                    opacity: hoveredNav !== null && activeNav?.submenu.length ? 1 : 0,
+                  }}
+                />
+                <div
+                  className="absolute px-10 transition-opacity duration-200"
+                  style={{
+                    left: '40px',
                     top: submenuTop,
                     opacity: hoveredNav !== null ? 1 : 0,
                     pointerEvents: hoveredNav !== null ? 'all' : 'none',
