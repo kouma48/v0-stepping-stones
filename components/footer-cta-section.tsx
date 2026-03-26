@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+// Base URL for all internal links
+const BASE_URL = 'https://steppingstones.co.ke'
+
 export default function FooterCtaSection() {
   return (
     <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden">
@@ -34,21 +37,21 @@ export default function FooterCtaSection() {
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
           <a
-            href="/contact-us/"
+            href={`${BASE_URL}/contact-us/`}
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >
             Inquire
           </a>
           <a
-            href="/apply-now/"
+            href={`${BASE_URL}/apply-now/`}
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >
             Apply
           </a>
           <a
-            href="/book-a-visit/"
+            href={`${BASE_URL}/book-a-visit/`}
             className="px-10 py-4 text-sm font-sans font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:brightness-110"
             style={{ background: 'var(--color-accent-red)' }}
           >

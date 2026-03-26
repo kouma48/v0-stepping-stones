@@ -5,80 +5,83 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { X, Info, MapPin, Send } from 'lucide-react'
 
+// Base URL for all internal links
+const BASE_URL = 'https://steppingstones.co.ke'
+
 // Bottom CTA bar links
 const CTA_LINKS = [
-  { label: 'Inquire', href: '/contact-us/', icon: Info },
-  { label: 'Visit', href: '/book-a-visit/', icon: MapPin },
-  { label: 'Apply', href: '/apply-now/', icon: Send },
+  { label: 'Inquire', href: `${BASE_URL}/contact-us/`, icon: Info },
+  { label: 'Visit', href: `${BASE_URL}/book-a-visit/`, icon: MapPin },
+  { label: 'Apply', href: `${BASE_URL}/apply-now/`, icon: Send },
 ]
 
 // Utility bar links
 const UTILITY_LINKS = [
-  { label: 'News', href: '/news/' },
-  { label: 'Events', href: '/events/' },
-  { label: 'Careers', href: '/careers/' },
-  { label: 'Contact', href: '/contact-us/' },
+  { label: 'News', href: `${BASE_URL}/news/` },
+  { label: 'Events', href: `${BASE_URL}/events/` },
+  { label: 'Careers', href: `${BASE_URL}/careers/` },
+  { label: 'Contact', href: `${BASE_URL}/contact-us/` },
 ]
 
 // Mega menu navigation structure with submenus and contextual images
 const MEGA_NAV = [
   {
     label: 'About Us',
-    href: '/#',
+    href: `${BASE_URL}/#`,
     image: '/images/about-us.jpg',
     submenu: [
-      { label: 'Welcome Message', href: '/welcome-message/' },
-      { label: 'Our Story', href: '/our-story/' },
-      { label: 'Our Leadership', href: '/our-leadership/' },
-      { label: 'Our Campus', href: '/our-campus/' },
-      { label: 'Careers', href: '/careers/' },
+      { label: 'Welcome Message', href: `${BASE_URL}/welcome-message/` },
+      { label: 'Our Story', href: `${BASE_URL}/our-story/` },
+      { label: 'Our Leadership', href: `${BASE_URL}/our-leadership/` },
+      { label: 'Our Campus', href: `${BASE_URL}/our-campus/` },
+      { label: 'Careers', href: `${BASE_URL}/careers/` },
     ],
   },
   {
     label: 'Academics',
-    href: '/#',
+    href: `${BASE_URL}/#`,
     image: '/images/academics.jpg',
     submenu: [
-      { label: 'Kindergarten', href: '/kindergarten/' },
-      { label: 'Lower Primary', href: '/lower-primary/' },
-      { label: 'Upper Primary', href: '/upper-primary/' },
-      { label: 'Junior Secondary', href: '/junior-secondary/' },
-      { label: 'Learning Support', href: '/learning-support/' },
-      { label: 'Beyond Classroom', href: '/beyond-classroom/' },
+      { label: 'Kindergarten', href: `${BASE_URL}/kindergarten/` },
+      { label: 'Lower Primary', href: `${BASE_URL}/lower-primary/` },
+      { label: 'Upper Primary', href: `${BASE_URL}/upper-primary/` },
+      { label: 'Junior Secondary', href: `${BASE_URL}/junior-secondary/` },
+      { label: 'Learning Support', href: `${BASE_URL}/learning-support/` },
+      { label: 'Beyond Classroom', href: `${BASE_URL}/beyond-classroom/` },
     ],
   },
   {
     label: 'Admissions',
-    href: '/#',
+    href: `${BASE_URL}/#`,
     image: '/images/admissions.jpg',
     submenu: [
-      { label: 'Why Stepping Stones', href: '/why-stepping-stones/' },
-      { label: 'Admissions Process', href: '/admissions-process/' },
-      { label: 'Apply Now', href: '/apply-now/' },
-      { label: 'Fees Structure', href: '/fees-structure/' },
-      { label: 'Book a Visit', href: '/book-a-visit/' },
+      { label: 'Why Stepping Stones', href: `${BASE_URL}/why-stepping-stones/` },
+      { label: 'Admissions Process', href: `${BASE_URL}/admissions-process/` },
+      { label: 'Apply Now', href: `${BASE_URL}/apply-now/` },
+      { label: 'Fees Structure', href: `${BASE_URL}/fees-structure/` },
+      { label: 'Book a Visit', href: `${BASE_URL}/book-a-visit/` },
     ],
   },
   {
     label: 'School Life',
-    href: '/#',
+    href: `${BASE_URL}/#`,
     image: '/images/school-life.jpg',
     submenu: [
-      { label: 'Daily Life', href: '/daily-life/' },
-      { label: 'Co-curricular Programs', href: '/co-curricular-programs/' },
-      { label: 'Student Development', href: '/student-development/' },
-      { label: 'Student Well Being', href: '/student-well-being/' },
+      { label: 'Daily Life', href: `${BASE_URL}/daily-life/` },
+      { label: 'Co-curricular Programs', href: `${BASE_URL}/co-curricular-programs/` },
+      { label: 'Student Development', href: `${BASE_URL}/student-development/` },
+      { label: 'Student Well Being', href: `${BASE_URL}/student-well-being/` },
     ],
   },
   {
     label: 'News',
-    href: '/news/',
+    href: `${BASE_URL}/news/`,
     image: '/images/academics.jpg',
     submenu: [],
   },
   {
     label: 'Events',
-    href: '/events/',
+    href: `${BASE_URL}/events/`,
     image: '/images/school-life.jpg',
     submenu: [],
   },
@@ -155,7 +158,7 @@ export default function SiteHeader() {
 
             {/* CENTRE — Logo pinned to horizontal & vertical centre with top offset */}
             <Link
-              href="/"
+              href={BASE_URL}
               className="absolute flex flex-col items-center"
               style={{
                 left: '50%',
