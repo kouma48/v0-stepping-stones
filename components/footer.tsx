@@ -2,6 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Facebook, Twitter, Youtube, Linkedin } from 'lucide-react'
 
+// Base URL for all internal links
+const BASE_URL = 'https://steppingstones.co.ke'
+
 export default function Footer() {
   return (
     <footer className="bg-[#0a2463] text-white">
@@ -23,13 +26,13 @@ export default function Footer() {
           {/* CTA buttons - Winchester style bordered boxes - wider */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-5xl mx-auto mb-24 border border-white/30">
             <Link
-              href="/apply/"
+              href={`${BASE_URL}/apply/`}
               className="px-8 md:px-16 py-10 md:py-12 text-white font-sans font-light text-2xl md:text-3xl tracking-widest hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center uppercase"
             >
               Apply Now
             </Link>
             <Link
-              href="/book-a-visit/"
+              href={`${BASE_URL}/book-a-visit/`}
               className="px-8 md:px-16 py-10 md:py-12 text-white font-sans font-light text-2xl md:text-3xl tracking-widest hover:bg-white/10 transition-colors duration-300 text-center uppercase"
             >
               Book Now
@@ -76,22 +79,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href="/about/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/about/`} className="hover:text-white transition-colors">
                   Our Story
                 </Link>
               </li>
               <li>
-                <Link href="/leadership/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/leadership/`} className="hover:text-white transition-colors">
                   Our Leadership
                 </Link>
               </li>
               <li>
-                <Link href="/campus/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/campus/`} className="hover:text-white transition-colors">
                   Our Campus
                 </Link>
               </li>
               <li>
-                <Link href="/careers/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/careers/`} className="hover:text-white transition-colors">
                   Careers
                 </Link>
               </li>
@@ -105,22 +108,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href="/apply/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/apply/`} className="hover:text-white transition-colors">
                   Apply
                 </Link>
               </li>
               <li>
-                <Link href="/book-a-visit/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/book-a-visit/`} className="hover:text-white transition-colors">
                   Book a Visit
                 </Link>
               </li>
               <li>
-                <Link href="/tuition/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/tuition/`} className="hover:text-white transition-colors">
                   Tuition
                 </Link>
               </li>
               <li>
-                <Link href="/contact/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/contact/`} className="hover:text-white transition-colors">
                   Contact Us
                 </Link>
               </li>
@@ -134,22 +137,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href="/kindergarten/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/kindergarten/`} className="hover:text-white transition-colors">
                   Kindergarten
                 </Link>
               </li>
               <li>
-                <Link href="/lower-primary/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/lower-primary/`} className="hover:text-white transition-colors">
                   Lower Primary
                 </Link>
               </li>
               <li>
-                <Link href="/upper-primary/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/upper-primary/`} className="hover:text-white transition-colors">
                   Upper Primary
                 </Link>
               </li>
               <li>
-                <Link href="/junior-secondary/" className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/junior-secondary/`} className="hover:text-white transition-colors">
                   Junior Secondary
                 </Link>
               </li>

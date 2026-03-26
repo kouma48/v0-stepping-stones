@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
 
+// Base URL for all internal links
+const BASE_URL = 'https://steppingstones.co.ke'
+
 interface NewsArticle {
   id: string | number
   title: string
@@ -355,13 +358,13 @@ export default function NewsEventsSection() {
             {/* Bottom buttons */}
             <div className="flex gap-4 mt-12 pt-8">
               <a
-                href="/news/"
+                href={`${BASE_URL}/news/`}
                 className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
               >
                 MORE NEWS
               </a>
               <a
-                href="/events/"
+                href={`${BASE_URL}/events/`}
                 className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
               >
                 FULL CALENDAR
