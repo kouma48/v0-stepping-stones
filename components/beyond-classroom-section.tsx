@@ -17,7 +17,7 @@ const TABS: TabContent[] = [
     description:
       'Through competitive sport, Stepping Stones students build resilience, teamwork, and the lifelong discipline that defines great character.',
     ctaText: 'View Programmes',
-    ctaHref: '#sports',
+    ctaHref: 'https://steppingstones.co.ke/co-curricular-programs/',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-T2vXCgMWEqFoHrCwdn6yp63OQ6Nxz1.jpeg',
     imageAlt: 'Titans sports team with trophy celebrating championship victory',
   },
@@ -30,7 +30,7 @@ const TABS: TabContent[] = [
     description:
       'Through music, drama, and dance, Stepping Stones students discover their unique creative voice and learn the power of passionate self-expression.',
     ctaText: 'View Programmes',
-    ctaHref: '#arts',
+    ctaHref: 'https://steppingstones.co.ke/co-curricular-programs/',
     image: '/images/beyond-arts-main.jpg',
     imageAlt: 'Students with musical instruments in music room',
   },
@@ -43,7 +43,7 @@ const TABS: TabContent[] = [
     description:
       'Our pastoral team nurtures emotional well-being and moral character, ensuring every child feels deeply valued, safe, and supported throughout their journey.',
     ctaText: 'View Programmes',
-    ctaHref: '#pastoral',
+    ctaHref: 'https://steppingstones.co.ke/student-well-being/',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pastoralcare-tqeY9xkpNTOMKsJE1hzesl7RAWA8J2.jpg',
     imageAlt: 'Teacher nurturing young students in a collaborative learning environment',
   },
@@ -56,7 +56,7 @@ const TABS: TabContent[] = [
     description:
       'Through leadership clubs, life skills training, and global engagement, Stepping Stones equips students with the tools to make a profound impact in the world.',
     ctaText: 'View Programmes',
-    ctaHref: '#development',
+    ctaHref: 'https://steppingstones.co.ke/student-development/',
     image: '/images/student-development.jpg',
     imageAlt: 'Students collaborating and studying together on campus',
   },
@@ -69,7 +69,7 @@ const TABS: TabContent[] = [
     description:
       'Putting empathy into action, our students engage in meaningful community service that builds character and creates lasting positive impact beyond the school gates.',
     ctaText: 'View Programmes',
-    ctaHref: '#service',
+    ctaHref: 'https://steppingstones.co.ke/student-development/',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-wYaub8zVt5FfImG18OowA07AeFVVo1.jpg',
     imageAlt: 'Stepping Stones students and community members distributing donations and supplies',
   },

@@ -26,7 +26,7 @@ export default function Footer() {
           {/* CTA buttons - Winchester style bordered boxes - wider */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-5xl mx-auto mb-24 border border-white/30">
             <Link
-              href={`${BASE_URL}/apply/`}
+              href={`${BASE_URL}/apply-now/`}
               className="px-8 md:px-16 py-10 md:py-12 text-white font-sans font-light text-2xl md:text-3xl tracking-widest hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center uppercase"
             >
               Apply Now
@@ -79,17 +79,17 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href={`${BASE_URL}/about/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/our-story/`} className="hover:text-white transition-colors">
                   Our Story
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/leadership/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/our-leadership/`} className="hover:text-white transition-colors">
                   Our Leadership
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/campus/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/our-campus/`} className="hover:text-white transition-colors">
                   Our Campus
                 </Link>
               </li>
@@ -108,7 +108,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href={`${BASE_URL}/apply/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/apply-now/`} className="hover:text-white transition-colors">
                   Apply
                 </Link>
               </li>
@@ -123,7 +123,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/contact/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/contact-us/`} className="hover:text-white transition-colors">
                   Contact Us
                 </Link>
               </li>
