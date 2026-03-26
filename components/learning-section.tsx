@@ -64,6 +64,7 @@ export default function LearningSection() {
               <a
                 key={stage.id}
                 href={stage.href}
+                target="_top"
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-red"
                 onMouseEnter={() => setHoveredId(stage.id)}
                 onMouseLeave={() => setHoveredId(null)}

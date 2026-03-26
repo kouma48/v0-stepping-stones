@@ -192,8 +192,8 @@ export default function HeroCarousel() {
                     alt={s.heading}
                     fill
                     priority={i === 0}
-                    fetchPriority={i === 0 ? 'high' : 'low'}
-                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={i === 0 ? 'high' : 'auto'}
+                    loading="eager"
                     className={`object-cover ${isActive ? kenBurnsClass : ''}`}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                     quality={85}

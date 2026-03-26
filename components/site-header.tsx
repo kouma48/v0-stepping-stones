@@ -141,6 +141,7 @@ export default function SiteHeader() {
                 <Link
                   key={link.label}
                   href={link.href}
+                  target="_top"
                   className="relative font-sans font-semibold tracking-[0.22em] uppercase transition-colors duration-300 group hidden md:block"
                   style={{
                     fontSize: '10px',
@@ -159,6 +160,7 @@ export default function SiteHeader() {
             {/* CENTRE — Logo pinned to horizontal & vertical centre with top offset */}
             <Link
               href={BASE_URL}
+              target="_top"
               className="absolute flex flex-col items-center"
               style={{
                 left: '50%',
@@ -282,6 +284,7 @@ export default function SiteHeader() {
                   <Link
                     key={link.label}
                     href={link.href}
+                    target="_top"
                     onClick={() => setMenuOpen(false)}
                     className="font-sans font-semibold tracking-[0.18em] uppercase text-gray-500 hover:text-gray-900 transition-colors duration-200"
                     style={{ fontSize: '9px' }}
@@ -320,6 +323,7 @@ export default function SiteHeader() {
                         <Link
                           ref={(el) => { navItemRefs.current[i] = el as any }}
                           href={nav.href}
+                          target="_top"
                           onClick={() => setMenuOpen(false)}
                           onMouseEnter={() => handleNavHover(i)}
                           className="hidden md:block w-full text-left relative font-serif py-3 transition-colors duration-200"
@@ -366,6 +370,7 @@ export default function SiteHeader() {
                       <Link
                         ref={(el) => { navItemRefs.current[i] = el as any }}
                         href={nav.href}
+                        target="_top"
                         onClick={() => setMenuOpen(false)}
                         onMouseEnter={() => handleNavHover(i)}
                         className="block w-full text-left relative font-serif py-3 transition-colors duration-200"
@@ -394,6 +399,7 @@ export default function SiteHeader() {
                           <Link
                             key={sub.label}
                             href={sub.href}
+                            target="_top"
                             onClick={() => setMenuOpen(false)}
                             className="font-sans py-2 text-base text-gray-600 hover:text-gray-900 active:text-gray-900 transition-colors duration-200"
                           >
@@ -434,6 +440,7 @@ export default function SiteHeader() {
                         <Link
                           key={sub.label}
                           href={sub.href}
+                          target="_top"
                           onClick={() => setMenuOpen(false)}
                           className="font-sans py-2 text-gray-500 hover:text-gray-900 transition-colors duration-200"
                           style={{
@@ -463,6 +470,7 @@ export default function SiteHeader() {
                   <Link
                     key={link.label}
                     href={link.href}
+                    target="_top"
                     onClick={() => setMenuOpen(false)}
                     className="flex-1 flex items-center justify-center gap-2 md:gap-3 py-4 md:py-5 text-white hover:bg-white/10 transition-colors duration-200 border-b md:border-b-0 md:border-r border-white/20 last:border-b-0 md:last:border-r-0"
                   >
