@@ -410,12 +410,13 @@ export default function SiteHeader() {
               <div className="hidden md:block relative w-1/2">
                 {/* Connecting line from active nav to submenu (Baylor style) */}
                 <div
-                  className="absolute left-0 h-[2px] transition-all duration-300"
+                  className="absolute left-0 h-[2px]"
                   style={{
-                    top: submenuTop + 12,
-                    width: hoveredNav !== null && activeNav?.submenu.length ? '40px' : '0px',
+                    top: submenuTop + 14,
+                    width: hoveredNav !== null && activeNav?.submenu.length ? '48px' : '0px',
                     background: '#c11f1e',
                     opacity: hoveredNav !== null && activeNav?.submenu.length ? 1 : 0,
+                    transition: 'top 0.25s ease, width 0.3s ease, opacity 0.2s ease',
                   }}
                 />
                 <div
