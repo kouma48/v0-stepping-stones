@@ -12,8 +12,14 @@
   #ss-header button, #ss-megamenu button { background: none; border: none; cursor: pointer; }
 
   /* ── Fonts ────────────────────────────────────── */
-  /* Assumes the page already loads these; if not, uncomment the line below */
-  /* @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;600&display=swap'); */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+  
+  @font-face {
+    font-family: 'Roxborough CF';
+    src: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Roxborough%20CF-tG08I3nOyaUit0BOYyomiXWIpX1duz.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
 
   /* ── Header bar ───────────────────────────────── */
   #ss-header {
@@ -50,7 +56,7 @@
     flex: 1;
   }
   .ss-header-left a {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.22em;
@@ -106,7 +112,7 @@
     flex: 1;
   }
   .ss-menu-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.22em;
@@ -195,7 +201,7 @@
   }
   .ss-util-links { display: flex; gap: 24px; }
   .ss-util-links a {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.18em;
@@ -235,7 +241,7 @@
   }
   .ss-nav-item {
     display: block;
-    font-family: 'EB Garamond', 'Georgia', serif;
+    font-family: 'Roxborough CF', 'Georgia', serif;
     font-size: clamp(18px, 2.5vw, 28px);
     color: #1a1a2e;
     padding: 12px 0;
@@ -286,7 +292,7 @@
   }
   .ss-submenu-links a {
     display: block;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     color: #6b7280;
     padding: 8px 40px 8px 0;
@@ -310,7 +316,7 @@
     gap: 8px;
     padding: 20px;
     color: #fff;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.2em;
@@ -341,7 +347,7 @@
     }
     .ss-mobile-submenu.open { display: flex; }
     .ss-mobile-submenu a {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 15px;
       color: #6b7280;
       padding: 8px 0;
