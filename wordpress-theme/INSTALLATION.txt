@@ -1,0 +1,157 @@
+=====================================================
+STEPPING STONES SCHOOL - WORDPRESS THEME
+=====================================================
+
+Thank you for using the Stepping Stones School WordPress Theme!
+
+This theme replicates the modern, elegant design of the v0 homepage
+with all sections including hero carousel, school intro, gallery,
+learning stages, beyond classroom, news & events, and footer.
+
+
+INSTALLATION INSTRUCTIONS
+-------------------------
+
+1. DOWNLOAD THE THEME
+   - Download the entire "stepping-stones" folder
+
+2. UPLOAD TO WORDPRESS
+   - Go to your WordPress Admin Dashboard
+   - Navigate to Appearance > Themes
+   - Click "Add New" then "Upload Theme"
+   - Select the stepping-stones.zip file (or upload the folder via FTP)
+   - Click "Install Now"
+
+3. ACTIVATE THE THEME
+   - After installation, click "Activate"
+
+4. ADD REQUIRED IMAGES
+   The theme requires these images in /assets/images/:
+   
+   LOGOS:
+   - logo-white.png (White logo for dark backgrounds)
+   - logo-colour.png (Colored logo for light backgrounds)
+   
+   HERO CAROUSEL (6 images):
+   - hero-1.jpg through hero-6.jpg
+   
+   GALLERY (6 images):
+   - gallery-1.jpg through gallery-6.jpg
+   
+   LEARNING SECTION (4 images):
+   - learning-earlyyears.jpg
+   - learning-lowerprimary.jpg
+   - learning-upperprimary.jpg
+   - learning-juniorsecondary.jpg
+   
+   BEYOND CLASSROOM (5 images):
+   - beyond-athletics.jpg
+   - beyond-arts.jpg
+   - beyond-pastoral.jpg
+   - beyond-development.jpg
+   - beyond-service.jpg
+   
+   MEGA MENU (4 images):
+   - about-us.jpg
+   - academics.jpg
+   - admissions.jpg
+   - school-life.jpg
+   
+   NEWS (3 images):
+   - news-1.jpg
+   - news-2.jpg
+   - news-3.jpg
+   
+   CTA SECTION:
+   - cta-background.jpg
+   
+   FONTS:
+   - assets/fonts/RoxboroughCF.ttf
+
+5. SET UP STATIC FRONT PAGE
+   - Go to Settings > Reading
+   - Select "A static page"
+   - Choose your homepage (or create a new page)
+   - The theme will automatically use front-page.php
+
+6. CUSTOMIZE THE THEME
+   - Go to Appearance > Customize
+   - Adjust colors, contact info, social media links
+   - Upload your custom logo
+
+
+THEME STRUCTURE
+---------------
+
+stepping-stones/
+├── style.css                 # Theme metadata and base styles
+├── functions.php             # Theme setup and functions
+├── header.php                # Site header with mega menu
+├── footer.php                # Site footer
+├── front-page.php            # Homepage template
+├── index.php                 # Default template
+├── single.php                # Single post template
+├── page.php                  # Page template
+├── inc/
+│   ├── template-tags.php     # Custom template functions
+│   └── customizer.php        # Customizer settings
+├── template-parts/
+│   ├── section-hero.php      # Hero carousel
+│   ├── section-intro.php     # School introduction
+│   ├── section-gallery.php   # Image gallery
+│   ├── section-learning.php  # Academic stages
+│   ├── section-beyond.php    # Beyond classroom tabs
+│   ├── section-news.php      # News & events
+│   └── section-cta.php       # Call to action
+└── assets/
+    ├── css/
+    │   └── components.css    # All component styles
+    ├── js/
+    │   ├── main.js           # Main JavaScript
+    │   └── carousel.js       # Hero carousel JS
+    ├── images/               # Theme images
+    └── fonts/                # Custom fonts
+
+
+CUSTOMIZATION
+-------------
+
+COLORS:
+Edit the CSS variables in style.css or use the Customizer:
+- --accent-red: Primary accent color (default: #c11f1e)
+- --navy: Navy blue color (default: #0F2C4C)
+- --gold: Gold accent (default: #C59A49)
+
+CONTENT:
+Most section content is defined in the template-parts files.
+You can edit these directly or integrate with ACF for
+admin-editable content.
+
+MENUS:
+Register your menus in Appearance > Menus:
+- Primary Menu: Main navigation
+- Footer Menu: Footer links
+- Utility Menu: Top utility links
+
+
+SUPPORT
+-------
+
+For support or customization requests, please contact:
+info@steppingstones.sc.ke
+
+
+VERSION HISTORY
+---------------
+
+1.0.0 - Initial release
+- Full homepage with all sections
+- Responsive design
+- Mega menu navigation
+- Hero carousel with Ken Burns effect
+- News integration with WordPress posts
+
+
+=====================================================
+© 2024 The Stepping Stones Schools
+=====================================================
