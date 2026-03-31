@@ -27,12 +27,14 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full max-w-5xl mx-auto mb-24 border border-white/30">
             <Link
               href={`${BASE_URL}/apply-now/`}
+              target="_top"
               className="px-8 md:px-16 py-10 md:py-12 text-white font-sans font-light text-2xl md:text-3xl tracking-widest hover:bg-white/10 transition-colors duration-300 border-r border-white/30 text-center uppercase"
             >
               Apply Now
             </Link>
             <Link
               href={`${BASE_URL}/book-a-visit/`}
+              target="_top"
               className="px-8 md:px-16 py-10 md:py-12 text-white font-sans font-light text-2xl md:text-3xl tracking-widest hover:bg-white/10 transition-colors duration-300 text-center uppercase"
             >
               Book Now
@@ -79,22 +81,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href={`${BASE_URL}/our-story/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/our-story/`} target="_top" className="hover:text-white transition-colors">
                   Our Story
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/our-leadership/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/our-leadership/`} target="_top" className="hover:text-white transition-colors">
                   Our Leadership
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/our-campus/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/our-campus/`} target="_top" className="hover:text-white transition-colors">
                   Our Campus
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/careers/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/careers/`} target="_top" className="hover:text-white transition-colors">
                   Careers
                 </Link>
               </li>
@@ -108,22 +110,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href={`${BASE_URL}/apply-now/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/apply-now/`} target="_top" className="hover:text-white transition-colors">
                   Apply
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/book-a-visit/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/book-a-visit/`} target="_top" className="hover:text-white transition-colors">
                   Book a Visit
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/tuition/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/tuition/`} target="_top" className="hover:text-white transition-colors">
                   Tuition
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/contact-us/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/contact-us/`} target="_top" className="hover:text-white transition-colors">
                   Contact Us
                 </Link>
               </li>
@@ -137,22 +139,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-white/75">
               <li>
-                <Link href={`${BASE_URL}/kindergarten/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/kindergarten/`} target="_top" className="hover:text-white transition-colors">
                   Kindergarten
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/lower-primary/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/lower-primary/`} target="_top" className="hover:text-white transition-colors">
                   Lower Primary
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/upper-primary/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/upper-primary/`} target="_top" className="hover:text-white transition-colors">
                   Upper Primary
                 </Link>
               </li>
               <li>
-                <Link href={`${BASE_URL}/junior-secondary/`} className="hover:text-white transition-colors">
+                <Link href={`${BASE_URL}/junior-secondary/`} target="_top" className="hover:text-white transition-colors">
                   Junior Secondary
                 </Link>
               </li>

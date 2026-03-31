@@ -11,7 +11,7 @@ const STAGES = [
     description: 'Where curiosity and character begin',
     image: '/images/learning-earlyyears.jpg',
     alt: 'Kindergarten children playing and learning together',
-    href: '#early-years',
+    href: 'https://steppingstones.co.ke/kindergarten/',
   },
   {
     id: 'lowerprimary',
@@ -19,7 +19,7 @@ const STAGES = [
     description: 'Laying the foundation for lifelong learning',
     image: '/images/learning-lowerprimary.jpg',
     alt: 'Lower primary students engaged in classroom learning',
-    href: '#lower-primary',
+    href: 'https://steppingstones.co.ke/lower-primary/',
   },
   {
     id: 'upperprimary',
@@ -27,7 +27,7 @@ const STAGES = [
     description: 'Growing confident, creative thinkers',
     image: '/images/learning-upperprimary.jpg',
     alt: 'Upper primary students working on creative projects',
-    href: '#upper-primary',
+    href: 'https://steppingstones.co.ke/upper-primary/',
   },
   {
     id: 'juniorsecondary',
@@ -35,7 +35,7 @@ const STAGES = [
     description: 'Shaping ethical leaders for tomorrow',
     image: '/images/learning-juniorsecondary.jpg',
     alt: 'Junior secondary students engaged in collaborative learning',
-    href: '#junior-secondary',
+    href: 'https://steppingstones.co.ke/junior-secondary/',
   },
 ]
 
@@ -64,6 +64,7 @@ export default function LearningSection() {
               <a
                 key={stage.id}
                 href={stage.href}
+                target="_top"
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-red"
                 onMouseEnter={() => setHoveredId(stage.id)}
                 onMouseLeave={() => setHoveredId(null)}

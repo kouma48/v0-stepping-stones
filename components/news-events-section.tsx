@@ -359,12 +359,14 @@ export default function NewsEventsSection() {
             <div className="flex gap-4 mt-12 pt-8">
               <a
                 href={`${BASE_URL}/news/`}
+                target="_top"
                 className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
               >
                 MORE NEWS
               </a>
               <a
                 href={`${BASE_URL}/events/`}
+                target="_top"
                 className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
               >
                 FULL CALENDAR
