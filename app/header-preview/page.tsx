@@ -30,8 +30,14 @@ function HeaderHTML() {
           font-style: normal;
         }
 
+        :root {
+          --font-sans: 'Montserrat', sans-serif;
+          --font-display: 'Roxborough CF', 'Georgia', serif;
+        }
+
         body {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--font-sans);
+          line-height: 1.5;
           margin: 0;
           padding: 0;
         }
@@ -72,7 +78,6 @@ function HeaderHTML() {
           flex: 1;
         }
         .ss-header-left a {
-          font-family: 'Montserrat', sans-serif;
           font-size: 10px;
           font-weight: 600;
           letter-spacing: 0.22em;
@@ -131,7 +136,6 @@ function HeaderHTML() {
           flex: 1;
         }
         .ss-menu-label {
-          font-family: 'Montserrat', sans-serif;
           font-size: 10px;
           font-weight: 600;
           letter-spacing: 0.22em;
@@ -220,7 +224,6 @@ function HeaderHTML() {
         }
         .ss-util-links { display: flex; gap: 24px; }
         .ss-util-links a {
-          font-family: 'Montserrat', sans-serif;
           font-size: 9px;
           font-weight: 600;
           letter-spacing: 0.18em;
@@ -260,8 +263,10 @@ function HeaderHTML() {
         }
         .ss-nav-item {
           display: block;
-          font-family: 'Roxborough CF', 'Georgia', serif;
+          font-family: var(--font-display);
           font-size: 28px;
+          font-weight: 400;
+          line-height: 1.2;
           color: #1a1a2e;
           padding: 12px 0;
           position: relative;
@@ -316,8 +321,9 @@ function HeaderHTML() {
         }
         .ss-submenu-links a {
           display: block;
-          font-family: 'Montserrat', sans-serif;
           font-size: 14px;
+          font-weight: 400;
+          line-height: 1.5;
           color: #6b7280;
           padding: 8px 40px 8px 0;
           transition: color 0.2s, transform 0.25s;
@@ -341,9 +347,9 @@ function HeaderHTML() {
           gap: 8px;
           padding: 20px;
           color: #fff;
-          font-family: 'Montserrat', sans-serif;
           font-size: 10px;
           font-weight: 700;
+          line-height: 1.2;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           border-right: 1px solid rgba(255,255,255,0.2);
@@ -372,8 +378,9 @@ function HeaderHTML() {
           }
           .ss-mobile-submenu.open { display: flex !important; }
           .ss-mobile-submenu a {
-            font-family: 'Montserrat', sans-serif;
             font-size: 15px;
+            font-weight: 400;
+            line-height: 1.5;
             color: #c11f1e;
             padding: 8px 0;
           }
@@ -390,7 +397,6 @@ function HeaderHTML() {
           margin-top: 160px;
           padding: 40px;
           background: #f9f9f9;
-          font-family: 'Montserrat', sans-serif;
         }
       `}} />
 
