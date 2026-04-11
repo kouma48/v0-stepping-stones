@@ -617,6 +617,14 @@ function HeaderHTML() {
           var closeBtn  = document.getElementById('ss-close-btn');
           var navCol    = document.getElementById('ss-nav-col');
 
+          console.log("[v0] Elements found:", {
+            header: !!header,
+            megamenu: !!megamenu,
+            openBtn: !!openBtn,
+            closeBtn: !!closeBtn,
+            navCol: !!navCol
+          });
+
           var images = [
             document.getElementById('ss-img-0'),
             document.getElementById('ss-img-1'),
@@ -633,6 +641,7 @@ function HeaderHTML() {
 
           // Open menu - set first image active
           openBtn.addEventListener('click', function () {
+            console.log("[v0] Menu button clicked");
             megamenu.classList.add('open');
             document.body.style.overflow = 'hidden';
             images.forEach(function (img) { img.classList.remove('active'); });
@@ -641,6 +650,7 @@ function HeaderHTML() {
 
           // Close menu
           closeBtn.addEventListener('click', function () {
+            console.log("[v0] Close button clicked");
             megamenu.classList.remove('open');
             document.body.style.overflow = '';
           });
