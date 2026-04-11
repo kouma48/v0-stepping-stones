@@ -256,16 +256,18 @@ function HeaderHTML() {
           display: flex;
           flex: 1;
           overflow: hidden;
-          flex-direction: column;
+          flex-direction: row;
+          gap: 0;
         }
 
         .ss-nav-col {
-          width: 100%;
+          width: 50%;
           padding: 56px 40px;
           display: flex;
           flex-direction: column;
           gap: 28px;
           overflow-y: auto;
+          border-right: 1px solid #e5e5e5;
         }
 
         .ss-nav-item {
@@ -275,7 +277,7 @@ function HeaderHTML() {
           font-weight: 400;
           line-height: 1.2;
           color: #000;
-          padding: 0;
+          padding: 0 0 8px 0;
           position: relative;
           transition: color 0.2s;
           text-align: left;
@@ -284,14 +286,65 @@ function HeaderHTML() {
           background: none;
           border: none;
         }
-        .ss-nav-item:hover {
+        .ss-nav-item:hover,
+        .ss-nav-item.active {
           color: #c11f1e;
         }
+        .ss-nav-underline {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          width: 0;
+          background: #c11f1e;
+          transition: width 0.3s ease;
+        }
+        .ss-nav-item.active .ss-nav-underline,
+        .ss-nav-item:hover .ss-nav-underline {
+          width: calc(100% - 80px);
+        }
 
-        /* Hide all secondary elements */
-        .ss-submenu-col,
+        /* Submenu column */
+        .ss-submenu-col {
+          width: 50%;
+          padding: 56px 40px;
+          display: flex !important;
+          flex-direction: column;
+          gap: 16px;
+          overflow-y: auto;
+        }
+
+        .ss-submenu-links {
+          display: none !important;
+        }
+        .ss-submenu-links.visible {
+          display: flex !important;
+          flex-direction: column;
+          gap: 12px;
+          animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .ss-submenu-links a {
+          display: block;
+          font-family: var(--font-sans);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 1.5;
+          color: #666;
+          padding: 0;
+          transition: color 0.2s;
+        }
+        .ss-submenu-links a:hover {
+          color: #000;
+        }
+
+        /* Hide connector line and other elements */
         .ss-connector-line,
-        .ss-submenu-links,
         .ss-nav-underline,
         .ss-mobile-submenu {
           display: none !important;
@@ -592,12 +645,30 @@ function HeaderHTML() {
             document.body.style.overflow = '';
           });
 
-          // Nav items - hover changes image
+          // Nav items - hover changes image and shows submenu
           var navItems = navCol.querySelectorAll('.ss-nav-item[data-index]');
+          var submenus = [
+            document.getElementById('ss-sub-0'),
+            document.getElementById('ss-sub-1'),
+            document.getElementById('ss-sub-2'),
+            document.getElementById('ss-sub-3')
+          ];
+
           navItems.forEach(function (item, i) {
             item.addEventListener('mouseenter', function () {
+              // Update active state
+              navItems.forEach(function (n) { n.classList.remove('active'); });
+              item.classList.add('active');
+
+              // Change image
               images.forEach(function (img) { img.classList.remove('active'); });
               if (images[i]) images[i].classList.add('active');
+
+              // Show submenu
+              submenus.forEach(function (sub) { sub.classList.remove('visible'); });
+              if (i < submenus.length && submenus[i]) {
+                submenus[i].classList.add('visible');
+              }
             });
           });
 
@@ -608,7 +679,12 @@ function HeaderHTML() {
               document.body.style.overflow = '';
             }
           });
-        })();
+
+          // Initialize - set first item active
+          if (navItems.length > 0) {
+            navItems[0].classList.add('active');
+            if (submenus[0]) submenus[0].classList.add('visible');
+          }
       `}} />
     </>
   )
