@@ -348,17 +348,6 @@ export default function HeaderPreview() {
           gap: 20px;
           overflow-y: auto;
           position: relative;
-          padding-left: 48px;
-        }
-        
-        .menu-submenu::before {
-          content: '';
-          position: absolute;
-          left: 32px;
-          top: 56px;
-          bottom: 0;
-          width: 2px;
-          background: #c11f1e;
         }
         
         .menu-submenu-header {
@@ -368,10 +357,20 @@ export default function HeaderPreview() {
           color: #000;
           margin-bottom: 16px;
           padding-bottom: 16px;
+          padding-top: 8px;
           border-bottom: 1px solid #e5e5e5;
           line-height: 1.2;
           position: relative;
-          z-index: 1;
+        }
+        
+        .menu-submenu-header::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 56px;
+          height: 2px;
+          background: #c11f1e;
         }
         
         .menu-submenu a {
@@ -387,17 +386,16 @@ export default function HeaderPreview() {
           align-items: center;
           gap: 12px;
           line-height: 1.5;
-          position: relative;
-          z-index: 1;
         }
         
-        .menu-submenu a::after {
+        .menu-submenu a::before {
           content: '→';
           opacity: 0;
           transition: opacity 0.2s ease, transform 0.2s ease;
           font-size: 14px;
-          transform: translateX(-4px);
+          transform: translateX(-8px);
           color: #c11f1e;
+          flex-shrink: 0;
         }
         
         .menu-submenu a:hover {
@@ -405,7 +403,7 @@ export default function HeaderPreview() {
           transform: translateX(8px);
         }
         
-        .menu-submenu a:hover::after {
+        .menu-submenu a:hover::before {
           opacity: 1;
           transform: translateX(0);
         }
