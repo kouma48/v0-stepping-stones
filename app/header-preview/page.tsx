@@ -656,11 +656,11 @@ export default function HeaderPreview() {
 
           {/* Navigation and submenu */}
           <div className="menu-body">
-            <nav className="menu-nav" onMouseLeave={() => !isMobile && setActiveItem(0)}>
+            <nav className="menu-nav">
               {menuItems.map((item, i) => (
                 <div key={i}>
                   <button
-                    className={`${activeItem === i ? 'active' : ''} ${expandedItems.has(i) ? 'active' : ''}`}
+                    className={`${activeItem === i && !isMobile ? 'active' : ''} ${expandedItems.has(i) && isMobile ? 'active' : ''}`}
                     onClick={() => {
                       if (isMobile) {
                         const newExpanded = new Set(expandedItems);
@@ -674,7 +674,16 @@ export default function HeaderPreview() {
                         setActiveItem(i);
                       }
                     }}
-                    onMouseEnter={() => !isMobile && setActiveItem(i)}
+                    onMouseEnter={() => {
+                      if (!isMobile) {
+                        setActiveItem(i);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (!isMobile) {
+                        setActiveItem(-1);
+                      }
+                    }}
                   >
                     {item.title}
                   </button>
@@ -690,7 +699,7 @@ export default function HeaderPreview() {
               ))}
             </nav>
 
-            {!isMobile && (
+            {!isMobile && activeItem >= 0 && (
               <div className="menu-submenu">
                 {menuItems[activeItem].submenu.map((item, i) => (
                   <a key={i} href="#">{item}</a>
