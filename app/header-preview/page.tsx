@@ -5,6 +5,15 @@ import { useState, useEffect } from 'react';
 export default function HeaderPreview() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
+  const [expandedItems, setExpandedItems] = useState(new Set([0]));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const menuItems = [
     { title: 'About Us', submenu: ['Welcome Message', 'Our Story', 'Our Leadership', 'Our Campus', 'Careers'], image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_4219-PjvUy4VQ7yQrEJF9T1NTuIlxjnKzrp.jpg' },
@@ -116,6 +125,27 @@ export default function HeaderPreview() {
           color: #1a1a2e;
         }
         
+        /* Mobile & Tablet Styles */
+        @media (max-width: 768px) {
+          header {
+            padding: 16px 24px;
+            height: 80px;
+          }
+          
+          header.scrolled {
+            height: 64px;
+          }
+          
+          .header-left {
+            display: none;
+          }
+          
+          .header-left a {
+            font-size: 9px;
+            gap: 12px;
+          }
+        }
+        
         .header-logo {
           position: absolute;
           left: 50%;
@@ -194,6 +224,117 @@ export default function HeaderPreview() {
         
         header.scrolled .menu-btn {
           color: #1a1a2e;
+        }
+        
+        /* Mobile Menu Body */
+        @media (max-width: 768px) {
+          .menu-body {
+            flex-direction: column;
+            overflow-y: auto;
+          }
+          
+          .menu-image {
+            display: none;
+          }
+          
+          .menu-nav {
+            width: 100%;
+            border-right: none;
+            padding: 32px 24px;
+            gap: 0;
+          }
+          
+          .menu-nav button {
+            font-size: 24px;
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e5e5;
+            position: relative;
+            text-align: left;
+          }
+          
+          .menu-nav button::after {
+            display: none !important;
+          }
+          
+          .menu-nav button::before {
+            content: '▼';
+            position: absolute;
+            right: 0;
+            font-size: 12px;
+            color: #666;
+            transition: transform 0.3s;
+          }
+          
+          .menu-nav button.active::before {
+            transform: rotate(180deg);
+          }
+          
+          .menu-submenu {
+            width: 100%;
+            padding: 0;
+            gap: 0;
+            border: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+          }
+          
+          .menu-submenu.active {
+            max-height: 500px;
+            padding: 16px 0;
+          }
+          
+          .menu-submenu::before {
+            display: none;
+          }
+          
+          .menu-submenu a {
+            font-size: 14px;
+            color: #666;
+            padding: 12px 0 12px 24px;
+            border-bottom: 1px solid #f0f0f0;
+          }
+          
+          .menu-cta {
+            flex-direction: column;
+            margin-top: 32px;
+            border-top: 1px solid #e5e5e5;
+          }
+          
+          .menu-cta a {
+            flex: none;
+            border-right: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 20px;
+          }
+          
+          .menu-cta a:last-child {
+            border-bottom: none;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          header {
+            padding: 12px 16px;
+          }
+          
+          .header-logo img {
+            width: 40px;
+            height: 40px;
+          }
+          
+          header.scrolled .header-logo img {
+            width: 36px;
+            height: 36px;
+          }
+          
+          .menu-nav {
+            padding: 24px 16px !important;
+          }
+          
+          .menu-nav button {
+            font-size: 22px;
+          }
         }
         
         /* Mega menu modal */
@@ -511,22 +652,45 @@ export default function HeaderPreview() {
           <div className="menu-body">
             <nav className="menu-nav">
               {menuItems.map((item, i) => (
-                <button
-                  key={i}
-                  className={activeItem === i ? 'active' : ''}
-                  onClick={() => setActiveItem(i)}
-                  onMouseEnter={() => setActiveItem(i)}
-                >
-                  {item.title}
-                </button>
+                <div key={i}>
+                  <button
+                    className={`${activeItem === i ? 'active' : ''} ${expandedItems.has(i) ? 'active' : ''}`}
+                    onClick={() => {
+                      if (isMobile) {
+                        const newExpanded = new Set(expandedItems);
+                        if (newExpanded.has(i)) {
+                          newExpanded.delete(i);
+                        } else {
+                          newExpanded.add(i);
+                        }
+                        setExpandedItems(newExpanded);
+                      } else {
+                        setActiveItem(i);
+                      }
+                    }}
+                    onMouseEnter={() => !isMobile && setActiveItem(i)}
+                  >
+                    {item.title}
+                  </button>
+                  
+                  {isMobile && (
+                    <div className={`menu-submenu ${expandedItems.has(i) ? 'active' : ''}`}>
+                      {item.submenu.map((subitem, j) => (
+                        <a key={j} href="#">{subitem}</a>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </nav>
 
-            <div className="menu-submenu">
-              {menuItems[activeItem].submenu.map((item, i) => (
-                <a key={i} href="#">{item}</a>
-              ))}
-            </div>
+            {!isMobile && (
+              <div className="menu-submenu">
+                {menuItems[activeItem].submenu.map((item, i) => (
+                  <a key={i} href="#">{item}</a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* CTA bar */}
