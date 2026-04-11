@@ -9,7 +9,13 @@ export default function HeaderPreview() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        setMenuOpen(false);
+      }
+    };
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -650,7 +656,7 @@ export default function HeaderPreview() {
 
           {/* Navigation and submenu */}
           <div className="menu-body">
-            <nav className="menu-nav">
+            <nav className="menu-nav" onMouseLeave={() => !isMobile && setActiveItem(0)}>
               {menuItems.map((item, i) => (
                 <div key={i}>
                   <button
