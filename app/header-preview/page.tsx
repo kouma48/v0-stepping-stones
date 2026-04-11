@@ -47,7 +47,10 @@ export default function HeaderPreview() {
         
         @font-face {
           font-family: 'Roxborough CF';
-          src: url('https://blob.v0.app/YQfLD.ttf') format('truetype');
+          src: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/RoxboroughCF-4ithLz81mwg1G5YNF5eeNDJZ2REPvd.ttf') format('truetype');
+          font-weight: 400;
+          font-style: normal;
+        }
         }
         
         body {
