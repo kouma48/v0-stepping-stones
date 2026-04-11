@@ -490,14 +490,57 @@ export default function HeaderPreview() {
         </div>
       </div>
 
-      {/* Preview content */}
-      <div style={{ marginTop: 160, padding: 40, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', minHeight: 'calc(100vh - 160px)', color: '#fff' }}>
-        <h2 style={{ fontSize: 48, fontWeight: 300, marginBottom: 20, textAlign: 'center' }}>
-          Header Preview
+      {/* Hero Section with Image */}
+      <div 
+        style={{ 
+          marginTop: 160, 
+          minHeight: 'calc(100vh - 160px)',
+          backgroundImage: 'url(/hero-preview.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          position: 'relative'
+        }}
+      >
+        {/* Dark overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(0, 0, 0, 0.4)'
+        }}></div>
+        
+        {/* Hero content */}
+        <div style={{ 
+          position: 'relative', 
+          zIndex: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+          padding: 40,
+          color: '#fff',
+          textAlign: 'center'
+        }}>
+          <h1 style={{ fontSize: 64, fontWeight: 300, marginBottom: 20, fontFamily: "'Roxborough CF', serif" }}>
+            Impact Starts Here
+          </h1>
+          <p style={{ fontSize: 18, opacity: 0.95, maxWidth: 600, marginBottom: 40 }}>
+            Scroll to see the transparent header overlay in action. Click MENU to explore the mega navigation.
+          </p>
+        </div>
+      </div>
+      
+      {/* Additional content to enable scrolling */}
+      <div style={{ padding: 60, background: '#fff' }}>
+        <h2 style={{ fontSize: 36, fontWeight: 400, marginBottom: 20, fontFamily: "'Roxborough CF', serif", color: '#000' }}>
+          Below the Fold
         </h2>
-        <p style={{ textAlign: 'center', fontSize: 16, opacity: 0.9 }}>
-          Scroll to see the header adapt. Click MENU to open the mega navigation.
+        <p style={{ fontSize: 16, color: '#666', lineHeight: 1.6, marginBottom: 20 }}>
+          Scroll back up to see how the transparent header overlay adapts as you move through the page. The header maintains transparency over the hero image and becomes solid white with a blur effect as you scroll down.
         </p>
+        <div style={{ height: 400, background: 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999', fontSize: 18 }}>
+          Additional content space for scrolling
+        </div>
       </div>
     </>
   )
