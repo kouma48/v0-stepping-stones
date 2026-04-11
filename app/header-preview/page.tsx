@@ -334,6 +334,22 @@ export default function HeaderPreview() {
           flex-direction: column;
           gap: 16px;
           overflow-y: auto;
+          position: relative;
+        }
+        
+        .menu-submenu::before {
+          content: '';
+          position: absolute;
+          top: 56px;
+          left: 0;
+          width: 2px;
+          height: 0;
+          background: #c11f1e;
+          transition: height 0.3s ease;
+        }
+        
+        .menu-submenu.has-items::before {
+          height: 24px;
         }
         
         .menu-submenu a {
@@ -343,10 +359,28 @@ export default function HeaderPreview() {
           color: #666;
           text-decoration: none;
           transition: color 0.2s;
+          position: relative;
+          padding-left: 16px;
+        }
+        
+        .menu-submenu a::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 2px;
+          height: 0;
+          background: #c11f1e;
+          transition: height 0.2s;
         }
         
         .menu-submenu a:hover {
-          color: #000;
+          color: #c11f1e;
+        }
+        
+        .menu-submenu a:hover::before {
+          height: 14px;
         }
         
         /* CTA bar */
@@ -464,7 +498,7 @@ export default function HeaderPreview() {
               ))}
             </nav>
 
-            <div className="menu-submenu">
+            <div className={`menu-submenu ${menuItems[activeItem].submenu.length > 0 ? 'has-items' : ''}`}>
               {menuItems[activeItem].submenu.map((item, i) => (
                 <a key={i} href="#">{item}</a>
               ))}
