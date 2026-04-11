@@ -169,12 +169,15 @@ function HeaderHTML() {
           inset: 0;
           z-index: 10000;
           display: flex;
+          background: #fff;
           opacity: 0;
+          visibility: hidden;
           pointer-events: none;
-          transition: opacity 0.4s ease;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         #ss-megamenu.open {
           opacity: 1;
+          visibility: visible;
           pointer-events: all;
         }
 
