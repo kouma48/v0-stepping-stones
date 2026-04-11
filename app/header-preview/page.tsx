@@ -183,6 +183,7 @@ function HeaderHTML() {
           position: relative;
           width: 50%;
           overflow: hidden;
+          background: #e5e5e5;
         }
         .ss-menu-img {
           position: absolute;
@@ -190,16 +191,13 @@ function HeaderHTML() {
           opacity: 0;
           transition: opacity 0.5s ease;
         }
-        .ss-menu-img.active { opacity: 1; }
-        .ss-menu-img img {
-          width: 100%; height: 100%;
-          object-fit: cover;
+        .ss-menu-img.active {
+          opacity: 1;
         }
-        .ss-menu-img::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(0,0,0,0.2);
+        .ss-menu-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         /* Right content panel */
@@ -209,134 +207,100 @@ function HeaderHTML() {
           background: #fff;
           display: flex;
           flex-direction: column;
-          transform: translateX(100%);
-          transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
         }
-        #ss-megamenu.open .ss-menu-content { transform: translateX(0); }
 
-        /* Utility bar */
+        /* Utility bar - minimal */
         .ss-menu-util {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 20px 48px;
-          border-bottom: 1px solid #f0f0f0;
+          padding: 28px 40px;
+          border-bottom: 1px solid #e5e5e5;
         }
-        .ss-util-links { display: flex; gap: 24px; }
+        .ss-util-links {
+          display: flex;
+          gap: 40px;
+        }
         .ss-util-links a {
-          font-size: 9px;
-          font-weight: 600;
-          letter-spacing: 0.18em;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #6b7280;
+          color: #666;
           transition: color 0.2s;
         }
-        .ss-util-links a:hover { color: #111; }
+        .ss-util-links a:hover {
+          color: #000;
+        }
         .ss-close-btn {
-          width: 48px; height: 48px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          background: #111;
+          background: #000;
           color: #fff;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
           line-height: 1;
           transition: background 0.2s;
+          cursor: pointer;
+          border: none;
         }
-        .ss-close-btn:hover { background: #333; }
+        .ss-close-btn:hover {
+          background: #333;
+        }
 
-        /* Nav + submenu body */
+        /* Main navigation */
         .ss-menu-body {
           display: flex;
           flex: 1;
           overflow: hidden;
-          position: relative;
+          flex-direction: column;
         }
 
-        /* Primary nav column */
         .ss-nav-col {
-          width: 50%;
-          padding: 64px 48px 40px;
-          border-right: 1px solid #f0f0f0;
+          width: 100%;
+          padding: 56px 40px;
           display: flex;
           flex-direction: column;
-          position: relative;
+          gap: 28px;
+          overflow-y: auto;
         }
+
         .ss-nav-item {
           display: block;
           font-family: var(--font-display);
-          font-size: 28px;
+          font-size: 36px;
           font-weight: 400;
           line-height: 1.2;
-          color: #1a1a2e;
-          padding: 12px 0;
+          color: #000;
+          padding: 0;
           position: relative;
           transition: color 0.2s;
           text-align: left;
           width: 100%;
+          cursor: pointer;
+          background: none;
+          border: none;
         }
-        .ss-nav-item:hover, .ss-nav-item.active { color: #c11f1e; }
-        .ss-nav-underline {
-          position: absolute;
-          bottom: -1px; left: 0;
-          height: 2px;
-          width: 0;
-          background: #c11f1e;
-          transition: width 0.3s ease;
-        }
-        .ss-nav-item.active .ss-nav-underline,
-        .ss-nav-item:hover .ss-nav-underline {
-          width: calc(100% + 3rem);
+        .ss-nav-item:hover {
+          color: #c11f1e;
         }
 
-        /* Hide mobile submenu on desktop */
+        /* Hide all secondary elements */
+        .ss-submenu-col,
+        .ss-connector-line,
+        .ss-submenu-links,
+        .ss-nav-underline,
         .ss-mobile-submenu {
           display: none !important;
         }
-
-        /* Submenu column */
-        .ss-submenu-col {
-          width: 50%;
-          padding-top: 64px;
-          position: relative;
-        }
-        .ss-connector-line {
-          position: absolute;
-          left: 0;
-          height: 2px;
-          background: #c11f1e;
-          width: 0;
-          opacity: 0;
-          transition: top 0.25s ease, width 0.3s ease, opacity 0.2s ease;
-        }
-        .ss-submenu-links {
-          position: absolute;
-          left: 40px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.2s ease;
-        }
-        .ss-submenu-links.visible {
-          opacity: 1;
-          pointer-events: all;
-        }
-        .ss-submenu-links a {
-          display: block;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 1.5;
-          color: #6b7280;
-          padding: 8px 40px 8px 0;
-          transition: color 0.2s, transform 0.25s;
-          transform: translateX(8px);
-        }
-        .ss-submenu-links.visible a { transform: translateX(0); }
-        .ss-submenu-links a:hover { color: #111; }
 
         /* Bottom red CTA bar */
         .ss-cta-bar {
           display: flex;
           background: #c11f1e;
-          border-top: 1px solid #f0f0f0;
           margin-top: auto;
         }
         .ss-cta-bar a {
@@ -344,20 +308,27 @@ function HeaderHTML() {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          padding: 20px;
+          gap: 10px;
+          padding: 28px 20px;
           color: #fff;
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 700;
-          line-height: 1.2;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          border-right: 1px solid rgba(255,255,255,0.2);
+          border-right: 1px solid rgba(255,255,255,0.15);
           transition: background 0.2s;
         }
-        .ss-cta-bar a:last-child { border-right: none; }
-        .ss-cta-bar a:hover { background: rgba(255,255,255,0.1); }
-        .ss-cta-bar svg { flex-shrink: 0; }
+        .ss-cta-bar a:last-child {
+          border-right: none;
+        }
+        .ss-cta-bar a:hover {
+          background: rgba(0,0,0,0.15);
+        }
+        .ss-cta-bar svg {
+          flex-shrink: 0;
+          width: 18px;
+          height: 18px;
+        }
 
         /* ── Mobile responsive ────────────────────────── */
         @media (max-width: 768px) {
@@ -592,22 +563,6 @@ function HeaderHTML() {
           var openBtn   = document.getElementById('ss-open-btn');
           var closeBtn  = document.getElementById('ss-close-btn');
           var navCol    = document.getElementById('ss-nav-col');
-          var connector = document.getElementById('ss-connector');
-          var activeIdx = null;
-
-          var submenus = [
-            document.getElementById('ss-sub-0'),
-            document.getElementById('ss-sub-1'),
-            document.getElementById('ss-sub-2'),
-            document.getElementById('ss-sub-3')
-          ];
-
-          var mobileSubmenus = [
-            document.getElementById('ss-mob-0'),
-            document.getElementById('ss-mob-1'),
-            document.getElementById('ss-mob-2'),
-            document.getElementById('ss-mob-3')
-          ];
 
           var images = [
             document.getElementById('ss-img-0'),
@@ -623,10 +578,12 @@ function HeaderHTML() {
             header.classList.toggle('scrolled', window.scrollY > 50);
           });
 
-          // Open menu
+          // Open menu - set first image active
           openBtn.addEventListener('click', function () {
             megamenu.classList.add('open');
             document.body.style.overflow = 'hidden';
+            images.forEach(function (img) { img.classList.remove('active'); });
+            if (images[0]) images[0].classList.add('active');
           });
 
           // Close menu
@@ -635,39 +592,14 @@ function HeaderHTML() {
             document.body.style.overflow = '';
           });
 
-          // Nav items
+          // Nav items - hover changes image
           var navItems = navCol.querySelectorAll('.ss-nav-item[data-index]');
           navItems.forEach(function (item, i) {
             item.addEventListener('mouseenter', function () {
-              activeIdx = i;
-              navItems.forEach(function (n) { n.classList.remove('active'); });
-              item.classList.add('active');
-
-              // Desktop submenu
-              submenus.forEach(function (s) { s.classList.remove('visible'); });
-              if (i < submenus.length) {
-                submenus[i].classList.add('visible');
-                updateConnector(item, i);
-              }
-
-              // Mobile submenu
-              mobileSubmenus.forEach(function (m) { m.classList.remove('open'); });
-              if (i < mobileSubmenus.length) {
-                mobileSubmenus[i].classList.add('open');
-              }
-
-              // Image
               images.forEach(function (img) { img.classList.remove('active'); });
               if (images[i]) images[i].classList.add('active');
             });
           });
-
-          function updateConnector(item, idx) {
-            var rect = item.getBoundingClientRect();
-            connector.style.top = rect.top - navCol.getBoundingClientRect().top + 12 + 'px';
-            connector.style.width = '48px';
-            connector.style.opacity = '1';
-          }
 
           // Close menu on escape
           document.addEventListener('keydown', function (e) {
