@@ -296,10 +296,10 @@ export default function HeaderPreview() {
         
         .menu-nav {
           width: 50%;
-          padding: 56px 40px;
+          padding: 64px 48px;
           display: flex;
           flex-direction: column;
-          gap: 28px;
+          gap: 72px;
           border-right: 1px solid #e5e5e5;
           overflow-y: auto;
         }
@@ -308,12 +308,13 @@ export default function HeaderPreview() {
           background: none;
           border: none;
           font-family: 'Roxborough CF', serif;
-          font-size: 36px;
+          font-size: 52px;
           font-weight: 400;
+          line-height: 1.1;
           color: #000;
           text-align: left;
           cursor: pointer;
-          padding: 0 0 8px 0;
+          padding: 0 0 12px 0;
           position: relative;
           transition: all 0.2s ease;
           transform: translateX(0);
@@ -331,45 +332,48 @@ export default function HeaderPreview() {
         .menu-nav button.active::after {
           content: '';
           position: absolute;
-          bottom: -8px;
-          left: -40px;
-          width: calc(100% + 80px);
-          height: 1px;
+          bottom: 0;
+          left: -48px;
+          width: calc(100% + 96px);
+          height: 2px;
           background: #c11f1e;
         }
         
         /* Submenu */
         .menu-submenu {
           width: 50%;
-          padding: 56px 40px;
+          padding: 64px 48px;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 24px;
           overflow-y: auto;
           position: relative;
         }
         
         .menu-submenu-header {
           font-family: 'Roxborough CF', serif;
-          font-size: 20px;
+          font-size: 24px;
+          font-weight: 400;
           color: #000;
-          margin-bottom: 8px;
-          padding-bottom: 12px;
+          margin-bottom: 16px;
+          padding-bottom: 16px;
           border-bottom: 1px solid #e5e5e5;
+          line-height: 1.2;
         }
         
         .menu-submenu a {
           font-family: 'Montserrat', sans-serif;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 400;
-          color: #666;
+          color: #9ca3af;
           text-decoration: none;
           transition: all 0.2s ease;
           transform: translateX(0);
-          padding: 4px 0;
+          padding: 8px 0;
           display: flex;
           align-items: center;
           gap: 8px;
+          line-height: 1.5;
         }
         
         .menu-submenu a::after {
