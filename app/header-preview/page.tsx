@@ -215,12 +215,19 @@ export default function HeaderPreview() {
           width: 50%;
           overflow: hidden;
           background: #e5e5e5;
+          position: relative;
         }
         
         .menu-image img {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          transition: opacity 0.4s ease;
+          opacity: 1;
+        }
+        
+        .menu-image img.loading {
+          opacity: 0.5;
         }
         
         /* Right content panel */
@@ -305,11 +312,13 @@ export default function HeaderPreview() {
           cursor: pointer;
           padding: 0 0 8px 0;
           position: relative;
-          transition: color 0.2s;
+          transition: all 0.2s ease;
+          transform: translateX(0);
         }
         
         .menu-nav button:hover {
           color: #c11f1e;
+          transform: translateX(8px);
         }
         
         .menu-nav button.active {
@@ -337,17 +346,29 @@ export default function HeaderPreview() {
           position: relative;
         }
         
+        .menu-submenu-header {
+          font-family: 'Roxborough CF', serif;
+          font-size: 20px;
+          color: #000;
+          margin-bottom: 8px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid #e5e5e5;
+        }
+        
         .menu-submenu a {
           font-family: 'Montserrat', sans-serif;
           font-size: 14px;
           font-weight: 400;
           color: #666;
           text-decoration: none;
-          transition: color 0.2s;
+          transition: all 0.2s ease;
+          transform: translateX(0);
+          padding: 4px 0;
         }
         
         .menu-submenu a:hover {
           color: #c11f1e;
+          transform: translateX(8px);
         }
         
         /* CTA bar */
@@ -435,7 +456,13 @@ export default function HeaderPreview() {
       {/* Mega Menu */}
       <div className={`megamenu ${menuOpen ? 'open' : ''}`}>
         <div className="menu-image">
-          <img src={menuItems[activeItem].image} alt={menuItems[activeItem].title} />
+          <img 
+            src={menuItems[activeItem].image} 
+            alt={menuItems[activeItem].title}
+            onLoad={(e) => e.target.classList.remove('loading')}
+            onMouseEnter={(e) => e.target.classList.add('loading')}
+            className="loading"
+          />
         </div>
 
         <div className="menu-content">
@@ -466,6 +493,9 @@ export default function HeaderPreview() {
             </nav>
 
             <div className="menu-submenu">
+              {menuItems[activeItem].submenu.length > 0 && (
+                <div className="menu-submenu-header">{menuItems[activeItem].title}</div>
+              )}
               {menuItems[activeItem].submenu.map((item, i) => (
                 <a key={i} href="#">{item}</a>
               ))}
