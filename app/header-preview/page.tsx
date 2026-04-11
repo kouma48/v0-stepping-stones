@@ -350,24 +350,11 @@ export default function HeaderPreview() {
           position: relative;
         }
         
-        .menu-submenu-header {
-          font-family: 'Roxborough CF', serif;
-          font-size: 22px;
-          font-weight: 400;
-          color: #000;
-          margin-bottom: 16px;
-          padding-bottom: 16px;
-          padding-top: 8px;
-          border-bottom: 1px solid #e5e5e5;
-          line-height: 1.2;
-          position: relative;
-        }
-        
-        .menu-submenu-header::before {
+        .menu-submenu::before {
           content: '';
           position: absolute;
           left: 0;
-          top: 0;
+          top: 56px;
           width: 56px;
           height: 2px;
           background: #c11f1e;
@@ -536,9 +523,6 @@ export default function HeaderPreview() {
             </nav>
 
             <div className="menu-submenu">
-              {menuItems[activeItem].submenu.length > 0 && (
-                <div className="menu-submenu-header">{menuItems[activeItem].title}</div>
-              )}
               {menuItems[activeItem].submenu.map((item, i) => (
                 <a key={i} href="#">{item}</a>
               ))}
