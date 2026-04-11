@@ -493,11 +493,11 @@ export default function HeaderPreview() {
       {/* Hero Section with Image */}
       <div 
         style={{ 
-          marginTop: 160, 
-          minHeight: 'calc(100vh - 160px)',
+          minHeight: '100vh',
           backgroundImage: 'url(/hero-preview.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
           position: 'relative'
         }}
       >
