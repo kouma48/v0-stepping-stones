@@ -655,7 +655,7 @@ export default function HeaderPreview() {
           </div>
 
           {/* Navigation and submenu */}
-          <div className="menu-body">
+          <div className="menu-body" onMouseLeave={() => !isMobile && setActiveItem(-1)}>
             <nav className="menu-nav">
               {menuItems.map((item, i) => (
                 <div key={i}>
@@ -677,11 +677,6 @@ export default function HeaderPreview() {
                     onMouseEnter={() => {
                       if (!isMobile) {
                         setActiveItem(i);
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      if (!isMobile) {
-                        setActiveItem(-1);
                       }
                     }}
                   >
