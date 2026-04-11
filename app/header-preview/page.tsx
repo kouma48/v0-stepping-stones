@@ -694,9 +694,9 @@ export default function HeaderPreview() {
               ))}
             </nav>
 
-            {!isMobile && activeItem >= 0 && (
+            {!isMobile && activeItem >= 0 && activeItem < menuItems.length && (
               <div className="menu-submenu">
-                {menuItems[activeItem].submenu.map((item, i) => (
+                {menuItems[activeItem]?.submenu?.map((item, i) => (
                   <a key={i} href="#">{item}</a>
                 ))}
               </div>
