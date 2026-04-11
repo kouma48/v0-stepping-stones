@@ -21,8 +21,20 @@ export default function HeaderPreview() {
     } else {
       document.body.style.overflow = '';
     }
+    
+    const handleScroll = () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [menuOpen]);
 
@@ -49,27 +61,136 @@ export default function HeaderPreview() {
           left: 0;
           right: 0;
           z-index: 999;
-          background: rgba(0,0,0,0.8);
-          padding: 24px 40px;
+          background: rgba(0,0,0,0.3);
+          backdrop-filter: blur(8px);
+          padding: 24px 56px;
           display: flex;
           align-items: center;
           justify-content: space-between;
+          height: 160px;
+          transition: height 0.5s ease, background 0.5s ease;
+        }
+        
+        header.scrolled {
           height: 80px;
+          background: rgba(255,255,255,0.98);
+          backdrop-filter: blur(16px);
         }
         
-        header h1 {
-          color: #fff;
-          font-size: 24px;
-          font-family: 'Roxborough CF', serif;
+        .header-left {
+          display: flex;
+          gap: 28px;
+          flex: 1;
         }
         
-        header button {
+        .header-left a {
+          color: rgba(255,255,255,0.9);
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          text-decoration: none;
+          transition: color 0.2s;
+          position: relative;
+        }
+        
+        .header-left a::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 1.5px;
+          background: #c11f1e;
+          transition: width 0.3s;
+        }
+        
+        .header-left a:hover::after {
+          width: 100%;
+        }
+        
+        header.scrolled .header-left a {
+          color: #1a1a2e;
+        }
+        
+        .header-logo {
+          position: absolute;
+          left: 50%;
+          top: 16px;
+          transform: translateX(-50%);
+          transition: top 0.5s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        header.scrolled .header-logo {
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+        
+        .header-logo img {
+          width: 120px;
+          height: 120px;
+          object-fit: contain;
+          transition: width 0.5s, height 0.5s;
+        }
+        
+        header.scrolled .header-logo img {
+          width: 50px;
+          height: 50px;
+        }
+        
+        .header-right {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex: 1;
+          justify-content: flex-end;
+        }
+        
+        .header-right span {
+          color: rgba(255,255,255,0.9);
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          transition: color 0.2s;
+        }
+        
+        header.scrolled .header-right span {
+          color: #1a1a2e;
+        }
+        
+        .menu-btn {
           background: none;
           border: none;
-          color: #fff;
+          color: rgba(255,255,255,0.9);
           font-size: 24px;
           cursor: pointer;
           padding: 8px;
+          transition: color 0.2s;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+        }
+        
+        .menu-btn span {
+          display: block;
+          width: 24px;
+          height: 1.5px;
+          background: currentColor;
+          margin: 2px 0;
+        }
+        
+        .menu-btn span:nth-child(2) {
+          width: 16px;
+        }
+        
+        header.scrolled .menu-btn {
+          color: #1a1a2e;
         }
         
         /* Mega menu modal */
@@ -262,17 +383,52 @@ export default function HeaderPreview() {
         
         /* Preview content */
         .preview-content {
-          margin-top: 80px;
+          margin-top: 160px;
           padding: 40px;
-          background: #f9f9f9;
-          min-height: calc(100vh - 80px);
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          min-height: calc(100vh - 160px);
+          color: #fff;
+          transition: margin-top 0.5s ease;
+        }
+        
+        header.scrolled ~ .preview-content {
+          margin-top: 80px;
+        }
+        
+        .preview-content h2 {
+          font-size: 48px;
+          font-weight: 300;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+        
+        .preview-content p {
+          text-align: center;
+          font-size: 16px;
+          opacity: 0.9;
         }
       `}</style>
 
       {/* Header */}
       <header>
-        <h1>Stepping Stones</h1>
-        <button onClick={() => setMenuOpen(true)}>☰ MENU</button>
+        <div className="header-left">
+          <a href="#">INQUIRE</a>
+          <a href="#">VISIT</a>
+          <a href="#">APPLY</a>
+        </div>
+
+        <div className="header-logo">
+          <img src="https://v0-stepping-stones-gamma.vercel.app/images/logo-white.png" alt="Stepping Stones" />
+        </div>
+
+        <div className="header-right">
+          <span>MENU</span>
+          <button className="menu-btn" onClick={() => setMenuOpen(true)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </header>
 
       {/* Mega Menu */}
