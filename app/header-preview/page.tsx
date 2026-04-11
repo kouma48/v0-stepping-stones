@@ -296,10 +296,10 @@ export default function HeaderPreview() {
         
         .menu-nav {
           width: 50%;
-          padding: 64px 48px;
+          padding: 56px 48px;
           display: flex;
           flex-direction: column;
-          gap: 72px;
+          gap: 36px;
           border-right: 1px solid #e5e5e5;
           overflow-y: auto;
         }
@@ -308,13 +308,13 @@ export default function HeaderPreview() {
           background: none;
           border: none;
           font-family: 'Roxborough CF', serif;
-          font-size: 52px;
+          font-size: 34px;
           font-weight: 400;
-          line-height: 1.1;
+          line-height: 1.2;
           color: #000;
           text-align: left;
           cursor: pointer;
-          padding: 0 0 12px 0;
+          padding: 0 0 8px 0;
           position: relative;
           transition: all 0.2s ease;
           transform: translateX(0);
@@ -342,10 +342,10 @@ export default function HeaderPreview() {
         /* Submenu */
         .menu-submenu {
           width: 50%;
-          padding: 64px 48px;
+          padding: 56px 48px;
           display: flex;
           flex-direction: column;
-          gap: 24px;
+          gap: 20px;
           overflow-y: auto;
           position: relative;
         }
