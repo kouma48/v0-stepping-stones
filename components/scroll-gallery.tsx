@@ -20,30 +20,6 @@ const defaultGalleryImages: GalleryImage[] = [
     alt: 'Teacher guiding students in computer lab with green uniforms',
     caption: 'Technology & Learning',
   },
-  {
-    id: '3',
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-ICuR5nH7GMCIYFdxnwCmmO7mURmZe6.jpeg',
-    alt: 'Students walking across manicured school grounds',
-    caption: 'Growth & Development',
-  },
-  {
-    id: '4',
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-6YNMOSy3CyVNB8JnHVqfVuLb6VJfbW.png',
-    alt: 'Students gathered around campfire at night',
-    caption: 'Building Connections',
-  },
-  {
-    id: '5',
-    src: '/images/carousel-sports.jpg',
-    alt: 'Students playing basketball on school court',
-    caption: 'Sports & Athletics',
-  },
-  {
-    id: '6',
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image.png-dTVspKtQ5pxszbhCDF94unXM7XvV8f.jpeg',
-    alt: 'Victorian school building with large trees',
-    caption: 'Heritage & Excellence',
-  },
 ]
 
 export default function ScrollGallery() {
