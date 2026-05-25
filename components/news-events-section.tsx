@@ -110,20 +110,15 @@ export default function NewsEventsSection() {
     
     fetch('/api/events', { signal: controller.signal })
       .then(res => {
-        console.log('[v0] Events API response status:', res.status)
         return res.ok ? res.json() : null
       })
       .then(data => {
-        console.log('[v0] Events data received:', data)
         if (data && data.length > 0) {
-          console.log('[v0] Setting', data.length, 'events')
-          setUpcomingEvents(data)
-        } else {
-          console.log('[v0] No events returned, using fallback')
+          // Limit to next 3 events
+          setUpcomingEvents(data.slice(0, 3))
         }
       })
-      .catch(err => {
-        console.error('[v0] Events fetch error:', err)
+      .catch(() => {
         // Keep fallback on error
       })
     
