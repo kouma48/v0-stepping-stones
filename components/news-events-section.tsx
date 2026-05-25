@@ -7,11 +7,28 @@ import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
 // Base URL for all internal links
 const BASE_URL = 'https://steppingstones.co.ke'
 
-// Helper function to decode HTML entities
+// Helper function to decode HTML entities (server-safe)
 const decodeHtmlEntities = (text: string): string => {
-  const textarea = document.createElement('textarea')
-  textarea.innerHTML = text
-  return textarea.value
+  const entities: { [key: string]: string } = {
+    '&amp;': '&',
+    '&#038;': '&',
+    '&lt;': '<',
+    '&#060;': '<',
+    '&gt;': '>',
+    '&#062;': '>',
+    '&quot;': '"',
+    '&#034;': '"',
+    '&#8211;': '–', // en-dash
+    '&#8212;': '—', // em-dash
+    '&#039;': "'",
+    '&#047;': '/',
+  }
+  
+  let result = text
+  for (const [entity, char] of Object.entries(entities)) {
+    result = result.replace(new RegExp(entity, 'g'), char)
+  }
+  return result
 }
 
 interface NewsArticle {
