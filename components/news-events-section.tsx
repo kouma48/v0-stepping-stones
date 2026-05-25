@@ -7,6 +7,13 @@ import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
 // Base URL for all internal links
 const BASE_URL = 'https://steppingstones.co.ke'
 
+// Helper function to decode HTML entities
+const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea')
+  textarea.innerHTML = text
+  return textarea.value
+}
+
 interface NewsArticle {
   id: string | number
   title: string
@@ -317,7 +324,7 @@ export default function NewsEventsSection() {
 
                     <div className="flex-1 pt-2">
                       <h3 className="font-sans font-semibold text-lg md:text-xl text-white mb-3 leading-snug group-hover:text-white transition-colors">
-                        {event.title}
+                        {decodeHtmlEntities(event.title)}
                       </h3>
                       <div className="flex items-center gap-2 mb-4">
                         <Clock className="w-4 h-4" style={{ color: 'rgba(255,255,255,0.6)' }} />
