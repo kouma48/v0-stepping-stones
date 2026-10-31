@@ -1,34 +1,18 @@
 'use client'
-// v5 - Clean build, news-only fetch, boxed events layout
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { ChevronLeft, ChevronRight, Clock, ArrowRight } from 'lucide-react'
 
-// Base URL for all internal links
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { ArrowUpRight, Clock } from 'lucide-react'
+
 const BASE_URL = 'https://steppingstones.co.ke'
 
-// Helper function to decode HTML entities (server-safe)
 const decodeHtmlEntities = (text: string): string => {
-  const entities: { [key: string]: string } = {
-    '&amp;': '&',
-    '&#038;': '&',
-    '&lt;': '<',
-    '&#060;': '<',
-    '&gt;': '>',
-    '&#062;': '>',
-    '&quot;': '"',
-    '&#034;': '"',
-    '&#8211;': '–', // en-dash
-    '&#8212;': '—', // em-dash
-    '&#039;': "'",
-    '&#047;': '/',
+  const entities: Record<string, string> = {
+    '&amp;': '&', '&#038;': '&', '&lt;': '<', '&#060;': '<', '&gt;': '>',
+    '&#062;': '>', '&quot;': '"', '&#034;': '"', '&#8211;': '–', '&#8212;': '—',
+    '&#039;': "'", '&#047;': '/',
   }
-  
-  let result = text
-  for (const [entity, char] of Object.entries(entities)) {
-    result = result.replace(new RegExp(entity, 'g'), char)
-  }
-  return result
+  return Object.entries(entities).reduce((result, [entity, value]) => result.replace(new RegExp(entity, 'g'), value), text)
 }
 
 interface NewsArticle {
@@ -47,353 +31,114 @@ interface CalendarEvent {
   title: string
   time: string
   link?: string
+  description?: string
 }
 
-// Fallback news data used while loading or on error
 const FALLBACK_NEWS: NewsArticle[] = [
-  {
-    id: 1,
-    title: 'The Nexus of Greatness',
-    author: 'Stepping Stones School',
-    date: 'Feb 26 2026',
-    excerpt:
-      "This year has been a defining moment for Stepping Stones' seventh- and eighth-grade students.",
-    image: '/images/news-feature-1.jpg',
-    link: '#',
-  },
-  {
-    id: 2,
-    title: 'Science Fair Excellence',
-    author: 'Stepping Stones School',
-    date: 'Mar 15 2026',
-    excerpt:
-      'Our annual Science Fair showcased remarkable innovation from students across all year groups.',
-    image: '/images/news-feature-2.jpg',
-    link: '#',
-  },
-  {
-    id: 3,
-    title: 'Drama Production Success',
-    author: 'Stepping Stones School',
-    date: 'Mar 20 2026',
-    excerpt:
-      "The spring theatrical production captivated audiences with stunning performances.",
-    image: '/images/news-feature-3.jpg',
-    link: '#',
-  },
+  { id: 1, title: 'Curiosity in action: learning beyond the classroom', author: 'School Life', date: 'Feb 26 2026', excerpt: 'Our students are exploring, creating and solving real-world problems through hands-on learning, guided by passionate teachers and a culture of curiosity.', image: '/images/news-feature-1.jpg', link: '#' },
+  { id: 2, title: 'Leadership in action: our student council', author: 'Our Community', date: 'Mar 15 2026', excerpt: 'Meet the students shaping school life with purpose, energy and a generous spirit.', image: '/images/news-feature-2.jpg', link: '#' },
+  { id: 3, title: 'Building bright futures, together', author: 'Academic Excellence', date: 'Mar 20 2026', excerpt: 'A closer look at the people and ideas inspiring our next generation.', image: '/images/news-feature-3.jpg', link: '#' },
 ]
 
-const UPCOMING_EVENTS = [
-  {
-    date: '23',
-    month: 'March',
-    title: 'Fourth Quarter Begins',
-    time: 'all day',
-  },
-  {
-    date: '25',
-    month: 'March',
-    title: 'National Honor Society Induction Ceremony',
-    time: '6:30 PM - 8:30 PM',
-  },
-  {
-    date: '26',
-    month: 'March',
-    title: 'Board of Directors Meeting',
-    time: '6:00 PM - 9:00 PM',
-  },
+const UPCOMING_EVENTS: CalendarEvent[] = [
+  { date: '23', month: 'Mar', title: 'Fourth Quarter Begins', time: 'All day', description: 'The start of our fourth quarter. A time for renewed focus, continued growth and finishing the year strong.' },
+  { date: '25', month: 'Mar', title: 'National Honor Society Induction Ceremony', time: '6:30 PM – 8:30 PM', description: 'Join us as we celebrate our new inductees and their commitment to scholarship, leadership, service and character.' },
+  { date: '26', month: 'Mar', title: 'Board of Directors Meeting', time: '6:00 PM – 9:00 PM', description: 'Regular meeting of the Stepping Stones School Board of Directors.' },
 ]
 
 export default function NewsEventsSection() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [hoveredSlide, setHoveredSlide] = useState<number | null>(null)
-  const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>(FALLBACK_NEWS)
-  const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>(UPCOMING_EVENTS)
+  const [featuredNews, setFeaturedNews] = useState(FALLBACK_NEWS)
+  const [upcomingEvents, setUpcomingEvents] = useState(UPCOMING_EVENTS)
 
-  // Fetch news from RSS feed
   useEffect(() => {
     const controller = new AbortController()
-    
-    fetch('/api/news', { signal: controller.signal })
-      .then(res => res.ok ? res.json() : null)
-      .then(data => {
-        if (data && data.length > 0) {
-          setFeaturedNews(data)
-        }
-      })
-      .catch(() => {
-        // Keep fallback on error
-      })
-    
+    fetch('/api/news', { signal: controller.signal }).then((res) => res.ok ? res.json() : null).then((data) => {
+      if (data?.length) setFeaturedNews(data)
+    }).catch(() => undefined)
     return () => controller.abort()
   }, [])
 
-  // Fetch events from calendar feed
   useEffect(() => {
     const controller = new AbortController()
-    
-    fetch('/api/events', { signal: controller.signal })
-      .then(res => {
-        return res.ok ? res.json() : null
-      })
-      .then(data => {
-        if (data && data.length > 0) {
-          // Limit to next 3 events
-          setUpcomingEvents(data.slice(0, 3))
-        }
-      })
-      .catch(() => {
-        // Keep fallback on error
-      })
-    
+    fetch('/api/events', { signal: controller.signal }).then((res) => res.ok ? res.json() : null).then((data) => {
+      if (data?.length) setUpcomingEvents(data.slice(0, 3))
+    }).catch(() => undefined)
     return () => controller.abort()
   }, [])
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % featuredNews.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + featuredNews.length) % featuredNews.length)
-  }
+  const featured = featuredNews[0]
+  const supporting = featuredNews.slice(1, 3)
 
   return (
-    <section
-      className="relative py-20 md:py-24 overflow-hidden"
-      style={{ background: '#0F2C4C' }}
-    >
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-        {/* Three red stars decoration */}
-        <div className="flex justify-center gap-6 mb-8">
-          {[1, 2, 3].map((i) => (
-            <svg
-              key={i}
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="opacity-90"
-            >
-              <path
-                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                fill="#c11f1e"
-              />
-            </svg>
-          ))}
-        </div>
+    <section className="overflow-hidden bg-[#0d3156] py-20 text-[#f7f5f0] md:py-24">
+      <div className="mx-auto max-w-[1500px] px-6 md:px-12">
+        <header className="mb-10 max-w-5xl">
+          <p className="mb-3 font-sans text-xs font-bold uppercase tracking-[0.32em] text-[#ff4d57]">Life at Stepping Stones</p>
+          <h2 className="font-serif text-[clamp(3rem,6vw,5.6rem)] leading-[0.95] tracking-[-0.035em]">Stories, moments &amp; milestones<span className="text-[#ff4d57]">.</span></h2>
+          <p className="mt-4 font-sans text-lg text-white/85 md:text-xl">Discover what&apos;s happening across our school community.</p>
+        </header>
 
-        {/* Section heading */}
-        <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-white text-center mb-16 leading-tight">
-          What's On & What's New
-        </h2>
-
-        <div className="grid lg:grid-cols-[1fr_500px] gap-12 lg:gap-16 items-start">
-          {/* Left: Featured News Carousel */}
-          <div className="relative">
-            {/* Vertical "FEATURED NEWS" label */}
-            <div
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 hidden xl:block"
-              style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
-            >
-              <span
-                className="font-sans text-xs tracking-[0.3em] uppercase"
-                style={{ color: 'rgba(255,255,255,0.5)' }}
-              >
-                FEATURED NEWS
-              </span>
-            </div>
-
-            {/* Carousel container */}
-            <div className="relative aspect-[4/3] rounded-sm overflow-hidden">
-              {featuredNews.map((article, index) => (
-                <div
-                  key={article.id}
-                  className={`absolute inset-0 transition-opacity duration-700 ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                  }`}
-                  onMouseEnter={() => setHoveredSlide(index)}
-                  onMouseLeave={() => setHoveredSlide(null)}
-                >
-                  {/* Image */}
-                  <Image
-                    src={article.image}
-                    alt={article.title}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 60vw, 90vw"
-                    unoptimized
-                  />
-
-                  {/* Default overlay - title at bottom */}
-                  <div
-                    className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-8 transition-opacity duration-300 ${
-                      hoveredSlide === index ? 'opacity-0' : 'opacity-100'
-                    }`}
-                  >
-                    <h3 className="font-serif text-3xl md:text-4xl text-white">{article.title}</h3>
-                  </div>
-
-                  {/* Hover overlay */}
-                  <div
-                    className={`absolute inset-0 flex flex-col justify-center px-10 md:px-16 py-12 transition-all duration-500 ${
-                      hoveredSlide === index
-                        ? 'opacity-100 translate-y-0'
-                        : 'opacity-0 translate-y-8 pointer-events-none'
-                    }`}
-                    style={{ 
-                      background: 'linear-gradient(135deg, rgba(153, 25, 24, 0.96) 0%, rgba(193, 31, 30, 0.96) 100%)'
-                    }}
-                  >
-                    <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight">
-                      {article.title}
-                    </h3>
-                    <p className="font-sans text-sm text-white/80 mb-2">{article.author}</p>
-                    <p className="font-sans text-sm text-white/70 mb-6">{article.date}</p>
-                    <p className="font-sans text-base md:text-lg text-white leading-relaxed mb-8 max-w-2xl">
-                      {article.excerpt}
-                    </p>
-                    <a
-                      href={article.link}
-                      className="inline-flex items-center gap-2 font-sans text-sm tracking-widest uppercase text-white hover:gap-3 transition-all"
-                    >
-                      READ MORE <ArrowRight className="w-4 h-4" />
-                    </a>
-                  </div>
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.7fr)_minmax(360px,0.9fr)] lg:gap-9">
+          <div>
+            <SectionLabel>Latest News</SectionLabel>
+            <article>
+              <a href={featured.link} className="group block">
+                <div className="relative aspect-[1.9/1] overflow-hidden bg-white/10">
+                  <Image src={featured.image} alt={featured.title} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" sizes="(min-width: 1024px) 65vw, 100vw" unoptimized />
                 </div>
+                <p className="mt-4 font-sans text-xs font-bold uppercase tracking-[0.24em] text-[#ff4d57]">{featured.author}</p>
+                <h3 className="mt-2 max-w-4xl font-serif text-3xl leading-tight md:text-4xl">{decodeHtmlEntities(featured.title)}</h3>
+                <p className="mt-2 max-w-3xl font-sans text-base leading-relaxed text-white/80 md:text-lg">{decodeHtmlEntities(featured.excerpt)}</p>
+                <StoryLink />
+              </a>
+            </article>
+
+            <div className="mt-7 grid gap-7 border-t border-white/20 pt-7 md:grid-cols-2">
+              {supporting.map((article) => (
+                <article key={article.id} className="grid gap-5 sm:grid-cols-[minmax(130px,0.8fr)_1fr]">
+                  <a href={article.link} className="relative aspect-[1.45/1] overflow-hidden bg-white/10">
+                    <Image src={article.image} alt={article.title} fill className="object-cover transition-transform duration-700 hover:scale-[1.04]" sizes="(min-width: 768px) 20vw, 90vw" unoptimized />
+                  </a>
+                  <div>
+                    <p className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-[#ff4d57]">{article.author}</p>
+                    <h3 className="mt-2 font-serif text-xl leading-tight">{decodeHtmlEntities(article.title)}</h3>
+                    <StoryLink />
+                  </div>
+                </article>
               ))}
-
-              {/* Navigation arrows */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-colors"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="w-5 h-5 text-white" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-colors"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-5 h-5 text-white" />
-              </button>
             </div>
-
-            {/* Carousel dots and arrows */}
-            <div className="flex justify-between items-center mt-6">
-              <div className="flex gap-2">
-                {featuredNews.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentSlide
-                        ? 'bg-white w-8'
-                        : 'bg-white/30 hover:bg-white/50'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              {/* Arrow navigation */}
-              <div className="flex gap-3">
-                <button
-                  onClick={prevSlide}
-                  className="w-10 h-10 flex items-center justify-center border border-white/30 hover:bg-white/10 rounded-sm transition-colors"
-                  aria-label="Previous article"
-                >
-                  <ChevronLeft className="w-5 h-5 text-white/80" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="w-10 h-10 flex items-center justify-center border border-white/30 hover:bg-white/10 rounded-sm transition-colors"
-                  aria-label="Next article"
-                >
-                  <ChevronRight className="w-5 h-5 text-white/80" />
-                </button>
-              </div>
-            </div>
+            <a href={`${BASE_URL}/news/`} target="_top" className="mt-8 inline-flex items-center gap-2 border-b-2 border-[#ff4d57] pb-2 font-sans text-xs font-bold uppercase tracking-[0.22em] hover:text-[#ffb0b3]">View all news <ArrowUpRight className="h-4 w-4" /></a>
           </div>
 
-          {/* Right: Upcoming Events - STATIC with boxed hover effect */}
-          <div className="flex flex-col">
-            <div className="space-y-0">
+          <aside className="border-l border-white/25 pl-8 lg:pl-12">
+            <SectionLabel>Upcoming Events</SectionLabel>
+            <div>
               {upcomingEvents.map((event, index) => (
-                <div key={index}>
-                  <div 
-                    className="flex items-start gap-6 group cursor-pointer p-6 -mx-6 rounded-sm transition-all duration-300 hover:bg-[#0a1f33]"
-                  >
-                    <div className="flex-shrink-0 text-center min-w-[80px]">
-                      <div
-                        className="font-serif text-6xl md:text-7xl leading-none mb-2 transition-colors"
-                        style={{ color: 'rgba(255,255,255,0.6)' }}
-                      >
-                        {event.date}
-                      </div>
-                      <div
-                        className="font-sans text-sm uppercase tracking-wider"
-                        style={{ color: 'rgba(255,255,255,0.5)' }}
-                      >
-                        {event.month}
-                      </div>
-                    </div>
-
-                    <div className="flex-1 pt-2">
-                      <h3 className="font-sans font-semibold text-lg md:text-xl text-white mb-3 leading-snug group-hover:text-white transition-colors">
-                        {decodeHtmlEntities(event.title)}
-                      </h3>
-                      <div className="flex items-center gap-2 mb-4">
-                        <Clock className="w-4 h-4" style={{ color: 'rgba(255,255,255,0.6)' }} />
-                        <span
-                          className="font-sans text-sm"
-                          style={{ color: 'rgba(255,255,255,0.7)' }}
-                        >
-                          {event.time}
-                        </span>
-                      </div>
-                      <a
-                        href={event.link || '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 font-sans text-xs tracking-widest uppercase group-hover:gap-3 transition-all"
-                        style={{ color: 'rgba(255,255,255,0.9)' }}
-                      >
-                        READ MORE <ArrowRight className="w-3 h-3" />
-                      </a>
-                    </div>
+                <article key={`${event.date}-${event.title}`} className={`grid grid-cols-[102px_1fr] gap-5 py-8 ${index === 0 ? 'pt-3' : 'border-t border-dashed border-white/20'}`}>
+                  <div className="border-r border-white/35 pr-5 text-center">
+                    <p className="font-serif text-6xl leading-none">{event.date}</p>
+                    <p className="mt-3 font-sans text-xs font-semibold uppercase tracking-[0.28em]">{event.month}</p>
                   </div>
-
-                  {index < upcomingEvents.length - 1 && (
-                    <div
-                      className="border-b border-dashed mx-0"
-                      style={{ borderColor: 'rgba(255,255,255,0.15)' }}
-                    />
-                  )}
-                </div>
+                  <div>
+                    <h3 className="font-serif text-xl leading-tight md:text-2xl">{decodeHtmlEntities(event.title)}</h3>
+                    <div className="mt-4 flex items-center gap-2 font-sans text-sm text-white/75"><Clock className="h-4 w-4" />{event.time}</div>
+                    {event.description && <p className="mt-3 font-sans text-sm leading-relaxed text-white/75">{decodeHtmlEntities(event.description)}</p>}
+                  </div>
+                </article>
               ))}
             </div>
-
-            {/* Bottom buttons */}
-            <div className="flex gap-4 mt-12 pt-8">
-              <a
-                href={`${BASE_URL}/news/`}
-                target="_top"
-                className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
-              >
-                MORE NEWS
-              </a>
-              <a
-                href={`${BASE_URL}/events/`}
-                target="_top"
-                className="flex-1 px-6 py-3 text-center font-sans text-xs tracking-widest uppercase text-white border border-white/30 hover:bg-white/10 transition-colors rounded-sm"
-              >
-                FULL CALENDAR
-              </a>
-            </div>
-          </div>
+            <a href={`${BASE_URL}/events/`} target="_top" className="mt-2 flex items-center justify-center gap-2 border border-white/70 px-5 py-3 font-sans text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-white hover:text-[#0d3156]">View full calendar <ArrowUpRight className="h-4 w-4" /></a>
+          </aside>
         </div>
       </div>
     </section>
   )
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return <div className="mb-4 flex items-center gap-4 font-sans text-xs font-bold uppercase tracking-[0.3em]"><span>{children}</span><span className="h-[2px] w-10 bg-[#ff4d57]" /></div>
+}
+
+function StoryLink() {
+  return <span className="mt-4 inline-flex items-center gap-2 border-b-2 border-[#ff4d57] pb-2 font-sans text-[10px] font-bold uppercase tracking-[0.22em]">Read story <ArrowUpRight className="h-3.5 w-3.5" /></span>
 }
