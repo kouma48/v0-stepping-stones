@@ -116,9 +116,9 @@ export default function BeyondClassroomSection() {
   }
 
   return (
-    <section className="py-20 md:py-28 overflow-hidden" style={{ background: '#f8f9fa' }}>
+    <section className="overflow-hidden bg-[#fbfaf7] py-16 text-[#0d1e31] md:py-20">
       {/* Header */}
-      <div className="relative text-center mb-14 px-6">
+      <div className="relative mx-auto mb-10 max-w-[1500px] px-6 md:mb-12 md:px-12">
         <p
           className="font-sans text-[11px] font-semibold tracking-[0.3em] uppercase mb-5"
           style={{ color: 'var(--color-accent-red)' }}
@@ -126,7 +126,7 @@ export default function BeyondClassroomSection() {
           Life at Stepping Stones
         </p>
         <h2
-          className="font-serif text-[clamp(2.8rem,6vw,5rem)] leading-[1.08] tracking-tight text-balance"
+          className="max-w-[1300px] font-serif text-[clamp(3.2rem,7vw,6.8rem)] leading-[0.92] tracking-[-0.045em] text-balance"
           style={{ color: 'var(--color-school-heading)' }}
         >
           A{' '}
@@ -168,43 +168,22 @@ export default function BeyondClassroomSection() {
       </div>
 
       {/* Main Split Panel */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        {/* Tab Bar - At Top */}
-        <div className="flex items-stretch" style={{ borderBottom: '1px solid #e5e5e5' }}>
-          {tabs.map((tab) => {
+      <div className="mx-auto grid max-w-[1500px] gap-6 px-6 md:px-12 lg:grid-cols-[145px_minmax(0,1fr)_minmax(380px,0.72fr)] lg:gap-0">
+        <nav className="flex gap-4 overflow-x-auto pb-5 lg:block lg:overflow-visible lg:pb-0 lg:pt-1" aria-label="Life at Stepping Stones programmes">
+          {tabs.map((tab, index) => {
             const isActive = activeTab === tab.id
             return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => handleTabChange(tab.id)}
-                onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)}
-                className="flex-1 flex items-center justify-center py-6 cursor-pointer relative transition-colors duration-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
-                style={{ borderRight: '1px solid #e5e5e5', background: isActive ? '#fafafa' : 'white' }}
-              >
-                <span
-                  className="font-sans font-semibold tracking-[0.16em] uppercase text-center leading-tight"
-                  style={{
-                    fontSize: '10.5px',
-                    color: isActive ? 'var(--color-accent-red)' : 'var(--color-school-heading)',
-                    transition: 'color 0.3s',
-                  }}
-                >
-                  {tab.label}
-                </span>
-                {isActive && (
-                  <div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px]"
-                    style={{ background: 'var(--color-accent-red)', width: '2.5rem' }}
-                  />
-                )}
+              <button key={tab.id} type="button" onClick={() => handleTabChange(tab.id)} onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)} className="group relative flex min-w-[125px] items-center gap-3 border-b-2 border-[#d1d5db] pb-3 text-left lg:min-w-0 lg:w-full lg:gap-4 lg:border-b-0 lg:border-l-2 lg:pb-8 lg:pl-5 lg:pt-1">
+                <span className={`font-serif text-3xl leading-none ${isActive ? 'text-[#e21d2b]' : 'text-[#56606d]'}`}>{String(index + 1).padStart(2, '0')}</span>
+                <span className={`font-sans text-[10px] font-semibold uppercase leading-snug tracking-[0.16em] ${isActive ? 'text-[#e21d2b]' : 'text-[#56606d]'}`}>{tab.label}</span>
+                {isActive && <span className="absolute -left-[7px] top-4 h-3 w-3 rounded-full border-2 border-[#fbfaf7] bg-[#e21d2b] lg:left-[-7px]" />}
               </button>
             )
           })}
-        </div>
+        </nav>
 
         {/* Content Grid - Image and Card */}
-        <div className="grid lg:grid-cols-[1fr_420px] overflow-hidden" style={{ minHeight: '520px' }}>
+        <div className="grid overflow-hidden lg:grid-cols-[minmax(0,1fr)_minmax(380px,0.72fr)] lg:col-span-2" style={{ minHeight: '610px' }}>
           {/* Left: Image */}
           <div className="relative bg-neutral-900 overflow-hidden" style={{ minHeight: '460px' }}>
             <div
@@ -240,7 +219,7 @@ export default function BeyondClassroomSection() {
             key={`card-${activeContent.id}`}
             className="flex flex-col justify-between p-10 md:p-12 lg:p-14"
             style={{
-              background: 'var(--color-accent-red)',
+              background: '#0b2238',
               opacity: animating ? 0 : 1,
               transform: animating ? 'translateX(12px)' : 'translateX(0)',
               transition: 'opacity 0.4s ease, transform 0.4s ease',
@@ -259,17 +238,10 @@ export default function BeyondClassroomSection() {
 
               <h3
                 className="font-serif text-white leading-[1.15] mb-7"
-                style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)' }}
+                style={{ fontSize: 'clamp(2.4rem, 4vw, 4rem)' }}
               >
                 {activeContent.title}
               </h3>
-
-              <p
-                className="font-sans font-bold text-white leading-snug mb-4"
-                style={{ fontSize: '0.95rem', letterSpacing: '0.01em' }}
-              >
-                {activeContent.boldIntro.toUpperCase()}
-              </p>
 
               <p
                 className="font-sans text-white/90 leading-relaxed"
