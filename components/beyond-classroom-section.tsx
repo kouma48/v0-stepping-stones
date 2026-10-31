@@ -168,13 +168,13 @@ export default function BeyondClassroomSection() {
       </div>
 
       {/* Main Split Panel */}
-      <div className="mx-auto grid max-w-[1500px] gap-6 px-6 md:px-12 lg:grid-cols-[145px_minmax(0,1fr)_minmax(380px,0.72fr)] lg:gap-0">
-        <nav className="flex gap-4 overflow-x-auto pb-5 lg:block lg:overflow-visible lg:pb-0 lg:pt-1" aria-label="Life at Stepping Stones programmes">
+      <div className="mx-auto grid max-w-[1500px] gap-6 px-6 md:px-12 xl:grid-cols-[145px_minmax(0,1fr)_minmax(380px,0.72fr)] xl:gap-0">
+        <nav className="grid grid-cols-2 gap-2 pb-5 xl:block xl:overflow-visible xl:pb-0 xl:pt-1" aria-label="Life at Stepping Stones programmes">
           {tabs.map((tab, index) => {
             const isActive = activeTab === tab.id
             return (
-              <button key={tab.id} type="button" onClick={() => handleTabChange(tab.id)} onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)} className="group relative flex min-w-[125px] items-center gap-3 border-b-2 border-[#d1d5db] pb-3 text-left lg:min-w-0 lg:w-full lg:gap-4 lg:border-b-0 lg:border-l-2 lg:pb-8 lg:pl-5 lg:pt-1">
-                <span className={`font-serif text-3xl leading-none ${isActive ? 'text-[#e21d2b]' : 'text-[#56606d]'}`}>{String(index + 1).padStart(2, '0')}</span>
+              <button key={tab.id} type="button" onClick={() => handleTabChange(tab.id)} onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)} className="group relative flex min-w-0 items-center gap-2 border-b-2 border-[#d1d5db] px-2 pb-3 pt-2 text-left sm:gap-3 sm:px-3 xl:w-full xl:gap-4 xl:border-b-0 xl:border-l-2 xl:pb-8 xl:pl-5 xl:pt-1">
+                <span className={`font-serif text-2xl leading-none sm:text-3xl ${isActive ? 'text-[#e21d2b]' : 'text-[#56606d]'}`}>{String(index + 1).padStart(2, '0')}</span>
                 <span className={`font-sans text-[10px] font-semibold uppercase leading-snug tracking-[0.16em] ${isActive ? 'text-[#e21d2b]' : 'text-[#56606d]'}`}>{tab.label}</span>
                 {isActive && <span className="absolute -left-[7px] top-4 h-3 w-3 rounded-full border-2 border-[#fbfaf7] bg-[#e21d2b] lg:left-[-7px]" />}
               </button>
@@ -183,7 +183,7 @@ export default function BeyondClassroomSection() {
         </nav>
 
         {/* Content Grid - Image and Card */}
-        <div className="grid overflow-hidden lg:grid-cols-[minmax(0,1fr)_minmax(380px,0.72fr)] lg:col-span-2" style={{ minHeight: '610px' }}>
+        <div className="grid overflow-hidden xl:grid-cols-[minmax(0,1fr)_minmax(380px,0.72fr)] xl:col-span-2" style={{ minHeight: '610px' }}>
           {/* Left: Image */}
           <div className="relative bg-neutral-900 overflow-hidden" style={{ minHeight: '460px' }}>
             <div
