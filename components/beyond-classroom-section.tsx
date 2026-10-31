@@ -118,7 +118,7 @@ export default function BeyondClassroomSection() {
   return (
     <section className="overflow-hidden bg-[#fbfaf7] py-16 text-[#0d1e31] md:py-20">
       {/* Header */}
-      <div className="relative mx-auto mb-10 max-w-[1500px] px-6 md:mb-12 md:px-12">
+      <div className="relative mx-auto mb-12 max-w-[1500px] px-6 md:mb-14 md:px-12">
         <p
           className="font-sans text-[11px] font-semibold tracking-[0.3em] uppercase mb-5"
           style={{ color: 'var(--color-accent-red)' }}
@@ -168,7 +168,7 @@ export default function BeyondClassroomSection() {
       </div>
 
       {/* Main Split Panel */}
-      <div className="mx-auto grid max-w-[1500px] gap-6 px-6 md:px-12 xl:grid-cols-[145px_minmax(0,1fr)_minmax(380px,0.72fr)] xl:gap-0">
+      <div className="mx-auto grid max-w-[1500px] gap-6 px-6 md:px-12 xl:grid-cols-[175px_minmax(0,1fr)_minmax(390px,0.72fr)] xl:gap-0">
         <nav className="grid grid-cols-2 gap-2 pb-5 xl:block xl:overflow-visible xl:pb-0 xl:pt-1" aria-label="Life at Stepping Stones programmes">
           {tabs.map((tab, index) => {
             const isActive = activeTab === tab.id
@@ -176,7 +176,7 @@ export default function BeyondClassroomSection() {
               <button key={tab.id} type="button" onClick={() => handleTabChange(tab.id)} onKeyDown={(e) => e.key === 'Enter' && handleTabChange(tab.id)} className="group relative flex min-w-0 items-center gap-2 border-b-2 border-[#d1d5db] px-2 pb-3 pt-2 text-left sm:gap-3 sm:px-3 xl:w-full xl:gap-4 xl:border-b-0 xl:border-l-2 xl:pb-8 xl:pl-5 xl:pt-1">
                 <span className={`font-serif text-2xl leading-none sm:text-3xl ${isActive ? 'text-[#e21d2b]' : 'text-[#56606d]'}`}>{String(index + 1).padStart(2, '0')}</span>
                 <span className={`font-sans text-[10px] font-semibold uppercase leading-snug tracking-[0.16em] ${isActive ? 'text-[#e21d2b]' : 'text-[#56606d]'}`}>{tab.label}</span>
-                {isActive && <span className="absolute -left-[7px] top-4 h-3 w-3 rounded-full border-2 border-[#fbfaf7] bg-[#e21d2b] lg:left-[-7px]" />}
+                {isActive && <span className="absolute -left-[7px] top-4 h-3 w-3 rounded-full border-2 border-[#fbfaf7] bg-[#e21d2b] xl:left-[-7px]" />}
               </button>
             )
           })}
@@ -233,7 +233,7 @@ export default function BeyondClassroomSection() {
                 >
                   {activeContent.eyebrow}
                 </span>
-                <div className="w-10 h-[2px] bg-white/50" />
+                <div className="h-[2px] w-16 bg-[#ff2635]" />
               </div>
 
               <h3
@@ -254,7 +254,7 @@ export default function BeyondClassroomSection() {
             <a
               href={activeContent.ctaHref}
               className="inline-flex items-center gap-3 text-white font-sans font-bold tracking-[0.18em] uppercase mt-10 group"
-              style={{ fontSize: '11px', borderTop: '1px solid rgba(255,255,255,0.3)', paddingTop: '1.5rem' }}
+              style={{ fontSize: '11px', borderBottom: '2px solid #ff2635', paddingBottom: '0.9rem' }}
             >
               <span>{activeContent.ctaText}</span>
               <ArrowRight
