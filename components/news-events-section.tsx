@@ -83,10 +83,10 @@ export default function NewsEventsSection() {
             <SectionLabel>Latest News</SectionLabel>
             <article>
               <a href={featured.link} className="group block">
-                <div className="relative aspect-[1.9/1] overflow-hidden bg-white/10">
+                <div className="relative aspect-[2.35/1] overflow-hidden bg-white/10">
                   <Image src={featured.image} alt={featured.title} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" sizes="(min-width: 1024px) 65vw, 100vw" unoptimized />
                 </div>
-                <p className="mt-4 font-sans text-xs font-bold uppercase tracking-[0.24em] text-[#ff4d57]">{featured.author}</p>
+                {featured.author && !featured.author.toLowerCase().includes('komondi') && <p className="mt-4 font-sans text-xs font-bold uppercase tracking-[0.24em] text-[#ff4d57]">{featured.author}</p>}
                 <h3 className="mt-2 max-w-4xl font-serif text-3xl leading-tight md:text-4xl">{decodeHtmlEntities(featured.title)}</h3>
                 <p className="mt-2 max-w-3xl font-sans text-base leading-relaxed text-white/80 md:text-lg">{decodeHtmlEntities(featured.excerpt)}</p>
                 <StoryLink />
@@ -100,7 +100,7 @@ export default function NewsEventsSection() {
                     <Image src={article.image} alt={article.title} fill className="object-cover transition-transform duration-700 hover:scale-[1.04]" sizes="(min-width: 768px) 20vw, 90vw" unoptimized />
                   </a>
                   <div>
-                    <p className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-[#ff4d57]">{article.author}</p>
+                    {article.author && !article.author.toLowerCase().includes('komondi') && <p className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-[#ff4d57]">{article.author}</p>}
                     <h3 className="mt-2 font-serif text-xl leading-tight">{decodeHtmlEntities(article.title)}</h3>
                     <StoryLink />
                   </div>
